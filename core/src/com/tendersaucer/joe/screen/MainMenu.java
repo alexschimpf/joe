@@ -29,8 +29,6 @@ public class MainMenu implements Screen {
     private Stage stage;
     private Image loadingBackground;
     private Label loadingText;
-    private Label byLine;
-    private TextButton audioButton;
 
     public MainMenu(Game game) {
         this.game = game;
@@ -97,7 +95,7 @@ public class MainMenu implements Screen {
 
         final TextButton playButton = new TextButton("PLAY", skin);
         playButton.setSize(screenWidth, playButtonHeight);
-        playButton.setPosition(0, (screenHeight - playButton.getPrefHeight()) * 0.4f);
+        playButton.setPosition(0, (screenHeight - playButton.getPrefHeight()) * 0.5f);
         playButton.setStyle(playButtonStyle);
         playButton.addListener(new ClickListener() {
             @Override
@@ -120,13 +118,13 @@ public class MainMenu implements Screen {
         style.font = fontGenerator.generateFont(fontParameter);
         style.fontColor = Color.BLACK;
 
-        byLine = new Label("by.alex.schimpf", skin);
-        byLine.setStyle(style);
-        float margin = screenHeight / 50;
-        byLine.setPosition(screenWidth - byLine.getPrefWidth() - margin, margin);
-        stage.addActor(byLine);
+        Label title = new Label("joe", skin);
+        title.setStyle(style);
+        title.setPosition((screenWidth - title.getPrefWidth()) / 2, playButton.getY() - playButtonHeight);
+        stage.addActor(title);
 
-        audioButton = new TextButton("audio", skin);
+        float margin = screenHeight / 100;
+        final TextButton audioButton = new TextButton("audio", skin);
         TextButton.TextButtonStyle audioButtonStyle = new TextButton.TextButtonStyle(playButtonStyle);
         audioButtonStyle.font = fontGenerator.generateFont(fontParameter);
         audioButtonStyle.fontColor = DAO.getInstance().getBoolean(DAO.IS_AUDIO_ENABLED, true) ? Color.GREEN : Color.RED;
@@ -160,7 +158,7 @@ public class MainMenu implements Screen {
         loadingText.setStyle(style);
         loadingText.setVisible(false);
         loadingText.setPosition((screenWidth - loadingText.getPrefWidth()) / 2,
-                (screenHeight - byLine.getPrefHeight()) / 2);
+                (screenHeight - title.getPrefHeight()) / 2);
         stage.addActor(loadingText);
     }
 }

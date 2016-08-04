@@ -1,0 +1,17 @@
+- run past a "post", then get to a certain point, activate something, then run back past the "post", and the map has (visibly) rotated over
+- Scripts?
+    - You reach the end of a chain
+    - Now you must tell a MovableEntity to move
+    - How do you do that?
+        - MovableEntities MAY NOT need this functionality
+- Particle effects
+- Randomness???
+- Need to cache texture regions in AssetManager??
+- Figure out what to do about friction
+    - Keep everything frictionless or not?
+- Make sure everything (that needs it) is disposed of
+- Platforms that hang on a spring
+    - More for effect
+- Platforms that disappear and reappear
+    - Few little "tricks"
+- Cool camera effect when level is completed

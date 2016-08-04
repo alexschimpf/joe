@@ -1,0 +1,7 @@
+- New Name (and add to main menu)
+- Iteration-Complete dialog
+- For each level, store (in Tiled) the path the camera should take during the level complete dialog
+- Level 2 (disappearing/moving platforms)
+- Back button goes to Main Menu (with dialog making sure)
+- Make 1st level SLIGHTLY easier
+- Look into texture bleeding
