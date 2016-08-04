@@ -1,0 +1,58 @@
+{
+    "entities": {
+        "entity": {
+            "class": "Entity",
+            "properties": {
+                "required": [
+                    "id", "x", "y", "width", "height", "type"
+                ],
+                "optional": [
+                    { "name": "body_type", "default": "static" },
+                    { "name": "body_width", "default": "0" },
+                    { "name": "body_height", "default": "0" },
+                    { "name": "fixed_rotation", "default": "true" },
+                    { "name": "rotation", "default": "0" },
+                    { "name": "is_visible", "default": "true" },
+                    { "name": "is_body_active", "default": "true" }
+                ]
+            },
+            "children": {
+                "rendered_entity": {
+                    "class": "RenderedEntity",
+                    "properties": {
+                        "required": [ "layer" ]
+                    },
+                    "children": {
+                        "player": {
+                            "class": "Player",
+                            "properties": {
+                                "optional": [
+                                    { "name": "body_type", "default": "dynamic" }
+                                ]
+                            }
+                        },
+                        "next_level_token": {
+                            "class": "NextLevelToken",
+                            "properties": {
+                                "optional": [
+                                    { "name": "body_type", "default": "kinematic" }
+                                ]
+                            }
+                        },
+                        "timer_chain_link": {
+                            "class": "TimerChainLink",
+                            "properties": {
+                                "optional": [
+                                    { "name": "is_start", "default": "false" },
+                                    { "name": "is_end", "default": "false" },
+                                    { "name": "delay", "default": "145" },
+                                    { "name": "is_body_active", "default": "false" }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
