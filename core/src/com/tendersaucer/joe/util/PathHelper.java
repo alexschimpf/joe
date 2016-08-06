@@ -11,12 +11,21 @@ import com.badlogic.gdx.utils.Array;
  */
 public class PathHelper {
 
-    // Each vector represents a "leg" (i.e. (dx, dy)) of the path.
     private final Array<Vector2> legs;
+    private final Vector2 velocity;
     private float totalDistance;
+    private boolean isLooping;
 
     public PathHelper() {
+        isLooping = false;
+        velocity = new Vector2();
         legs = new Array<Vector2>();
+    }
+
+    public PathHelper(boolean isLooping) {
+        this();
+
+        this.isLooping = isLooping;
     }
 
     public PathHelper(Array<Vector2> legs) {
@@ -25,16 +34,28 @@ public class PathHelper {
         setPath(legs);
     }
 
-    public Vector2 getVelocity(float duration, float age) {
-        // Keep time in seconds.
-        duration /= 1000;
-        age /= 1000;
+    public PathHelper(Array<Vector2> legs, boolean isLooping) {
+        this();
 
+        this.isLooping = isLooping;
+        setPath(legs);
+    }
+
+    /**
+     * Returns the velocity at a point in time, given path and total trip duration
+     * @param duration total path duration in ms
+     * @param age progress through path in ms
+     * @return velocity in distance/ms
+     */
+    public Vector2 getVelocity(float duration, float age) {
         float speed = totalDistance / duration;
         float distanceCovered = speed * age;
+        if (isLooping) {
+            distanceCovered = distanceCovered % totalDistance;
+        }
 
-        Vector2 velocity = new Vector2();
-        for (Vector2 leg : legs) {
+        for (int i = 0; i < legs.size; i++) {
+            Vector2 leg = legs.get(i);
             distanceCovered -= leg.len();
             if (distanceCovered < 0) {
                 float theta = leg.angleRad();
@@ -46,14 +67,18 @@ public class PathHelper {
         return velocity;
     }
 
+    /**
+     * NOTE: Each vector represents a "leg" (i.e. (dx, dy)) of the path.
+     * @param legs
+     */
     public void setPath(Array<Vector2> legs) {
         this.legs.clear();
         this.legs.add(new Vector2(0, 0));
         this.legs.addAll(legs);
 
         totalDistance = 0;
-        for (int i = 0; i < this.legs.size; i++) {
-            totalDistance += this.legs.get(i).len();
+        for (Vector2 leg : legs) {
+            totalDistance += leg.len();
         }
     }
 

@@ -17,11 +17,14 @@ import com.tendersaucer.joe.util.Vector2Pool;
  */
 public class NextLevelToken extends RenderedEntity {
 
+    public static final String ID = "next_level_token";
+
     private boolean obtained;
 
     public NextLevelToken(EntityDefinition def) {
         super(def);
 
+        id = ID;
         obtained = false;
         body.setAngularVelocity(1.5f);
         sprite.setColor(Color.RED);

@@ -45,8 +45,6 @@ public final class Driver implements Screen {
 
     @Override
     public void show() {
-        Gdx.input.setCatchBackKey(true);
-
         AssetManager.getInstance().load();
         ParticleEffectManager.getInstance().loadDefinitions();
 
@@ -55,6 +53,7 @@ public final class Driver implements Screen {
         eventManager.listen(LevelLoadBeginEvent.class, ParticleEffectManager.getInstance());
         eventManager.listen(GameStateChangeEvent.class, HUD.getInstance());
         eventManager.listen(GameStateChangeEvent.class, StatisticsListener.getInstance());
+        eventManager.listen(GameStateChangeEvent.class, MainCamera.getInstance());
 
         DAO dao = DAO.getInstance();
         long iterationId = dao.getIterationId();
