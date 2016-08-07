@@ -22,6 +22,10 @@ import com.tendersaucer.joe.level.Level;
 import com.tendersaucer.joe.particle.ParticleEffectManager;
 import com.tendersaucer.joe.util.Vector2Pool;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Main update and render logic
  * <p/>
@@ -41,6 +45,8 @@ public final class Driver implements Screen {
         debugRenderer = new Box2DDebugRenderer();
 
         spriteBatch = new SpriteBatch();
+
+        Gdx.app.setLogLevel(Globals.LOG_LEVEL);
     }
 
     @Override
@@ -56,13 +62,14 @@ public final class Driver implements Screen {
         eventManager.listen(GameStateChangeEvent.class, MainCamera.getInstance());
 
         DAO dao = DAO.getInstance();
-        long iterationId = dao.getIterationId();
-        int levelId = (int)dao.getLevelId();
+        long iterationId = dao.getLong(DAO.ITERATION_ID_KEY, 0);
+        int levelId = (int)dao.getLong(DAO.LEVEL_ID_KEY, 0);
         Level.getInstance().load(iterationId, levelId);
 
-        if (dao.isNew()) {
+        if (dao.getBoolean(DAO.IS_NEW_KEY, true)) {
             eventManager.notify(new NewUserEvent());
             dao.putBoolean(DAO.IS_NEW_KEY, false);
+            dao.putString(DAO.COLOR_ORDER_KEY, getRandomColorOrder());
         }
     }
 
@@ -141,5 +148,18 @@ public final class Driver implements Screen {
         }
 
         HUD.getInstance().render(spriteBatch);
+    }
+
+    private String getRandomColorOrder() {
+        List<String> codes = new ArrayList<String>();
+        codes.add("r"); codes.add("g"); codes.add("b");
+        Collections.shuffle(codes);
+
+        String order = "";
+        for (int i = 0; i < codes.size(); i++) {
+            order += codes.get(i);
+        }
+
+        return order;
     }
 }

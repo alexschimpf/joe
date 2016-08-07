@@ -40,7 +40,7 @@ public final class StatisticsListener implements IGameStateChangeListener {
             dao.reset(DAO.TOTAL_TIME_KEY);
         }
         if (isLevelEnd(newEvent)) {
-            int levelId = (int)dao.getLevelId();
+            int levelId = (int)dao.getLong(DAO.LEVEL_ID_KEY, 0);
             if (levelId >= Globals.NUM_LEVELS - 1) {
                 dao.reset(DAO.LEVEL_ID_KEY);
                 dao.increment(DAO.ITERATION_ID_KEY);

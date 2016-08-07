@@ -38,26 +38,6 @@ public final class DAO {
         return instance;
     }
 
-    public boolean isNew() {
-        return getBoolean(IS_NEW_KEY, true);
-    }
-
-    public long getIterationId() {
-        return getLong(ITERATION_ID_KEY, 0);
-    }
-
-    public long getLevelId() {
-        return getLong(LEVEL_ID_KEY,0);
-    }
-
-    public long getRunId() {
-        return getLong(RUN_ID_KEY, 0);
-    }
-
-    public long getTotalTime() {
-        return getLong(TOTAL_TIME_KEY, 0);
-    }
-
     public long getLong(String key, long defaultValue) {
         if (!preferencesCache.containsKey(key)) {
             return defaultValue;

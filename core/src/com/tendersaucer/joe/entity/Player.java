@@ -11,15 +11,10 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.tendersaucer.joe.DAO;
 import com.tendersaucer.joe.MainCamera;
 import com.tendersaucer.joe.animation.AnimatedSprite;
 import com.tendersaucer.joe.animation.AnimatedSpriteSystem;
 import com.tendersaucer.joe.level.Level;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * User-controlled player
@@ -50,11 +45,6 @@ public final class Player extends RenderedEntity {
 
         numFootContacts = 0;
         direction = Direction.RIGHT;
-
-        DAO dao = DAO.getInstance();
-        if (dao.isNew()) {
-            dao.putString(DAO.COLOR_ORDER_KEY, getRandomColorOrder());
-        }
 
 //        String colorCodes = dao.getString(DAO.COLOR_ORDER_KEY, "");
 //        char colorCode = colorCodes.charAt((int)(Level.getInstance().getIterationId() % 3));
@@ -286,18 +276,5 @@ public final class Player extends RenderedEntity {
 //        ParticleEffectManager.getInstance().beginParticleEffect(effect, position, sizeRange, 1);
 //        vector2Pool.free(position);
 //        vector2Pool.free(sizeRange);
-    }
-
-    private String getRandomColorOrder() {
-        List<String> codes = new ArrayList<String>();
-        codes.add("r"); codes.add("g"); codes.add("b");
-        Collections.shuffle(codes);
-
-        String order = "";
-        for (int i = 0; i < codes.size(); i++) {
-            order += codes.get(i);
-        }
-
-        return order;
     }
 }

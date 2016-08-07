@@ -102,8 +102,6 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
                 Globals.CUSTOM_CAMERA_MODE = !Globals.CUSTOM_CAMERA_MODE;
                 MainCamera.getInstance().setPlayerFocus(true);
                 break;
-            case Keys.SPACE:
-                break;
             default:
                 if (Globals.getGameState() != GameState.RUNNING) {
                     Globals.setGameState(GameState.RUNNING);

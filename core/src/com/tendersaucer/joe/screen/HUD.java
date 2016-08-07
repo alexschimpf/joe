@@ -84,7 +84,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener {
         Level level = Level.getInstance();
         long iterationId = level.getIterationId();
         int levelId = level.getId();
-        long runId = DAO.getInstance().getRunId();
+        long runId = DAO.getInstance().getLong(DAO.RUN_ID_KEY, 0);
         progressLabel.setText(iterationId + "." + levelId + "." + runId);
 
         float labelHeight = progressLabel.getPrefHeight();
@@ -142,7 +142,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener {
         nextButton.setDisabled(false);
         nextButton.setVisible(true);
 
-        long duration = DAO.getInstance().getTotalTime();
+        long duration = DAO.getInstance().getLong(DAO.TOTAL_TIME_KEY, 0);
         levelSummaryLabel.setText(String.format("TIME TAKEN: %s SECONDS",
                 TimeUnit.MILLISECONDS.toSeconds(duration)));
         levelSummaryLabel.setVisible(true);

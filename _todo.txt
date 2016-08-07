@@ -1,4 +1,5 @@
 - FUCK IS UP WITH THE LOGGING?
+- Problem with foot contacts at start of run
 - New Name (and add to main menu)
 - Iteration-Complete dialog
 - For each level, store (in Tiled) the path the camera should take during the level complete dialog
