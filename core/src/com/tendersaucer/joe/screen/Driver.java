@@ -69,7 +69,6 @@ public final class Driver implements Screen {
 
         if (dao.getBoolean(DAO.IS_NEW_KEY, true)) {
             eventManager.notify(new NewUserEvent());
-            dao.putBoolean(DAO.IS_NEW_KEY, false);
             dao.putString(DAO.COLOR_ORDER_KEY, getRandomColorOrder());
             //Gdx.input.setInputProcessor(null);
         }

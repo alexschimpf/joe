@@ -42,7 +42,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
     private static final HUD instance = new HUD();
     private static final float BUTTON_ALPHA = 0.5f;
-    private static final String[] TUTORIAL_MESSAGES = new String[] {
+    private static final String[] MOBILE_TUTORIAL_MESSAGES = new String[] {
         "Hi, I'm Joe.",
         "Now... mindlessly follow my commands.",
         "To make me move left/right, slide your finger here...",
@@ -50,6 +50,15 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         "If you hold longer, I'll jump higher...",
         "IMPORTANT: There will be NO instructions! Figure it out yourself!!!",
         "Anyway, just get me to the end of each level."
+    };
+    private static final String[] DESKTOP_TUTORIAL_MESSAGES = new String[] {
+            "Hi, I'm Joe.",
+            "Now... mindlessly follow my commands.",
+            "To make me move left/right, use the arrow keys...",
+            "To make me jump, press A...",
+            "If you hold longer, I'll jump higher...",
+            "IMPORTANT: There will be NO instructions! Figure it out yourself!!!",
+            "... Just get me to the end of each level."
     };
 
     private int tutorialPosition;
@@ -120,7 +129,12 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         float labelWidth = tutorialLabel.getWidth();
         int screenWidth = Gdx.graphics.getWidth();
         tutorialLabel.setPosition((screenWidth - labelWidth) / 2, 0.6f * screenHeight);
-        tutorialLabel.setText(TUTORIAL_MESSAGES[tutorialPosition]);
+
+        if (Globals.isMobile()) {
+            tutorialLabel.setText(MOBILE_TUTORIAL_MESSAGES[tutorialPosition]);
+        } else {
+            tutorialLabel.setText(DESKTOP_TUTORIAL_MESSAGES[tutorialPosition]);
+        }
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 
@@ -144,7 +158,12 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
     @Override
     public void onNewUser() {
-        tutorialLabel.setText(TUTORIAL_MESSAGES[0]);
+        if (Globals.isMobile()) {
+            tutorialLabel.setText(MOBILE_TUTORIAL_MESSAGES[0]);
+        } else {
+            tutorialLabel.setText(DESKTOP_TUTORIAL_MESSAGES[0]);
+        }
+
         tutorialLabel.setVisible(true);
         tutorialNextButton.setVisible(true);
         stage.removeListener(inputListener);
@@ -334,12 +353,13 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         tutorialLabel.setVisible(false);
         stage.addActor(tutorialLabel);
 
+        final float padding = screenHeight * 0.01f;
         float size = screenWidth * 0.08f;
         TextureRegion tr = AssetManager.getInstance().getTextureRegion("arrow");
         tr.flip(false, true);
         tutorialNextButton = new Image(tr);
         tutorialNextButton.setSize(size, size);
-        tutorialNextButton.setPosition(jumpButton.getRight(), screenHeight - tutorialNextButton.getHeight());
+        tutorialNextButton.setPosition(screenWidth - tutorialNextButton.getWidth() - padding, screenHeight - tutorialNextButton.getHeight());
         tutorialNextButton.setRotation(90);
         tutorialNextButton.setVisible(false);
         tutorialNextButton.setColor(Color.BLACK);
@@ -351,10 +371,13 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                }
 
                tutorialNextButton.setColor(Color.LIGHT_GRAY);
-               if (tutorialPosition == TUTORIAL_MESSAGES.length - 1) {
+               int lastPos = Globals.isMobile() ? MOBILE_TUTORIAL_MESSAGES.length - 1 :
+                       DESKTOP_TUTORIAL_MESSAGES.length - 1;
+               if (tutorialPosition == lastPos) {
                    tutorialLabel.setVisible(false);
                    tutorialNextButton.setVisible(false);
                    stage.addListener(inputListener);
+                   DAO.getInstance().putBoolean(DAO.IS_NEW_KEY, false);
                } else {
                    tutorialPosition++;
                    if (tutorialPosition == 5) {
@@ -364,7 +387,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                    }
 
                    if (Globals.isMobile()) {
-                       float padding = moveButton.getHeight() * 0.05f;
                        if (tutorialPosition == 2) {
                            float moveButtonCenterX = moveButton.getX() + (moveButton.getWidth() / 2);
                            tutorialArrow.setPosition((moveButtonCenterX - (tutorialArrow.getWidth()) / 2), moveButton.getTop() + padding);
