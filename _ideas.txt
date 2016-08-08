@@ -18,4 +18,19 @@
     - More for effect
 - Platforms that disappear and reappear
     - Few little "tricks"
-- Cool camera effect when level is completed
+
+
+
+Tutorial
+-----------------------------------------------
+Each message must be acknowledged via touch before moving on to the next.
+Each "speech box" should look like a straight black line leading to a transparent box
+Maybe 1 second delay between next steps.
+
+1. Hi, I'm Joe.
+2. Now mindlessly follow my commands...
+3. To make me move left/right, slide your finger here... [arrow points (and moves back and forth) on move button]
+4. To make me jump, touch here... [arrow points (and moves back and forth) on jump button]
+5. If you hold longer, I'll jump higher... [arrow is still pointing to jump button]
+6. IMPORTANT: Each level is different. There will be no instructions. That's how it was designed.
+7. Now... just get me to the end of each level.

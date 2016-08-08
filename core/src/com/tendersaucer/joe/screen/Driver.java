@@ -60,6 +60,7 @@ public final class Driver implements Screen {
         eventManager.listen(GameStateChangeEvent.class, HUD.getInstance());
         eventManager.listen(GameStateChangeEvent.class, StatisticsListener.getInstance());
         eventManager.listen(GameStateChangeEvent.class, MainCamera.getInstance());
+        eventManager.listen(NewUserEvent.class, HUD.getInstance());
 
         DAO dao = DAO.getInstance();
         long iterationId = dao.getLong(DAO.ITERATION_ID_KEY, 0);
@@ -70,6 +71,7 @@ public final class Driver implements Screen {
             eventManager.notify(new NewUserEvent());
             dao.putBoolean(DAO.IS_NEW_KEY, false);
             dao.putString(DAO.COLOR_ORDER_KEY, getRandomColorOrder());
+            //Gdx.input.setInputProcessor(null);
         }
     }
 

@@ -26,6 +26,10 @@ public final class Globals {
         gameState = GameState.RUNNING;
     }
 
+    public static boolean isMobile() {
+        return isAndroid() || isIOS();
+    }
+
     public static boolean isAndroid() {
         return Gdx.app.getType().equals(ApplicationType.Android);
     }

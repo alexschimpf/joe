@@ -2,7 +2,9 @@ package com.tendersaucer.joe.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -15,25 +17,44 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.tendersaucer.joe.*;
+import com.tendersaucer.joe.AssetManager;
+import com.tendersaucer.joe.DAO;
+import com.tendersaucer.joe.GameState;
+import com.tendersaucer.joe.Globals;
+import com.tendersaucer.joe.IUpdate;
+import com.tendersaucer.joe.InputListener;
+import com.tendersaucer.joe.MainCamera;
 import com.tendersaucer.joe.entity.Player;
 import com.tendersaucer.joe.event.IGameStateChangeListener;
+import com.tendersaucer.joe.event.INewUserEventListener;
 import com.tendersaucer.joe.level.Level;
-import com.tendersaucer.joe.DAO;
 
 import java.util.concurrent.TimeUnit;
 
 /**
  * Game heads up display
- * <p/>
+ * TODO: MAKE THIS NOT SO HACKY!!!
  * Created by Alex on 4/8/2016.
  */
-public final class HUD implements IUpdate, IRender, IGameStateChangeListener {
+public final class HUD implements IUpdate, IRender, IGameStateChangeListener, INewUserEventListener {
 
     private static final HUD instance = new HUD();
     private static final float BUTTON_ALPHA = 0.5f;
+    private static final String[] TUTORIAL_MESSAGES = new String[] {
+        "Hi, I'm Joe.",
+        "Now... mindlessly follow my commands.",
+        "To make me move left/right, slide your finger here...",
+        "To make me jump, touch here...",
+        "If you hold longer, I'll jump higher...",
+        "IMPORTANT: There will be NO instructions! Figure it out yourself!!!",
+        "Anyway, just get me to the end of each level."
+    };
 
+    private int tutorialPosition;
+    private Label tutorialLabel;
+    private Image tutorialNextButton;
     private Stage stage;
     private InputListener inputListener;
     private Image levelCompleteBackground;
@@ -43,6 +64,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener {
     private Button moveButton;
     private Button jumpButton;
     private Integer movePointer;
+    private Image tutorialArrow;
     private FreeTypeFontGenerator fontGenerator;
     private Skin skin;
 
@@ -53,15 +75,17 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener {
         Gdx.input.setInputProcessor(stage);
 
         fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
-
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         createProgressLabel();
         createLevelCompleteUI();
         hideLevelComplete();
 
-        if (Globals.isAndroid() || Globals.isIOS()) {
+        if (Globals.isMobile()) {
             createMobileButtons();
         }
+
+        tutorialPosition = 0;
+        createTutorialUI();
     }
 
     public static HUD getInstance() {
@@ -93,6 +117,11 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener {
         progressLabel.setPosition(margin, screenHeight - (labelHeight / 2) - margin);
         levelSummaryLabel.setPosition(margin, margin + (labelHeight / 2));
 
+        float labelWidth = tutorialLabel.getWidth();
+        int screenWidth = Gdx.graphics.getWidth();
+        tutorialLabel.setPosition((screenWidth - labelWidth) / 2, 0.6f * screenHeight);
+        tutorialLabel.setText(TUTORIAL_MESSAGES[tutorialPosition]);
+
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 
         return false;
@@ -113,12 +142,16 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener {
         }
     }
 
-    public void resize(int width, int height) {
-        stage.getViewport().update(width, height);
+    @Override
+    public void onNewUser() {
+        tutorialLabel.setText(TUTORIAL_MESSAGES[0]);
+        tutorialLabel.setVisible(true);
+        tutorialNextButton.setVisible(true);
+        stage.removeListener(inputListener);
     }
 
-    public com.tendersaucer.joe.InputListener getInputListener() {
-        return inputListener;
+    public void resize(int width, int height) {
+        stage.getViewport().update(width, height);
     }
 
     private void hideLevelComplete() {
@@ -168,9 +201,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener {
         stage.addActor(progressLabel);
     }
 
-    /**
-     * TODO: Do this in the skin file...
-     */
     private void createLevelCompleteUI() {
         if (Level.getInstance().getPlayer() != null){
             Level.getInstance().getPlayer().setDone();
@@ -238,7 +268,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener {
         moveButton.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (Globals.getGameState() == GameState.WAIT_FOR_INPUT) {
+                boolean isTutorial = tutorialLabel.isVisible();
+                if (!isTutorial && Globals.getGameState() == GameState.WAIT_FOR_INPUT) {
                     Globals.setGameState(GameState.RUNNING);
                 }
 
@@ -264,7 +295,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener {
         jumpButton.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (Globals.getGameState() == GameState.WAIT_FOR_INPUT) {
+                boolean isTutorial = tutorialLabel.isVisible();
+                if (!isTutorial && Globals.getGameState() == GameState.WAIT_FOR_INPUT) {
                     Globals.setGameState(GameState.RUNNING);
                 }
 
@@ -286,6 +318,86 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener {
         stage.addActor(jumpButton);
     }
 
+    private void createTutorialUI() {
+        int screenWidth = Gdx.graphics.getWidth();
+        int screenHeight = Gdx.graphics.getHeight();
+
+        tutorialLabel = new Label("", skin);
+        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+        parameter.size = screenWidth / 50;
+        BitmapFont font = fontGenerator.generateFont(parameter);
+        LabelStyle labelStyle = new LabelStyle(font, Color.BLACK);
+        tutorialLabel.setStyle(labelStyle);
+        tutorialLabel.setAlignment(Align.center);
+        tutorialLabel.setWrap(true);
+        tutorialLabel.setSize(screenWidth / 2, screenHeight / 5);
+        tutorialLabel.setVisible(false);
+        stage.addActor(tutorialLabel);
+
+        float size = screenWidth * 0.08f;
+        TextureRegion tr = AssetManager.getInstance().getTextureRegion("arrow");
+        tr.flip(false, true);
+        tutorialNextButton = new Image(tr);
+        tutorialNextButton.setSize(size, size);
+        tutorialNextButton.setPosition(jumpButton.getRight(), screenHeight - tutorialNextButton.getHeight());
+        tutorialNextButton.setRotation(90);
+        tutorialNextButton.setVisible(false);
+        tutorialNextButton.setColor(Color.BLACK);
+        tutorialNextButton.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
+           @Override
+           public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+               if (!tutorialLabel.isVisible()) {
+                   return false;
+               }
+
+               tutorialNextButton.setColor(Color.LIGHT_GRAY);
+               if (tutorialPosition == TUTORIAL_MESSAGES.length - 1) {
+                   tutorialLabel.setVisible(false);
+                   tutorialNextButton.setVisible(false);
+                   stage.addListener(inputListener);
+               } else {
+                   tutorialPosition++;
+                   if (tutorialPosition == 5) {
+                       tutorialLabel.getStyle().fontColor = Color.RED;
+                   } else {
+                       tutorialLabel.getStyle().fontColor = Color.BLACK;
+                   }
+
+                   if (Globals.isMobile()) {
+                       float padding = moveButton.getHeight() * 0.05f;
+                       if (tutorialPosition == 2) {
+                           float moveButtonCenterX = moveButton.getX() + (moveButton.getWidth() / 2);
+                           tutorialArrow.setPosition((moveButtonCenterX - (tutorialArrow.getWidth()) / 2), moveButton.getTop() + padding);
+                           tutorialArrow.setVisible(true);
+                       } else if (tutorialPosition == 3) {
+                           float jumpButtonCenterX = jumpButton.getX() + (jumpButton.getWidth() / 2);
+                           tutorialArrow.setPosition((jumpButtonCenterX - (tutorialArrow.getWidth()) / 2), jumpButton.getTop() + padding);
+                       } else if (tutorialPosition == 5) {
+                           tutorialArrow.setVisible(false);
+                       }
+                   }
+               }
+
+               return true;
+           }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                tutorialNextButton.setColor(Color.BLACK);
+            }
+        });
+
+        stage.addActor(tutorialNextButton);
+
+        if (Globals.isMobile()) {
+            tutorialArrow = new Image(tr);
+            tutorialArrow.setSize(size, size);
+            tutorialArrow.setVisible(false);
+            tutorialArrow.setColor(Color.BLACK);
+            stage.addActor(tutorialArrow);
+        }
+    }
+
     private void checkMobileButtons() {
         if(movePointer == null || Globals.getGameState() != GameState.RUNNING) {
             return;
@@ -294,18 +406,19 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener {
         float moveCenterX = moveButton.getX() + (moveButton.getWidth() / 2);
         float x = Gdx.input.getX(movePointer);
         Player player = Level.getInstance().getPlayer();
-        if(moveButton.isPressed()) {
+        boolean isTutorial = tutorialLabel.isVisible();
+        if(moveButton.isPressed() && !isTutorial) {
             MainCamera camera = MainCamera.getInstance();
             if(x < moveCenterX) {
                 if (camera.isFlipped()) {
                     player.moveRight();
-                } else  {
+                } else {
                     player.moveLeft();
                 }
             } else {
                 if (camera.isFlipped()) {
                     player.moveLeft();
-                } else  {
+                } else {
                     player.moveRight();
                 }
             }
