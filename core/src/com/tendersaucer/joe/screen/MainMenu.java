@@ -6,13 +6,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tendersaucer.joe.AssetManager;
 import com.tendersaucer.joe.DAO;
@@ -23,12 +24,14 @@ import com.tendersaucer.joe.InputListener;
  */
 public class MainMenu implements Screen {
 
+    private static final Color offColor = new Color(0, 0.7f, 0, 1);
+    private static final Color onColor = new Color(0.7f, 0, 0, 1);
+
     private Game game;
     private FreeTypeFontGenerator fontGenerator;
     private Skin skin;
     private Stage stage;
-    private Image loadingBackground;
-    private Label loadingText;
+    private Label loadingLabel;
 
     public MainMenu(Game game) {
         this.game = game;
@@ -82,26 +85,49 @@ public class MainMenu implements Screen {
     }
 
     private void createUI() {
-        float screenWidth = Gdx.graphics.getWidth();
-        float screenHeight = Gdx.graphics.getHeight();
-        float playButtonHeight = screenWidth / 10f;
-        FreeTypeFontGenerator.FreeTypeFontParameter playParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        playParameter.size = (int)playButtonHeight * 2;
-        playParameter.spaceX = (int)screenWidth / 100;
-        TextButton.TextButtonStyle playButtonStyle = new TextButton.TextButtonStyle();
-        playButtonStyle.font = fontGenerator.generateFont(playParameter);
-        playButtonStyle.fontColor = Color.BLACK;
-        playButtonStyle.downFontColor = Color.WHITE;
+        float titleY = createTitleLabel();
+        createPlayButton(titleY);
+        createAudioButton(titleY);
+        createLoadingLabel();
+    }
 
+    private float createTitleLabel() {
+        int height = (int)(Gdx.graphics.getWidth() * 0.15f);
+        FreeTypeFontParameter fontParam = new FreeTypeFontParameter();
+        fontParam.size = height;
+
+        Label.LabelStyle style = new Label.LabelStyle();
+        style.font = fontGenerator.generateFont(fontParam);
+        style.fontColor = Color.BLACK;
+
+        Label title = new Label("joe", skin);
+        title.setStyle(style);
+        title.setSize(Gdx.graphics.getWidth(), height);
+        title.setPosition(0, (Gdx.graphics.getHeight() - height) / 2);
+        stage.addActor(title);
+
+        return title.getY();
+    }
+
+    private void createPlayButton(float titleY) {
+        int height = (int)(Gdx.graphics.getWidth() * 0.05f);
+        FreeTypeFontParameter fontParam = new FreeTypeFontParameter();
+        fontParam.size = height;
+
+        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
+        style.font = fontGenerator.generateFont(fontParam);
+        style.fontColor = Color.BLACK;
+        style.downFontColor = Color.WHITE;
+
+        float padding = Gdx.graphics.getHeight() * 0.01f;
         final TextButton playButton = new TextButton("PLAY", skin);
-        playButton.setSize(screenWidth, playButtonHeight);
-        playButton.setPosition(0, (screenHeight - playButton.getPrefHeight()) * 0.5f);
-        playButton.setStyle(playButtonStyle);
+        playButton.setSize(Gdx.graphics.getWidth(), height);
+        playButton.setPosition(0, titleY - height - padding);
+        playButton.setStyle(style);
         playButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                loadingBackground.setVisible(true);
-                loadingText.setVisible(true);
+                loadingLabel.setVisible(true);
                 return true;
             }
 
@@ -110,27 +136,24 @@ public class MainMenu implements Screen {
                 game.setScreen(new Driver(game));
             }
         });
+
         stage.addActor(playButton);
+    }
 
-        FreeTypeFontGenerator.FreeTypeFontParameter fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        fontParameter.size = Gdx.graphics.getWidth() / 30;
-        Label.LabelStyle style = new Label.LabelStyle();
-        style.font = fontGenerator.generateFont(fontParameter);
-        style.fontColor = Color.BLACK;
+    private void createAudioButton(float titleY) {
+        int height = (int)(Gdx.graphics.getWidth() * 0.05f);
+        FreeTypeFontParameter fontParam = new FreeTypeFontParameter();
+        fontParam.size = height;
 
-        Label title = new Label("joe", skin);
-        title.setStyle(style);
-        title.setPosition((screenWidth - title.getPrefWidth()) / 2, playButton.getY() - playButtonHeight);
-        stage.addActor(title);
+        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
+        style.font = fontGenerator.generateFont(fontParam);
+        style.downFontColor = Color.WHITE;
+        style.fontColor = DAO.getInstance().getBoolean(DAO.IS_AUDIO_ENABLED, true) ? onColor : offColor;
 
-        float margin = screenHeight / 100;
+        float padding = Gdx.graphics.getHeight() * 0.01f;
         final TextButton audioButton = new TextButton("audio", skin);
-        TextButton.TextButtonStyle audioButtonStyle = new TextButton.TextButtonStyle(playButtonStyle);
-        audioButtonStyle.font = fontGenerator.generateFont(fontParameter);
-        audioButtonStyle.fontColor = DAO.getInstance().getBoolean(DAO.IS_AUDIO_ENABLED, true) ? Color.GREEN : Color.RED;
-        audioButton.setStyle(audioButtonStyle);
-        audioButton.setPosition(screenWidth - audioButton.getPrefWidth() - margin,
-                screenHeight - audioButton.getPrefHeight() - margin);
+        audioButton.setStyle(style);
+        audioButton.setPosition(Gdx.graphics.getWidth() - audioButton.getPrefWidth() - padding, titleY + padding);
         audioButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -140,25 +163,25 @@ public class MainMenu implements Screen {
                 audioButton.getStyle().fontColor = isEnabled ? Color.GREEN : Color.RED;
                 return true;
             }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-            }
         });
+
         stage.addActor(audioButton);
+    }
 
-        loadingBackground = new Image(AssetManager.getInstance().getTextureRegion("default"));
-        loadingBackground.setPosition(0, 0);
-        loadingBackground.setSize(screenWidth, screenHeight);
-        loadingBackground.setColor(1, 1, 1, 1);
-        loadingBackground.setVisible(false);
-        stage.addActor(loadingBackground);
+    private void createLoadingLabel() {
+        int height = (int)(Gdx.graphics.getWidth() * 0.15f);
+        FreeTypeFontParameter fontParam = new FreeTypeFontParameter();
+        fontParam.size = height;
 
-        loadingText = new Label("loading", skin);
-        loadingText.setStyle(style);
-        loadingText.setVisible(false);
-        loadingText.setPosition((screenWidth - loadingText.getPrefWidth()) / 2,
-                (screenHeight - title.getPrefHeight()) / 2);
-        stage.addActor(loadingText);
+        Label.LabelStyle style = new Label.LabelStyle();
+        style.font = fontGenerator.generateFont(fontParam);
+        style.fontColor = Color.BLACK;
+        loadingLabel = new Label("LOADING", skin);
+        loadingLabel.setStyle(style);
+        loadingLabel.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        loadingLabel.setAlignment(Align.center);
+        loadingLabel.setPosition(0, 0);
+        loadingLabel.setVisible(false);
+        stage.addActor(loadingLabel);
     }
 }
