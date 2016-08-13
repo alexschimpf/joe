@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tendersaucer.joe.AssetManager;
 import com.tendersaucer.joe.DAO;
@@ -35,7 +36,9 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Game heads up display
- * TODO: MAKE THIS NOT SO HACKY!!!
+ *
+ * NOTE: This code is... Horrible. Unforgivable. But it works.
+ *
  * Created by Alex on 4/8/2016.
  */
 public final class HUD implements IUpdate, IRender, IGameStateChangeListener, INewUserEventListener {
@@ -52,18 +55,19 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         "Anyway, just get me to the end of each level."
     };
     private static final String[] DESKTOP_TUTORIAL_MESSAGES = new String[] {
-            "Hi, I'm Joe.",
-            "Now... mindlessly follow my commands.",
-            "To make me move left/right, use the arrow keys...",
-            "To make me jump, press A...",
-            "If you hold longer, I'll jump higher...",
-            "IMPORTANT: There will be NO instructions! Figure it out yourself!!!",
-            "... Just get me to the end of each level."
+        "Hi, I'm Joe.",
+        "Now... mindlessly follow my commands.",
+        "To make me move left/right, use the arrow keys...",
+        "To make me jump, press A...",
+        "If you hold longer, I'll jump higher...",
+        "IMPORTANT: There will be NO instructions! Figure it out yourself!!!",
+        "... Just get me to the end of each level."
     };
 
     private int tutorialPosition;
     private Label tutorialLabel;
     private Image tutorialNextButton;
+    private Timer tutorialFlashTimer;
     private Stage stage;
     private InputListener inputListener;
     private Image levelCompleteBackground;
@@ -73,7 +77,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     private Button moveButton;
     private Button jumpButton;
     private Integer movePointer;
-    private Image tutorialArrow;
     private FreeTypeFontGenerator fontGenerator;
     private Skin skin;
 
@@ -93,8 +96,10 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             createMobileButtons();
         }
 
-        tutorialPosition = 0;
-        createTutorialUI();
+        if (DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true)) {
+            tutorialPosition = 0;
+            createTutorialUI();
+        }
     }
 
     public static HUD getInstance() {
@@ -129,6 +134,10 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         float labelWidth = tutorialLabel.getWidth();
         int screenWidth = Gdx.graphics.getWidth();
         tutorialLabel.setPosition((screenWidth - labelWidth) / 2, 0.6f * screenHeight);
+
+        if (tutorialPosition == 0 || tutorialPosition == 5) {
+            tutorialNextButton.setY(tutorialLabel.getTop() - (tutorialNextButton.getHeight() / 2));
+        }
 
         if (Globals.isMobile()) {
             tutorialLabel.setText(MOBILE_TUTORIAL_MESSAGES[tutorialPosition]);
@@ -338,8 +347,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     }
 
     private void createTutorialUI() {
-        int screenWidth = Gdx.graphics.getWidth();
-        int screenHeight = Gdx.graphics.getHeight();
+        final int screenWidth = Gdx.graphics.getWidth();
+        final int screenHeight = Gdx.graphics.getHeight();
 
         tutorialLabel = new Label("", skin);
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
@@ -354,12 +363,13 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         stage.addActor(tutorialLabel);
 
         final float padding = screenHeight * 0.01f;
-        float size = screenWidth * 0.08f;
+        float size = screenWidth * 0.1f;
         TextureRegion tr = AssetManager.getInstance().getTextureRegion("arrow");
         tr.flip(false, true);
         tutorialNextButton = new Image(tr);
         tutorialNextButton.setSize(size, size);
-        tutorialNextButton.setPosition(screenWidth - tutorialNextButton.getWidth() - padding, screenHeight - tutorialNextButton.getHeight());
+        tutorialNextButton.setOrigin(Align.center);
+        tutorialNextButton.setX((screenWidth - size) / 2);
         tutorialNextButton.setRotation(90);
         tutorialNextButton.setVisible(false);
         tutorialNextButton.setColor(Color.BLACK);
@@ -370,7 +380,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                    return false;
                }
 
-               tutorialNextButton.setColor(Color.LIGHT_GRAY);
                int lastPos = Globals.isMobile() ? MOBILE_TUTORIAL_MESSAGES.length - 1 :
                        DESKTOP_TUTORIAL_MESSAGES.length - 1;
                if (tutorialPosition == lastPos) {
@@ -378,6 +387,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                    tutorialNextButton.setVisible(false);
                    stage.addListener(inputListener);
                    DAO.getInstance().putBoolean(DAO.IS_NEW_KEY, false);
+                   tutorialFlashTimer.clear();
                } else {
                    tutorialPosition++;
                    if (tutorialPosition == 5) {
@@ -387,37 +397,39 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                    }
 
                    if (Globals.isMobile()) {
+                       float size = tutorialNextButton.getWidth();
                        if (tutorialPosition == 2) {
                            float moveButtonCenterX = moveButton.getX() + (moveButton.getWidth() / 2);
-                           tutorialArrow.setPosition((moveButtonCenterX - (tutorialArrow.getWidth()) / 2), moveButton.getTop() + padding);
-                           tutorialArrow.setVisible(true);
+                           tutorialNextButton.setRotation(0);
+                           tutorialNextButton.setPosition(moveButtonCenterX - (size / 2), moveButton.getTop() + padding);
+                           tutorialNextButton.setVisible(true);
                        } else if (tutorialPosition == 3) {
                            float jumpButtonCenterX = jumpButton.getX() + (jumpButton.getWidth() / 2);
-                           tutorialArrow.setPosition((jumpButtonCenterX - (tutorialArrow.getWidth()) / 2), jumpButton.getTop() + padding);
+                           tutorialNextButton.setPosition(jumpButtonCenterX - (size / 2), jumpButton.getTop() + padding);
                        } else if (tutorialPosition == 5) {
-                           tutorialArrow.setVisible(false);
+                           tutorialNextButton.setRotation(90);
+                           tutorialNextButton.setX((screenWidth - size) / 2);
                        }
                    }
                }
 
                return true;
            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                tutorialNextButton.setColor(Color.BLACK);
-            }
         });
 
-        stage.addActor(tutorialNextButton);
+        tutorialFlashTimer = new Timer();
+        tutorialFlashTimer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                if (tutorialNextButton.getColor().equals(Color.BLACK)) {
+                    tutorialNextButton.setColor(Globals.OFF_COLOR);
+                } else {
+                    tutorialNextButton.setColor(Color.BLACK);
+                }
+            }
+        }, 0, 0.25f);
 
-        if (Globals.isMobile()) {
-            tutorialArrow = new Image(tr);
-            tutorialArrow.setSize(size, size);
-            tutorialArrow.setVisible(false);
-            tutorialArrow.setColor(Color.BLACK);
-            stage.addActor(tutorialArrow);
-        }
+        stage.addActor(tutorialNextButton);
     }
 
     private void checkMobileButtons() {

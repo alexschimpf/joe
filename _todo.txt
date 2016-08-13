@@ -1,13 +1,8 @@
 - Change up tutorial arrows stuff
-- Look at making audio button color darker (green on white ain't so good)
 - During tutorial, progress label text is replaced with flashing red 'TUTORIAL'
-- Problem with foot contacts at start of run
-- Change up main menu
-    - JOE really big
-    - Play button below that
-    - Audio button at top-right, above JOE
 - Use gray instead of red in texture atlas
+-------------------------------------------------------------------------------------------------
+- Problem with foot contacts at start of run
 - Iteration-Complete dialog
 - Level 2 (disappearing/moving platforms)
 - Back button goes to Main Menu (with dialog making sure)
-- Look into texture bleeding

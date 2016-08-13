@@ -20,15 +20,13 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tendersaucer.joe.AssetManager;
 import com.tendersaucer.joe.DAO;
+import com.tendersaucer.joe.Globals;
 import com.tendersaucer.joe.InputListener;
 
 /**
  * Created by Alex on 8/3/2016.
  */
 public class MainMenu implements Screen {
-
-    private static final Color onColor = new Color(0, 0.7f, 0, 1);
-    private static final Color offColor = new Color(0.7f, 0, 0, 1);
 
     private Game game;
     private FreeTypeFontGenerator fontGenerator;
@@ -158,12 +156,12 @@ public class MainMenu implements Screen {
 
         Label.LabelStyle style = new Label.LabelStyle();
         style.font = fontGenerator.generateFont(fontParam);
-        style.fontColor = DAO.getInstance().getBoolean(DAO.IS_AUDIO_ENABLED, true) ? onColor : offColor;
+        style.fontColor = DAO.getInstance().getBoolean(DAO.IS_AUDIO_ENABLED, true) ? Globals.ON_COLOR : Globals.OFF_COLOR;
 
-        final Label audioButton = new Label("AUDIO", skin);
+        final Label audioButton = new Label("AUDIO?", skin);
         audioButton.setStyle(style);
-        audioButton.setSize(Gdx.graphics.getWidth(), height);
-        audioButton.setPosition(0, Gdx.graphics.getHeight() - height);
+        audioButton.setSize(Gdx.graphics.getWidth() * 0.95f, height);
+        audioButton.setPosition(0, Gdx.graphics.getHeight() - height - (Gdx.graphics.getWidth() * 0.025f));
         audioButton.setAlignment(Align.right);
         audioButton.addListener(new ClickListener() {
             @Override
@@ -171,7 +169,7 @@ public class MainMenu implements Screen {
                 boolean wasEnabled = DAO.getInstance().getBoolean(DAO.IS_AUDIO_ENABLED, true);
                 DAO.getInstance().putBoolean(DAO.IS_AUDIO_ENABLED, !wasEnabled );
                 boolean isEnabled = DAO.getInstance().getBoolean(DAO.IS_AUDIO_ENABLED, true);
-                audioButton.getStyle().fontColor = isEnabled ? onColor : offColor;
+                audioButton.getStyle().fontColor = isEnabled ? Globals.ON_COLOR : Globals.OFF_COLOR;
                 return true;
             }
         });
