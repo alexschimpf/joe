@@ -207,7 +207,7 @@ public final class Player extends RenderedEntity {
     private void attachFootSensor(Body body, float width) {
         PolygonShape shape = new PolygonShape();
         Vector2 localBottom = body.getLocalPoint(new Vector2(getCenterX(), getBottom()));
-        shape.setAsBox(width * 0.45f, 0.12f, localBottom, 0);
+        shape.setAsBox(width * 0.47f, 0.12f, localBottom, 0);
         Fixture fixture = body.createFixture(shape, 0);
         fixture.setSensor(true);
 
@@ -256,11 +256,11 @@ public final class Player extends RenderedEntity {
 //                new Vector2(1f, 1.3f),
 //                new Vector2(1.3f, 1.29f)
 //        });
-        shape.setAsBox(getWidth() * 0.5f, getHeight() * 0.46875f);
+        shape.setAsBox(getWidth() * 0.49f, getHeight() * 0.459375f);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = 0.7f;
+        fixtureDef.density = 0.71f;
         fixtureDef.friction = 0f;
         fixtureDef.restitution = 0;
 

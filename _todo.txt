@@ -1,8 +1,5 @@
-- Change up tutorial arrows stuff
-- During tutorial, progress label text is replaced with flashing red 'TUTORIAL'
-- Use gray instead of red in texture atlas
--------------------------------------------------------------------------------------------------
 - Problem with foot contacts at start of run
 - Iteration-Complete dialog
 - Level 2 (disappearing/moving platforms)
 - Back button goes to Main Menu (with dialog making sure)
+- Make play button bigger than audio button

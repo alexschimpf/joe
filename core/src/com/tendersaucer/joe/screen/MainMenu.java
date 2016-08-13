@@ -120,7 +120,7 @@ public class MainMenu implements Screen {
     }
 
     private void createPlayButton(float titleY) {
-        int height = (int)(Gdx.graphics.getWidth() * 0.05f);
+        int height = (int)(Gdx.graphics.getWidth() * 0.1f);
         FreeTypeFontParameter fontParam = new FreeTypeFontParameter();
         fontParam.size = height;
 

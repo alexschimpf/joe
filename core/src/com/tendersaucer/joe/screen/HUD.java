@@ -32,8 +32,6 @@ import com.tendersaucer.joe.event.IGameStateChangeListener;
 import com.tendersaucer.joe.event.INewUserEventListener;
 import com.tendersaucer.joe.level.Level;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * Game heads up display
  *
@@ -82,8 +80,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
     private HUD() {
         stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
-        inputListener = new InputListener(true);
-        stage.addListener(inputListener);
+        stage.addListener(inputListener = new InputListener(true));
         Gdx.input.setInputProcessor(stage);
 
         fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
@@ -120,10 +117,15 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         }
 
         Level level = Level.getInstance();
-        long iterationId = level.getIterationId();
-        int levelId = level.getId();
-        long runId = DAO.getInstance().getLong(DAO.RUN_ID_KEY, 0);
-        progressLabel.setText(iterationId + "." + levelId + "." + runId);
+        boolean isTutorial = DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true);
+        if (isTutorial) {
+            progressLabel.setText("TUTORIAL");
+        } else {
+            long iterationId = level.getIterationId();
+            int levelId = level.getId();
+            long runId = DAO.getInstance().getLong(DAO.RUN_ID_KEY, 0);
+            progressLabel.setText(iterationId + "." + levelId + "." + runId);
+        }
 
         float labelHeight = progressLabel.getPrefHeight();
         float screenHeight = Gdx.graphics.getHeight();
@@ -131,18 +133,20 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         progressLabel.setPosition(margin, screenHeight - (labelHeight / 2) - margin);
         levelSummaryLabel.setPosition(margin, margin + (labelHeight / 2));
 
-        float labelWidth = tutorialLabel.getWidth();
-        int screenWidth = Gdx.graphics.getWidth();
-        tutorialLabel.setPosition((screenWidth - labelWidth) / 2, 0.6f * screenHeight);
+        if (tutorialLabel != null) {
+            float labelWidth = tutorialLabel.getWidth();
+            int screenWidth = Gdx.graphics.getWidth();
+            tutorialLabel.setPosition((screenWidth - labelWidth) / 2, 0.6f * screenHeight);
 
-        if (tutorialPosition == 0 || tutorialPosition == 5) {
-            tutorialNextButton.setY(tutorialLabel.getTop() - (tutorialNextButton.getHeight() / 2));
+            if (Globals.isMobile()) {
+                tutorialLabel.setText(MOBILE_TUTORIAL_MESSAGES[tutorialPosition]);
+            } else {
+                tutorialLabel.setText(DESKTOP_TUTORIAL_MESSAGES[tutorialPosition]);
+            }
         }
 
-        if (Globals.isMobile()) {
-            tutorialLabel.setText(MOBILE_TUTORIAL_MESSAGES[tutorialPosition]);
-        } else {
-            tutorialLabel.setText(DESKTOP_TUTORIAL_MESSAGES[tutorialPosition]);
+        if (tutorialNextButton != null && tutorialPosition == 0 || tutorialPosition == 5) {
+            tutorialNextButton.setY(tutorialLabel.getTop() - (tutorialNextButton.getHeight() / 2));
         }
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -204,8 +208,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         nextButton.setVisible(true);
 
         long duration = DAO.getInstance().getLong(DAO.TOTAL_TIME_KEY, 0);
-        levelSummaryLabel.setText(String.format("TIME TAKEN: %s SECONDS",
-                TimeUnit.MILLISECONDS.toSeconds(duration)));
+        levelSummaryLabel.setText(String.format("TIME TAKEN: " + getTimeTakenDisplay(duration)));
         levelSummaryLabel.setVisible(true);
 
         if (!Globals.isDesktop() && moveButton != null && jumpButton != null) {
@@ -296,7 +299,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         moveButton.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                boolean isTutorial = tutorialLabel.isVisible();
+                boolean isTutorial = DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true);
                 if (!isTutorial && Globals.getGameState() == GameState.WAIT_FOR_INPUT) {
                     Globals.setGameState(GameState.RUNNING);
                 }
@@ -323,7 +326,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         jumpButton.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                boolean isTutorial = tutorialLabel.isVisible();
+                boolean isTutorial = DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true);
                 if (!isTutorial && Globals.getGameState() == GameState.WAIT_FOR_INPUT) {
                     Globals.setGameState(GameState.RUNNING);
                 }
@@ -440,7 +443,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         float moveCenterX = moveButton.getX() + (moveButton.getWidth() / 2);
         float x = Gdx.input.getX(movePointer);
         Player player = Level.getInstance().getPlayer();
-        boolean isTutorial = tutorialLabel.isVisible();
+        boolean isTutorial = DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true);
         if(moveButton.isPressed() && !isTutorial) {
             MainCamera camera = MainCamera.getInstance();
             if(x < moveCenterX) {
@@ -459,5 +462,24 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         } else {
             player.stopHorizontalMove();
         }
+    }
+
+    private String getTimeTakenDisplay(long durationMs) {
+        long durationSeconds = durationMs / 1000;
+        String unitDisplay = null;
+        if (durationSeconds < 60) {
+            unitDisplay = durationSeconds + " SECONDS";
+        } else if (durationSeconds >= 60) {
+            long minutes = durationSeconds / 60;
+            long seconds = durationSeconds - (minutes * 60);
+            String minutesDisplay = minutes > 1 ? "MINUTES" : "MINUTE";
+            String secondsDisplay = seconds > 1 ? "SECONDS" : "SECOND";
+            unitDisplay = minutes + " " + minutesDisplay;
+            if (seconds > 0) {
+                unitDisplay += " " + seconds + " " + secondsDisplay;
+            }
+        }
+
+        return unitDisplay;
     }
 }

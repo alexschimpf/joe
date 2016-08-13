@@ -2,6 +2,7 @@ package com.tendersaucer.joe.desktop;
 
 import com.badlogic.gdx.Gdx;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -40,7 +41,7 @@ public class TilesetGenerator {
             BufferedImage image = new BufferedImage(TILESET_SIZE, TILESET_SIZE,
                     BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
-            graphics.setBackground(java.awt.Color.RED);
+            graphics.setBackground(new Color(0.5f, 0.5f, 0.5f, 1));
             graphics.clearRect(0, 0, TILESET_SIZE, TILESET_SIZE);
 
             try {

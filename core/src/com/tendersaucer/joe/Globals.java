@@ -20,7 +20,7 @@ public final class Globals {
     public static boolean DEBUG_PHYSICS = false;
     public static boolean PRINT_DEBUG_INFO = false;
     public static boolean CUSTOM_CAMERA_MODE = false;
-    public static boolean CLEAR_PREFERENCES = true;
+    public static boolean CLEAR_PREFERENCES = false;
     public static final Color ON_COLOR = new Color(0, 0.7f, 0, 1);
     public static final Color OFF_COLOR = new Color(0.7f, 0, 0, 1);
     private static GameState gameState;
