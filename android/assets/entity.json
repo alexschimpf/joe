@@ -49,6 +49,15 @@
                                     { "name": "is_body_active", "default": "false" }
                                 ]
                             }
+                        },
+                        "vanishing_platform": {
+                            "class": "VanishingPlatform",
+                            "properties": {
+                                "optional": [
+                                    { "name": "vanish_duration", "default": "1000" },
+                                    { "name": "reappear_delay", "default": "1000" }
+                                ]
+                            }
                         }
                     }
                 }

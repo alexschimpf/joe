@@ -45,7 +45,7 @@ public class TimerChainLink extends RenderedEntity implements IGameStateChangeLi
     }
 
     @Override
-    public boolean update() {
+    public void tick() {
         if (activatedStartTime != null && TimeUtils.timeSinceMillis(activatedStartTime) > delay) {
             deactivate();
 
@@ -57,8 +57,6 @@ public class TimerChainLink extends RenderedEntity implements IGameStateChangeLi
                 Level.getInstance().replay();
             }
         }
-
-        return super.update();
     }
 
     @Override

@@ -122,10 +122,11 @@ public final class Level implements IUpdate {
     }
 
     public void loadNext() {
-        id++;
         if (id >= Globals.NUM_LEVELS - 1) {
             id = 0;
             iterationId++;
+        } else {
+            id++;
         }
 
         load(iterationId, id);
@@ -154,7 +155,8 @@ public final class Level implements IUpdate {
         return player != null;
     }
 
-    public void addEntity(String id, Entity entity) {
+    public void addEntity(Entity entity) {
+        String id = entity.getId();
         entityMap.put(id, entity);
 
         if (id.equals(EntityConstants.PLAYER)) {
@@ -202,7 +204,7 @@ public final class Level implements IUpdate {
                 ((RenderedEntity)entity).addToCanvas();
             }
 
-            addEntity(entity.getId(), entity);
+            addEntity(entity);
         }
     }
 

@@ -14,7 +14,7 @@ import com.tendersaucer.joe.event.GameStateChangeEvent;
  */
 public final class Globals {
 
-    public static final int NUM_LEVELS = 1;
+    public static final int NUM_LEVELS = 2;
     public static final int LOG_LEVEL = Application.LOG_DEBUG;
     public static boolean FULLSCREEN_MODE = true;
     public static boolean DEBUG_PHYSICS = false;
