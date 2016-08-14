@@ -108,6 +108,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         stage.draw();
     }
 
+
     @Override
     public boolean update() {
         if (Globals.isDesktop()) {

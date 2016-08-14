@@ -59,7 +59,6 @@ public class VanishingPlatform extends RenderedEntity {
     public void setReappearWait(boolean isReappearWait) {
         this.isReappearWait = isReappearWait;
 
-        System.out.println("isReappearWait=" + isReappearWait);
         Fixture fixture = body.getFixtureList().get(0);
         fixture.setSensor(isReappearWait);
         sprite.setAlpha(isReappearWait ? 0 : 1);

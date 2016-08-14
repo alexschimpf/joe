@@ -46,6 +46,8 @@ public class TimerChainLink extends RenderedEntity implements IGameStateChangeLi
 
     @Override
     public void tick() {
+        super.tick();
+
         if (activatedStartTime != null && TimeUtils.timeSinceMillis(activatedStartTime) > delay) {
             deactivate();
 
