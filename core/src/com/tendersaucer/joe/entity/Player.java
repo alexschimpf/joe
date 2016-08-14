@@ -60,6 +60,14 @@ public final class Player extends RenderedEntity {
     }
 
     @Override
+    public void init() {
+        super.init();
+
+        // To ensure foot contact, thus allowing jumping
+        body.applyForceToCenter(0, 0.0001f, true);
+    }
+
+    @Override
     protected void tick() {
         super.tick();
 

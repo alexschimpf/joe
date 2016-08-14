@@ -65,7 +65,8 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
 
     @Override
     public boolean keyDown(InputEvent event, int keyCode) {
-        if (Globals.getGameState() == GameState.RUNNING) {
+        GameState gameState = Globals.getGameState();
+        if (gameState == GameState.RUNNING || gameState == GameState.WAIT_FOR_INPUT) {
             if (keyCode == Keys.A) {
                 Player player = Level.getInstance().getPlayer();
                 if (player != null) {

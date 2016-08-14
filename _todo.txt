@@ -2,3 +2,5 @@
 - Iteration-Complete dialog
 - Level 2 (disappearing/moving platforms)
 - Back button goes to Main Menu (with dialog making sure)
+- Add function: Level.getSafeRandomId()
+    - Just to make sure collisions NEVER happen
