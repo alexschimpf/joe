@@ -4,7 +4,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.tendersaucer.joe.Game;
 import com.tendersaucer.joe.Globals;
-import com.tendersaucer.joe.ParticleEffectViewerApp;
+import com.tendersaucer.joe.ParticleEffectViewer;
 
 public class DesktopLauncher {
 
@@ -35,7 +35,7 @@ public class DesktopLauncher {
                 new LwjglApplication(new Game(), config);
                 break;
             case PARTICLE_EFFECT_VIEWER:
-                new LwjglApplication(new ParticleEffectViewerApp(), config);
+                new LwjglApplication(new ParticleEffectViewer(), config);
                 break;
         }
     }

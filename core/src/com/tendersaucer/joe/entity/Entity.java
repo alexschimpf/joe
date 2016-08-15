@@ -17,7 +17,6 @@ import com.tendersaucer.joe.util.BodyData;
 import com.tendersaucer.joe.util.Vector2Pool;
 
 import java.lang.reflect.Constructor;
-import java.util.UUID;
 
 /**
  * Abstract entity
@@ -270,7 +269,7 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
     private String getOrCreateId() {
         String id = definition.getId();
         if (id == null || id.equals("")) {
-            id = UUID.randomUUID().toString();
+            id = Level.getInstance().getAvailableId();
         }
 
         return id;

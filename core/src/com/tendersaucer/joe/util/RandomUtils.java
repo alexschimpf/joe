@@ -65,9 +65,4 @@ public final class RandomUtils {
         split = Math.abs(split);
         return pick(pickFromRange(a, -split), pickFromRange(split, b));
     }
-
-    public static float pickFromRanges(Vector2... ranges) {
-        Vector2 range = ranges[pickIndex(ranges)];
-        return pickFromRange(range);
-    }
 }

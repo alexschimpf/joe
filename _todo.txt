@@ -3,6 +3,4 @@
     - i.e. The objective should be a little more obvious
 - Iteration-Complete dialog
 - Back button goes to Main Menu (with dialog making sure)
-- Add function: Level.getSafeRandomId()
-    - Just to make sure collisions NEVER happen
 - Fix input handling during tutorial (on desktop, at least)

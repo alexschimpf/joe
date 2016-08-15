@@ -24,6 +24,7 @@ import com.tendersaucer.joe.util.InvalidConfigException;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -166,6 +167,19 @@ public final class Level implements IUpdate {
 
     public Entity getEntity(String id) {
         return entityMap.get(id);
+    }
+
+    public boolean hasEntity(String id) {
+        return entityMap.containsKey(id);
+    }
+
+    public String getAvailableId() {
+        String id;
+        do {
+            id = UUID.randomUUID().toString();
+        } while (hasEntity(id));
+
+        return id;
     }
 
     public int getId() {

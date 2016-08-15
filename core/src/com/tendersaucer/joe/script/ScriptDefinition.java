@@ -1,24 +1,26 @@
 package com.tendersaucer.joe.script;
 
+import com.tendersaucer.joe.util.Definition;
+
 /**
  * Interface for scripts
  * <p/>
  * Created by Alex on 4/9/2016.
  */
-public abstract class ScriptDefinition {
+public abstract class ScriptDefinition extends Definition {
 
-    protected String name;
+    protected String id;
     protected String type;
 
-    public ScriptDefinition(String name, String type) {
-        this.name = name;
+    public ScriptDefinition(String id, String type) {
+        super();
+
+        this.id = id;
         this.type = type;
     }
 
-    public abstract Object getProperty(String key);
-
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
 
     public String getType() {

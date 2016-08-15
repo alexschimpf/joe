@@ -1,19 +1,25 @@
 package com.tendersaucer.joe.script;
 
+import com.badlogic.gdx.Gdx;
+import com.tendersaucer.joe.IDisposable;
 import com.tendersaucer.joe.IUpdate;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * A runnable script
  * <p/>
  * Created by Alex on 4/24/2016.
  */
-public abstract class Script implements IUpdate {
+public abstract class Script implements IUpdate, IDisposable {
+
+    protected boolean isDone;
 
     protected Script(ScriptDefinition def) {
+        isDone = false;
+    }
 
+    public void init() {
     }
 
     public static Script buildScript(ScriptDefinition scriptDef) {
@@ -22,20 +28,31 @@ public abstract class Script implements IUpdate {
             String scriptType = scriptDef.getType();
             String className = ScriptConfig.getInstance().getClassName(scriptType);
             Class<?> c = Class.forName(className);
-            Constructor<?> constructor = c.getConstructor(ScriptDefinition.class);
+            Constructor<?> constructor = c.getDeclaredConstructor(ScriptDefinition.class);
+            constructor.setAccessible(true);
             script = (Script)constructor.newInstance(scriptDef);
-        } catch (ClassNotFoundException e) {
-            // TODO:
-        } catch (NoSuchMethodException e) {
-            // TODO:
-        } catch (InstantiationException e) {
-            // TODO:
-        } catch (IllegalAccessException e) {
-            // TODO:
-        } catch (InvocationTargetException e) {
-            // TODO:
+        } catch (Exception e) {
+            String scriptInfo = "type=" + scriptDef.getType() + ", id=" + scriptDef.getId();
+            Gdx.app.log("script", "Error building script (" + scriptInfo + ")");
+            Gdx.app.log("script", e.toString());
         }
 
         return script;
     }
+
+    @Override
+    public boolean update() {
+        tick();
+        return isDone;
+    }
+
+    @Override
+    public void dispose() {
+    }
+
+    public void setDone() {
+        isDone = true;
+    }
+
+    protected abstract void tick();
 }
