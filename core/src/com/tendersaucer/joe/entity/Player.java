@@ -40,7 +40,7 @@ public final class Player extends RenderedEntity {
     private Direction direction;
     private float jumpStartY;
 
-    public Player(EntityDefinition def) {
+    private Player(EntityDefinition def) {
         super(def);
 
         numFootContacts = 0;
@@ -102,6 +102,10 @@ public final class Player extends RenderedEntity {
     @Override
     public void onBeginContact(Contact contact, Entity entity) {
         handleFootContact(contact, true);
+
+        if (entity instanceof NextLevelToken) {
+            setDone();
+        }
     }
 
     @Override

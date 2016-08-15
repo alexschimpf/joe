@@ -39,7 +39,7 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
     protected Rectangle bounds;
     protected EntityDefinition definition; // in case it needs to be cloned
 
-    public Entity(EntityDefinition definition) {
+    protected Entity(EntityDefinition definition) {
         this.definition = definition;
         this.type = definition.getType();
 
@@ -74,7 +74,8 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
             String entityType = entityDef.getType();
             String className = ENTITIES_CLASS_PATH + EntityConfig.getInstance().getClassName(entityType);
             Class<?> c = Class.forName(className);
-            Constructor<?> constructor = c.getConstructor(EntityDefinition.class);
+            Constructor<?> constructor = c.getDeclaredConstructor(EntityDefinition.class);
+            constructor.setAccessible(true);
             entity = (Entity)constructor.newInstance(entityDef);
             entity.init();
         } catch (Exception e) {

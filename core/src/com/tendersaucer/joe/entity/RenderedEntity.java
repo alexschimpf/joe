@@ -13,7 +13,7 @@ public abstract class RenderedEntity extends Entity implements IRender {
 
     protected Sprite sprite; // subclasses can add more, if necessary
 
-    public RenderedEntity(EntityDefinition definition) {
+    protected RenderedEntity(EntityDefinition definition) {
         super(definition);
 
         sprite = createSprite(definition);

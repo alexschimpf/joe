@@ -49,8 +49,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         "To make me move left/right, slide your finger here...",
         "To make me jump, touch here...",
         "If you hold longer, I'll jump higher...",
-        "IMPORTANT: There will be NO instructions! Figure it out yourself!!!",
-        "Anyway, just get me to the end of each level."
+        "Goal: Reach the end of each level",
     };
     private static final String[] DESKTOP_TUTORIAL_MESSAGES = new String[] {
         "Hi, I'm Joe.",
@@ -58,8 +57,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         "To make me move left/right, use the arrow keys...",
         "To make me jump, press A...",
         "If you hold longer, I'll jump higher...",
-        "IMPORTANT: There will be NO instructions! Figure it out yourself!!!",
-        "... Just get me to the end of each level."
+        "Goal: Reach the end of each level",
     };
 
     private int tutorialPosition;
@@ -376,7 +374,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         tutorialNextButton.setX((screenWidth - size) / 2);
         tutorialNextButton.setRotation(90);
         tutorialNextButton.setVisible(false);
-        tutorialNextButton.setColor(Color.BLACK);
+        tutorialNextButton.setColor(Globals.OFF_COLOR);
         tutorialNextButton.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
            @Override
            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -395,7 +393,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                } else {
                    tutorialPosition++;
                    if (tutorialPosition == 5) {
-                       tutorialLabel.getStyle().fontColor = Color.RED;
+                       tutorialLabel.getStyle().fontColor = Globals.OFF_COLOR;
                    } else {
                        tutorialLabel.getStyle().fontColor = Color.BLACK;
                    }
@@ -425,11 +423,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         tutorialFlashTimer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                if (tutorialNextButton.getColor().equals(Color.BLACK)) {
-                    tutorialNextButton.setColor(Globals.OFF_COLOR);
-                } else {
-                    tutorialNextButton.setColor(Color.BLACK);
-                }
+                tutorialNextButton.setVisible(!tutorialNextButton.isVisible());
             }
         }, 0, 0.25f);
 

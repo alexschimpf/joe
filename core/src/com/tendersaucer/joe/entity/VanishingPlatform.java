@@ -20,7 +20,7 @@ public class VanishingPlatform extends RenderedEntity {
     private final float vanishDuration;
     private final float reappearDelay;
 
-    public VanishingPlatform(EntityDefinition def) {
+    private VanishingPlatform(EntityDefinition def) {
         super(def);
 
         vanishDuration = def.getFloatProperty("vanish_duration");

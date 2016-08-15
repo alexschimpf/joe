@@ -21,7 +21,7 @@ public class TimerChainLink extends RenderedEntity implements IGameStateChangeLi
     private float delay;
     private Long activatedStartTime;
 
-    public TimerChainLink(EntityDefinition def) {
+    private TimerChainLink(EntityDefinition def) {
         super(def);
 
         isStart = def.getBooleanProperty("is_start");

@@ -1,7 +1,5 @@
-- Camera should just move in a square around the next level token
-    - Square width = 1 camera height
-- This is a good middle-ground between the particle effects and a moving camera
-
+- Game doesn't need much explanation
+    - Just reach the end of the level!
 - run past a "post", then get to a certain point, activate something, then run back past the "post", and the map has (visibly) rotated over
 - Scripts?
     - You reach the end of a chain

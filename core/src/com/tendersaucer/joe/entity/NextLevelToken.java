@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.tendersaucer.joe.GameState;
 import com.tendersaucer.joe.Globals;
 import com.tendersaucer.joe.gen.ParticleConstants;
-import com.tendersaucer.joe.level.Level;
 import com.tendersaucer.joe.particle.ParticleEffect;
 import com.tendersaucer.joe.particle.ParticleEffectManager;
 import com.tendersaucer.joe.util.Vector2Pool;
@@ -21,7 +20,7 @@ public class NextLevelToken extends RenderedEntity {
 
     private boolean obtained;
 
-    public NextLevelToken(EntityDefinition def) {
+    private NextLevelToken(EntityDefinition def) {
         super(def);
 
         id = ID;
@@ -39,7 +38,6 @@ public class NextLevelToken extends RenderedEntity {
 
             Gdx.app.debug("NextLevelToken", "Next level token obtained...");
             setDone();
-            Level.getInstance().getPlayer().setDone();
             beginParticleEffect();
 
             Globals.setGameState(GameState.LEVEL_COMPLETE);
