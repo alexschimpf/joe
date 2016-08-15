@@ -37,7 +37,7 @@ public abstract class Script implements IUpdate, IDisposable {
         Script script = null;
         try {
             String scriptType = scriptDef.getType();
-            String className = CLASS_PATH + ScriptConfiguration.getInstance().getClassName(scriptType);
+            String className = CLASS_PATH + ScriptPropertyConfiguration.getInstance().getClassName(scriptType);
             Class<?> c = Class.forName(className);
             Constructor<?> constructor = c.getDeclaredConstructor(ScriptDefinition.class);
             constructor.setAccessible(true);
@@ -59,7 +59,7 @@ public abstract class Script implements IUpdate, IDisposable {
         Script script = null;
         try {
             String scriptType = scriptDef.getType();
-            String className = ScriptConfiguration.getInstance().getClassName(scriptType);
+            String className = ScriptPropertyConfiguration.getInstance().getClassName(scriptType);
             Class<?> c = Class.forName(className);
             Constructor<?> constructor = c.getDeclaredConstructor(ScriptDefinition.class);
             constructor.setAccessible(true);

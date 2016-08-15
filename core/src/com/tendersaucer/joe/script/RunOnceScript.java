@@ -26,13 +26,13 @@ public abstract class RunOnceScript extends Script {
                 return false;
             } else if (TimeUtils.timeSinceMillis(startTime) > delay) {
                 tick();
-                return true;
             } else {
                 return false;
             }
         } else {
             tick();
-            return true;
         }
+
+        return true;
     }
 }

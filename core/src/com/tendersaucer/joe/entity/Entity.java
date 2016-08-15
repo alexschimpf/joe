@@ -71,7 +71,7 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
         Entity entity = null;
         try {
             String entityType = entityDef.getType();
-            String className = CLASS_PATH + EntityConfiguration.getInstance().getClassName(entityType);
+            String className = CLASS_PATH + EntityPropertyConfiguration.getInstance().getClassName(entityType);
             Class<?> c = Class.forName(className);
             Constructor<?> constructor = c.getDeclaredConstructor(EntityDefinition.class);
             constructor.setAccessible(true);

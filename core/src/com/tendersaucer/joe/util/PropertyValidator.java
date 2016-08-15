@@ -12,9 +12,9 @@ public abstract class PropertyValidator {
     protected PropertyValidator() {
     }
 
-    public static void validateAndProcess(Configuration configuration, String type,
+    public static void validateAndProcess(PropertyConfiguration configuration, String type,
                                           MapProperties mapProperties) {
-        Configuration.Properties properties = configuration.getProperties(type);
+        PropertyConfiguration.Properties properties = configuration.getProperties(type);
         if (properties == null) {
             throw new InvalidConfigException(type + ": Properties not set for type");
         }

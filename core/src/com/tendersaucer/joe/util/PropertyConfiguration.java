@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Created by Alex on 8/14/2016.
  */
-public abstract class Configuration {
+public abstract class PropertyConfiguration {
 
     private final String filename;
     private final String root1;
@@ -20,7 +20,7 @@ public abstract class Configuration {
     private final Map<String, Properties> typePropertiesMap;
     private final Map<String, String> typeClassMap;
 
-    protected Configuration(String filename, String root1, String root2) {
+    protected PropertyConfiguration(String filename, String root1, String root2) {
         this.filename = filename;
         this.root1 = root1;
         this.root2 = root2;
