@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import com.tendersaucer.joe.background.ParallaxBackground;
 import com.tendersaucer.joe.entity.EntityDefinition;
 import com.tendersaucer.joe.screen.IRender;
+import com.tendersaucer.joe.script.ScriptDefinition;
 import com.tendersaucer.joe.util.FixtureBodyDefinition;
 
 import java.util.Map;
@@ -42,6 +43,14 @@ public interface ILevelLoadable {
      * @return entity definitions
      */
     Array<EntityDefinition> getEntityDefinitions();
+
+
+    /**
+     * Returns all initial script definitions
+     *
+     * @return script definitions
+     */
+    Array<ScriptDefinition> getScriptDefinitions();
 
     /**
      * Returns all non-entity body definitions

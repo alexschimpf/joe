@@ -19,6 +19,7 @@ import com.tendersaucer.joe.event.LevelLoadEndEvent;
 import com.tendersaucer.joe.gen.EntityConstants;
 import com.tendersaucer.joe.screen.Canvas;
 import com.tendersaucer.joe.screen.IRender;
+import com.tendersaucer.joe.script.Script;
 import com.tendersaucer.joe.util.FixtureBodyDefinition;
 import com.tendersaucer.joe.util.InvalidConfigException;
 
@@ -44,9 +45,11 @@ public final class Level implements IUpdate {
     private World physicsWorld;
     private Vector2 respawnPosition;
     private final Map<String, Entity> entityMap;
+    private final Map<String, Script> scriptMap;
 
     private Level() {
         entityMap = new ConcurrentHashMap<String, Entity>();
+        scriptMap = new ConcurrentHashMap<String, Script>();
 
         respawnPosition = new Vector2();
 
@@ -74,6 +77,16 @@ public final class Level implements IUpdate {
 
                 entityIdIter.remove();
                 entity.dispose();
+            }
+        }
+
+        Iterator<String> scriptIdIter = scriptMap.keySet().iterator();
+        while (scriptIdIter.hasNext()) {
+            String id = scriptIdIter.next();
+            Script script = scriptMap.get(id);
+            if (script != null && script.update()) {
+                entityIdIter.remove();
+                script.dispose();
             }
         }
 

@@ -29,20 +29,21 @@ public final class Globals {
         gameState = GameState.RUNNING;
     }
 
-    public static boolean isMobile() {
-        return isAndroid() || isIOS();
+
+    public static boolean isDesktop() {
+        return Gdx.app.getType() == ApplicationType.Desktop;
     }
 
     public static boolean isAndroid() {
-        return Gdx.app.getType().equals(ApplicationType.Android);
-    }
-
-    public static boolean isDesktop() {
-        return Gdx.app.getType().equals(ApplicationType.Desktop);
+        return Gdx.app.getType() == ApplicationType.Android;
     }
 
     public static boolean isIOS() {
-        return Gdx.app.getType().equals(ApplicationType.iOS);
+        return Gdx.app.getType() == ApplicationType.iOS;
+    }
+
+    public static boolean isMobile() {
+        return isAndroid() || isIOS();
     }
 
     public static void  setGameState(GameState gameState) {

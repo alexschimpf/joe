@@ -21,18 +21,20 @@ import com.tendersaucer.joe.AssetManager;
 import com.tendersaucer.joe.MainCamera;
 import com.tendersaucer.joe.background.ParallaxBackground;
 import com.tendersaucer.joe.background.TextureParallaxLayer;
+import com.tendersaucer.joe.entity.EntityConfiguration;
 import com.tendersaucer.joe.entity.EntityDefinition;
 import com.tendersaucer.joe.entity.TiledEntityDefinition;
-import com.tendersaucer.joe.entity.TiledEntityPropertyValidator;
 import com.tendersaucer.joe.gen.EntityConstants;
 import com.tendersaucer.joe.screen.Canvas;
 import com.tendersaucer.joe.screen.Driver;
 import com.tendersaucer.joe.screen.IRender;
+import com.tendersaucer.joe.script.ScriptConfiguration;
 import com.tendersaucer.joe.script.ScriptDefinition;
 import com.tendersaucer.joe.script.TiledScriptDefinition;
 import com.tendersaucer.joe.util.FixtureBodyDefinition;
 import com.tendersaucer.joe.util.InvalidConfigException;
 import com.tendersaucer.joe.util.MapLayerWrapper;
+import com.tendersaucer.joe.util.PropertyValidator;
 import com.tendersaucer.joe.util.StringUtils;
 import com.tendersaucer.joe.util.TiledUtils;
 
@@ -103,6 +105,11 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
     @Override
     public Array<EntityDefinition> getEntityDefinitions() {
         return entityDefinitions;
+    }
+
+    @Override
+    public Array<ScriptDefinition> getScriptDefinitions() {
+        return scriptDefinitions;
     }
 
     @Override
@@ -213,7 +220,8 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
             }
 
             String type = TiledUtils.getStringProperty(object, "type");
-            TiledEntityPropertyValidator.validateAndProcess(type, object.getProperties());
+            PropertyValidator.validateAndProcess(EntityConfiguration.getInstance(), type,
+                    object.getProperties());
 
             // Determine body skeleton.
             MapObject bodySkeleton = object;
@@ -254,7 +262,8 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
             }
 
             String type = TiledUtils.getStringProperty(object, "type");
-            // TODO: Create TiledScriptPropertyValidator.
+            PropertyValidator.validateAndProcess(ScriptConfiguration.getInstance(), type,
+                    object.getProperties());
 
             ScriptDefinition scriptDefinition = new TiledScriptDefinition(object.getName(), type,
                     object.getProperties());

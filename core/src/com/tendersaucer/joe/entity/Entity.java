@@ -25,7 +25,7 @@ import java.lang.reflect.Constructor;
  */
 public abstract class Entity implements IUpdate, ICollide, IDisposable {
 
-    private static final String ENTITIES_CLASS_PATH = "com.tendersaucer.joe.entity.";
+    private static final String CLASS_PATH = "com.tendersaucer.joe.entity.";
 
     public enum State {
         ACTIVE, INACTIVE, DONE
@@ -71,7 +71,7 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
         Entity entity = null;
         try {
             String entityType = entityDef.getType();
-            String className = ENTITIES_CLASS_PATH + EntityConfig.getInstance().getClassName(entityType);
+            String className = CLASS_PATH + EntityConfiguration.getInstance().getClassName(entityType);
             Class<?> c = Class.forName(className);
             Constructor<?> constructor = c.getDeclaredConstructor(EntityDefinition.class);
             constructor.setAccessible(true);
