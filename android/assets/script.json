@@ -1,0 +1,24 @@
+{
+    "scripts": {
+        "script": {
+            "class": "Script",
+            "properties": {
+                "required": [
+                    "id", "type"
+                ]
+            },
+            "children": {
+                "run_once": {
+                    "class": "RunOnce",
+                    "properties": {
+                        "optional": [
+                            {"name": "delay", "default": "0"}
+                        ]
+                    }
+                },
+                "children": {
+                }
+            }
+        }
+    }
+}
