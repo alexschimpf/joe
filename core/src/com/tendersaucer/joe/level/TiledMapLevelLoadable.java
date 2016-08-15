@@ -28,9 +28,12 @@ import com.tendersaucer.joe.gen.EntityConstants;
 import com.tendersaucer.joe.screen.Canvas;
 import com.tendersaucer.joe.screen.Driver;
 import com.tendersaucer.joe.screen.IRender;
+import com.tendersaucer.joe.script.ScriptDefinition;
+import com.tendersaucer.joe.script.TiledScriptDefinition;
 import com.tendersaucer.joe.util.FixtureBodyDefinition;
 import com.tendersaucer.joe.util.InvalidConfigException;
 import com.tendersaucer.joe.util.MapLayerWrapper;
+import com.tendersaucer.joe.util.StringUtils;
 import com.tendersaucer.joe.util.TiledUtils;
 
 import java.util.HashMap;
@@ -51,6 +54,7 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
     private final ParallaxBackground background;
     private final Array<FixtureBodyDefinition> freeBodyDefinitions;
     private final Array<EntityDefinition> entityDefinitions;
+    private final Array<ScriptDefinition> scriptDefinitions;
     private final Map<IRender, Integer> canvasMap;
     private final Map<String, MapObject> bodySkeletonMap;
 
@@ -60,6 +64,7 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
         respawnPosition = new Vector2();
         freeBodyDefinitions = new Array<FixtureBodyDefinition>();
         entityDefinitions = new Array<EntityDefinition>();
+        scriptDefinitions = new Array<ScriptDefinition>();
         canvasMap = new LinkedHashMap<IRender, Integer>();
         bodySkeletonMap = new HashMap<String, MapObject>();
 
@@ -124,7 +129,7 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
         for (MapLayer layer : tiledMap.getLayers()) {
             MapLayerWrapper layerWrapper = new MapLayerWrapper(renderer, layer);
             // Bodies must exist before entity objects.
-            if (layerWrapper.getName().equals("bodies")) {
+            if (StringUtils.equalsAny(layerWrapper.getName(), "bodies", "scripts")) {
                 processLayer(layerWrapper);
             } else {
                 if (!TiledUtils.propertyExists(layerWrapper, "layer")) {
@@ -149,10 +154,15 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
     private void processLayer(MapLayerWrapper layer) {
         Array<MapObject> freeBodies = new Array<MapObject>();
         Array<TextureMapObject> entities = new Array<TextureMapObject>();
+        Array<TextureMapObject> scripts = new Array<TextureMapObject>();
 
         for (MapObject object : layer.getObjects()) {
             if (object instanceof TextureMapObject) {
-                entities.add((TextureMapObject)object);
+                if (layer.getName().equals("bodies")) {
+                    entities.add((TextureMapObject)object);
+                } else if (layer.getName().equals("scripts")) {
+                    scripts.add((TextureMapObject)object);
+                }
             } else {
                 if (!TiledUtils.propertyExists(object, "type")) {
                     freeBodies.add(object);
@@ -169,6 +179,7 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
 
         processFreeBodies(freeBodies);
         processEntities(layer, entities);
+        processScripts(scripts);
     }
 
     private void processFreeBodies(Array<MapObject> bodies) {
@@ -233,6 +244,21 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
             if (type != null && type.equals(EntityConstants.PLAYER)) {
                 respawnPosition.set(entityDefinition.getCenter());
             }
+        }
+    }
+
+    private void processScripts(Array<TextureMapObject> scripts) {
+        for (TextureMapObject object : scripts) {
+            if (!TiledUtils.propertyExists(object, "type")) {
+                throw new InvalidConfigException(filename, "type", "null");
+            }
+
+            String type = TiledUtils.getStringProperty(object, "type");
+            // TODO: Create TiledScriptPropertyValidator.
+
+            ScriptDefinition scriptDefinition = new TiledScriptDefinition(object.getName(), type,
+                    object.getProperties());
+            scriptDefinitions.add(scriptDefinition);
         }
     }
 

@@ -4,3 +4,4 @@
 - Iteration-Complete dialog
 - Back button goes to Main Menu (with dialog making sure)
 - Fix input handling during tutorial (on desktop, at least)
+- Start using StringUtils class

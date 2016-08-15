@@ -423,7 +423,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         tutorialFlashTimer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                tutorialNextButton.setVisible(!tutorialNextButton.isVisible());
+                Color curr = tutorialNextButton.getColor();
+                tutorialNextButton.setColor(curr.r, curr.g, curr.b, curr.a == 0 ? 1 : 0);
             }
         }, 0, 0.25f);
 
