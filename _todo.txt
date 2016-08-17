@@ -1,7 +1,8 @@
-- Level 0 needs timer countdown label
-    - The first level should make a little more sense to the user
-    - i.e. The objective should be a little more obvious
+- Level 0 should be easier
+- Level 1 is level with timer
+- Level 2 has vanishing shit
 - Iteration-Complete dialog
 - Back button goes to Main Menu (with dialog making sure)
 - Fix input handling during tutorial (on desktop, at least)
 - Start using StringUtils class
+- Make sure everything (that needs it) is disposed of

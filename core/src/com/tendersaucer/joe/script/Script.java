@@ -30,7 +30,7 @@ public abstract class Script implements IUpdate, IDisposable {
         this.type = definition.getType();
 
         id = getOrCreateId();
-        state = State.ACTIVE;
+        state = definition.getBooleanProperty("is_active") ? State.ACTIVE : State.INACTIVE;
     }
 
     public static Script build(ScriptDefinition scriptDef) {
@@ -75,6 +75,10 @@ public abstract class Script implements IUpdate, IDisposable {
 
     @Override
     public boolean update() {
+        if (state != State.ACTIVE) {
+            return isDone();
+        }
+
         tick();
         return isDone();
     }
@@ -116,7 +120,7 @@ public abstract class Script implements IUpdate, IDisposable {
     private String getOrCreateId() {
         String id = definition.getId();
         if (id == null || id.equals("")) {
-            id = Level.getInstance().getAvailableId();
+            id = Level.getInstance().getAvailableScriptId();
         }
 
         return id;

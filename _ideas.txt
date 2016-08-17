@@ -11,7 +11,6 @@
 - Need to cache texture regions in AssetManager??
 - Figure out what to do about friction
     - Keep everything frictionless or not?
-- Make sure everything (that needs it) is disposed of
 - Platforms that hang on a spring
     - More for effect
 - Platforms that disappear and reappear

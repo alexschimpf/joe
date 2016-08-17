@@ -4,7 +4,10 @@
             "class": "Script",
             "properties": {
                 "required": [
-                    "id", "type"
+                    "id", "x", "y", "width", "height", "type"
+                ],
+                "optional": [
+                    { "name": "is_active", "default": "false" }
                 ]
             },
             "children": {
@@ -12,11 +15,17 @@
                     "class": "RunOnce",
                     "properties": {
                         "optional": [
-                            {"name": "delay", "default": "0"}
+                            { "name": "delay", "default": "0" }
                         ]
                     }
                 },
-                "children": {
+                "set_timer": {
+                    "class": "SetTimer",
+                    "properties": {
+                        "required": [
+                            "duration"
+                        ]
+                    }
                 }
             }
         }

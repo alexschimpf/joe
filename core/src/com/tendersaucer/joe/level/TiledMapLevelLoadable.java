@@ -184,9 +184,12 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
             }
         }
 
-        processFreeBodies(freeBodies);
-        processEntities(layer, entities);
-        processScripts(scripts);
+        if (layer.getName().equals("scripts")) {
+            processScripts(scripts);
+        } else {
+            processFreeBodies(freeBodies);
+            processEntities(layer, entities);
+        }
     }
 
     private void processFreeBodies(Array<MapObject> bodies) {

@@ -269,7 +269,7 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
     private String getOrCreateId() {
         String id = definition.getId();
         if (id == null || id.equals("")) {
-            id = Level.getInstance().getAvailableId();
+            id = Level.getInstance().getAvailableEntityId();
         }
 
         return id;

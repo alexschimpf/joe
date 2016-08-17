@@ -35,7 +35,8 @@
                             "class": "NextLevelToken",
                             "properties": {
                                 "optional": [
-                                    { "name": "body_type", "default": "kinematic" }
+                                    { "name": "body_type", "default": "kinematic" },
+                                    { "name": "fixed_rotation", "default": "false" }
                                 ]
                             }
                         },
@@ -45,7 +46,7 @@
                                 "optional": [
                                     { "name": "is_start", "default": "false" },
                                     { "name": "is_end", "default": "false" },
-                                    { "name": "delay", "default": "145" },
+                                    { "name": "delay", "default": "145 " },
                                     { "name": "is_body_active", "default": "false" }
                                 ]
                             }

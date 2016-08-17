@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -15,9 +16,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tendersaucer.joe.AssetManager;
@@ -60,6 +61,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         "Goal: Reach the end of each level",
     };
 
+
     private int tutorialPosition;
     private Label tutorialLabel;
     private Image tutorialNextButton;
@@ -74,6 +76,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     private Button jumpButton;
     private Integer movePointer;
     private FreeTypeFontGenerator fontGenerator;
+    private Image flashImage;
+    private Long flashStartTime;
     private Skin skin;
 
     private HUD() {
@@ -83,6 +87,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
         fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
         skin = new Skin(Gdx.files.internal("uiskin.json"));
+        createFlashImage();
         createProgressLabel();
         createLevelCompleteUI();
         hideLevelComplete();
@@ -113,6 +118,10 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             inputListener.update();
         } else {
             checkMobileButtons();
+        }
+
+        if (flashImage.isVisible() && flashStartTime != null) {
+            updateFlash();
         }
 
         Level level = Level.getInstance();
@@ -166,6 +175,10 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                 }
             });
         }
+
+        if (oldEvent == GameState.RUNNING && newEvent == GameState.WAIT_FOR_INPUT) {
+            setFlash(true);
+        }
     }
 
     @Override
@@ -185,9 +198,39 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         stage.getViewport().update(width, height);
     }
 
+    public void addActor(Actor actor) {
+        stage.addActor(actor);
+    }
+
+    public Skin getSkin() {
+        return skin;
+    }
+
+    public void setFlash(boolean flash) {
+        if (flashImage.isVisible() != flash) {
+            flashImage.setVisible(flash);
+            flashStartTime = flash ? TimeUtils.millis() : null;
+        }
+    }
+
+    private void updateFlash() {
+        Color c = flashImage.getColor();
+        float age = TimeUtils.timeSinceMillis(flashStartTime);
+        if (age < 200) {
+            c.a = age / 200;
+            flashImage.setColor(c);
+        } else if (age < 400){
+            age -= 200;
+            c.a = 1 - (age / 200);
+            flashImage.setColor(c);
+        } else {
+            setFlash(false);
+            flashStartTime = null;
+        }
+    }
+
     private void hideLevelComplete() {
         levelCompleteBackground.setVisible(false);
-        nextButton.setDisabled(true);
         nextButton.setVisible(false);
 
         levelSummaryLabel.setText("");
@@ -203,7 +246,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
     private void showLevelComplete() {
         levelCompleteBackground.setVisible(true);
-        nextButton.setDisabled(false);
         nextButton.setVisible(true);
 
         long duration = DAO.getInstance().getLong(DAO.TOTAL_TIME_KEY, 0);
@@ -216,6 +258,17 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             jumpButton.setDisabled(true);
             jumpButton.setVisible(false);
         }
+    }
+
+    private void createFlashImage() {
+        TextureRegion tr = AssetManager.getInstance().getTextureRegion("default");
+        flashImage = new Image(tr);
+        flashImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        flashImage.setPosition(0, 0);
+        flashImage.setVisible(false);
+        flashImage.setColor(new Color(0, 0, 0, 0));
+
+        stage.addActor(flashImage);
     }
 
     private void createProgressLabel() {
@@ -244,14 +297,13 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         levelCompleteBackground.setColor(0.7f, 0.7f, 0.7f, 0.8f);
         stage.addActor(levelCompleteBackground);
 
-        float nextButtonHeight = screenWidth / 4;
-        FreeTypeFontParameter nextParameter = new FreeTypeFontParameter();
-        nextParameter.size = (int)nextButtonHeight;
-        nextParameter.borderWidth = nextParameter.size / 50;
-        nextParameter.spaceX = (int)screenWidth / 100;
-        TextButtonStyle nextButtonStyle = new TextButtonStyle();
-        nextButtonStyle.font = fontGenerator.generateFont(nextParameter);
+        int nextButtonHeight = (int)(Gdx.graphics.getWidth() * 0.1f);
+        FreeTypeFontParameter fontParam = new FreeTypeFontParameter();
+        fontParam.size = nextButtonHeight;
+        TextButton.TextButtonStyle nextButtonStyle = new TextButton.TextButtonStyle();
+        nextButtonStyle.font = fontGenerator.generateFont(fontParam);
         nextButtonStyle.fontColor = Color.BLACK;
+        nextButtonStyle.downFontColor = Color.WHITE;
         nextButton = new TextButton("\nNEXT", skin);
         nextButton.setSize(screenWidth, nextButtonHeight);
         nextButton.setPosition(0, screenHeight / 2);
@@ -259,12 +311,20 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         nextButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (!nextButton.isVisible()) {
+                    return false;
+                }
+
                 nextButton.getStyle().fontColor = Color.WHITE;
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                if (!nextButton.isVisible()) {
+                    return;
+                }
+
                 hideLevelComplete();
                 nextButton.getStyle().fontColor = Color.BLACK;
                 Level.getInstance().loadNext();

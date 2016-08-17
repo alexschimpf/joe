@@ -1,12 +1,12 @@
 package com.tendersaucer.joe.level;
 
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.tendersaucer.joe.GameState;
 import com.tendersaucer.joe.Globals;
+import com.tendersaucer.joe.IDisposable;
 import com.tendersaucer.joe.IUpdate;
 import com.tendersaucer.joe.MainCamera;
 import com.tendersaucer.joe.entity.Entity;
@@ -20,6 +20,7 @@ import com.tendersaucer.joe.gen.EntityConstants;
 import com.tendersaucer.joe.screen.Canvas;
 import com.tendersaucer.joe.screen.IRender;
 import com.tendersaucer.joe.script.Script;
+import com.tendersaucer.joe.script.ScriptDefinition;
 import com.tendersaucer.joe.util.FixtureBodyDefinition;
 import com.tendersaucer.joe.util.InvalidConfigException;
 
@@ -34,7 +35,7 @@ import java.util.concurrent.TimeUnit;
  * <p/>
  * Created by Alex on 4/8/2016.
  */
-public final class Level implements IUpdate {
+public final class Level implements IUpdate, IDisposable {
 
     public static final float DEFAULT_GRAVITY = 50;
     private static final Level instance = new Level();
@@ -63,6 +64,16 @@ public final class Level implements IUpdate {
     }
 
     @Override
+    public void dispose() {
+        for (Entity entity : entityMap.values()) {
+            entity.dispose();
+        }
+        for (Script script : scriptMap.values()) {
+            script.dispose();
+        }
+    }
+
+    @Override
     public boolean update() {
         physicsWorld.step(1 / 45.0f, 5, 5);
 
@@ -85,7 +96,7 @@ public final class Level implements IUpdate {
             String id = scriptIdIter.next();
             Script script = scriptMap.get(id);
             if (script != null && script.update()) {
-                entityIdIter.remove();
+                scriptIdIter.remove();
                 script.dispose();
             }
         }
@@ -111,7 +122,6 @@ public final class Level implements IUpdate {
         id = loadable.getId();
         respawnPosition.set(loadable.getRespawnPosition());
 
-        clearPhysicsWorld();
         Canvas.getInstance().addToLayer(0, loadable.getBackground());
 
         // Add non-entity/background canvas objects.
@@ -121,9 +131,14 @@ public final class Level implements IUpdate {
             Canvas.getInstance().addToLayer(layer, object);
         }
 
+        dispose();
+        clearPhysicsWorld();
         entityMap.clear();
+        scriptMap.clear();
+
         loadEntities(loadable);
         loadFreeBodies(loadable);
+        loadScripts(loadable);
 
         EventManager.getInstance().notify(new LevelLoadEndEvent());
         Globals.setGameState(GameState.WAIT_FOR_INPUT);
@@ -178,19 +193,40 @@ public final class Level implements IUpdate {
         }
     }
 
+    public void addScript(Script script) {
+        scriptMap.put(script.getId(), script);
+    }
+
     public Entity getEntity(String id) {
         return entityMap.get(id);
+    }
+
+    public Script getScript(String id) {
+        return scriptMap.get(id);
     }
 
     public boolean hasEntity(String id) {
         return entityMap.containsKey(id);
     }
 
-    public String getAvailableId() {
+    public boolean hasScript(String id) {
+        return scriptMap.containsKey(id);
+    }
+
+    public String getAvailableEntityId() {
         String id;
         do {
             id = UUID.randomUUID().toString();
         } while (hasEntity(id));
+
+        return id;
+    }
+
+    public String getAvailableScriptId() {
+        String id;
+        do {
+            id = UUID.randomUUID().toString();
+        } while (hasScript(id));
 
         return id;
     }
@@ -205,15 +241,6 @@ public final class Level implements IUpdate {
 
     public Vector2 getRespawnPosition() {
         return respawnPosition;
-    }
-
-    public String getAvailableEntityId() {
-        String id;
-        do {
-            id = String.valueOf(MathUtils.random(0, Integer.MAX_VALUE));
-        } while (entityMap.containsKey(id));
-
-        return id;
     }
 
     private void loadEntities(ILevelLoadable loadable) {
@@ -241,6 +268,18 @@ public final class Level implements IUpdate {
             body.createFixture(fixtureBodyDef.fixtureDef);
 
             fixtureBodyDef.fixtureDef.shape.dispose();
+        }
+    }
+
+    private void loadScripts(ILevelLoadable loadable) {
+        for (ScriptDefinition definition : loadable.getScriptDefinitions()) {
+            String id = definition.getId();
+
+            if (id != null && scriptMap.containsKey(id)) {
+                throw new InvalidConfigException("Duplicate script id: " + id);
+            }
+
+            addScript(Script.build(definition));
         }
     }
 

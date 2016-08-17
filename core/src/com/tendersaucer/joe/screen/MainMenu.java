@@ -181,7 +181,6 @@ public class MainMenu implements Screen {
         int height = (int)(Gdx.graphics.getWidth() * 0.1f);
         FreeTypeFontParameter fontParam = new FreeTypeFontParameter();
         fontParam.size = height;
-
         Label.LabelStyle style = new Label.LabelStyle();
         style.font = fontGenerator.generateFont(fontParam);
         style.fontColor = Color.BLACK;
