@@ -205,6 +205,5 @@
     <property name="duration" type="int" value="15"/>
    </properties>
   </object>
-  <object id="181" name="fs" type="flash_screen" gid="32" x="704" y="576" width="64" height="64"/>
  </objectgroup>
 </map>

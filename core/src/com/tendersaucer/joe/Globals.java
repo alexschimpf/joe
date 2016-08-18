@@ -15,12 +15,12 @@ import com.tendersaucer.joe.event.GameStateChangeEvent;
 public final class Globals {
 
     private static GameState gameState;
-    public static final int NUM_LEVELS = 2;
+    public static final int NUM_LEVELS = 3;
     public static boolean FULLSCREEN_MODE = true;
     public static boolean DEBUG_PHYSICS = false;
     public static boolean PRINT_DEBUG_INFO = false;
     public static boolean CUSTOM_CAMERA_MODE = false;
-    public static boolean CLEAR_PREFERENCES = true;
+    public static boolean CLEAR_PREFERENCES = false;
     public static final int LOG_LEVEL = Application.LOG_DEBUG;
     public static final Color ON_COLOR = new Color(0, 0.7f, 0, 1);
     public static final Color OFF_COLOR = new Color(0.7f, 0, 0, 1);
