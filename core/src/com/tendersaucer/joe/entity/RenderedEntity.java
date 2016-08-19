@@ -17,6 +17,7 @@ public abstract class RenderedEntity extends Entity implements IRender {
         super(definition);
 
         sprite = createSprite(definition);
+        sprite.setColor(definition.getColorProperty("color"));
     }
 
     @Override

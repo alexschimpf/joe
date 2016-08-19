@@ -1,6 +1,7 @@
 package com.tendersaucer.joe.level;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.CircleMapObject;
@@ -21,15 +22,15 @@ import com.tendersaucer.joe.AssetManager;
 import com.tendersaucer.joe.MainCamera;
 import com.tendersaucer.joe.background.ParallaxBackground;
 import com.tendersaucer.joe.background.TextureParallaxLayer;
-import com.tendersaucer.joe.entity.EntityPropertyConfiguration;
 import com.tendersaucer.joe.entity.EntityDefinition;
+import com.tendersaucer.joe.entity.EntityPropertyConfiguration;
 import com.tendersaucer.joe.entity.TiledEntityDefinition;
 import com.tendersaucer.joe.gen.EntityConstants;
 import com.tendersaucer.joe.screen.Canvas;
 import com.tendersaucer.joe.screen.Driver;
 import com.tendersaucer.joe.screen.IRender;
-import com.tendersaucer.joe.script.ScriptPropertyConfiguration;
 import com.tendersaucer.joe.script.ScriptDefinition;
+import com.tendersaucer.joe.script.ScriptPropertyConfiguration;
 import com.tendersaucer.joe.script.TiledScriptDefinition;
 import com.tendersaucer.joe.util.FixtureBodyDefinition;
 import com.tendersaucer.joe.util.InvalidConfigException;
@@ -246,10 +247,17 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
                 }
             }
 
+            // TODO: GET THIS WORKING!!!
+            TextureRegion textureRegion = object.getTextureRegion();
+            if (TiledUtils.propertyExists(object, "texture")) {
+                String textureId = TiledUtils.getStringProperty(object, "texture");
+                textureRegion = AssetManager.getInstance().getTextureRegion(textureId);
+            }
+
             int layerPosition = getLayerPosition(layer, object);
             BodyDef bodyDef = getBodyDef(layer, object);
             EntityDefinition entityDefinition = new TiledEntityDefinition(object.getName(), type,
-                    layerPosition, bodyDef, bodySkeleton, object.getProperties(), object.getTextureRegion());
+                    layerPosition, bodyDef, bodySkeleton, object.getProperties(), textureRegion);
             entityDefinitions.add(entityDefinition);
 
             if (type != null && type.equals(EntityConstants.PLAYER)) {

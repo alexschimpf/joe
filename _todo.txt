@@ -1,6 +1,7 @@
 - Level 0 should be easier
 - Level 1 is level with timer
 - Level 2 has vanishing shit
+- Get custom entity texture working
 - Iteration-Complete dialog
 - Back button goes to Main Menu (with dialog making sure)
 - Fix input handling during tutorial (on desktop, at least)

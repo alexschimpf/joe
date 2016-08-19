@@ -44,7 +44,8 @@ public class VanishingPlatform extends RenderedEntity {
             }
         }
 
-        if(isReappearWait && !Level.getInstance().getPlayer().overlaps(this)) {
+        Player player = Level.getInstance().getPlayer();
+        if(isReappearWait && player != null && !player.overlaps(this)) {
             setReappearWait(false);
         }
     }

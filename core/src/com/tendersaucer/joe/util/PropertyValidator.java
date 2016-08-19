@@ -30,7 +30,7 @@ public abstract class PropertyValidator {
         Iterator<String> propertiesIter = mapProperties.getKeys();
         while (propertiesIter.hasNext()) {
             String property = propertiesIter.next();
-            if (property.equals("gid")) {
+            if (property.equals("gid") || property.equals("texture")) {
                 continue;
             }
 
