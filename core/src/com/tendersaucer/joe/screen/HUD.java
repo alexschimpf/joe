@@ -64,6 +64,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
     private int tutorialPosition;
     private Label tutorialLabel;
+    private Image tutorialHelperArrow;
     private Image tutorialNextButton;
     private Timer tutorialFlashTimer;
     private Stage stage;
@@ -153,10 +154,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             }
         }
 
-        if (tutorialNextButton != null && tutorialPosition == 0 || tutorialPosition == 5) {
-            tutorialNextButton.setY(tutorialLabel.getTop() - (tutorialNextButton.getHeight() / 2));
-        }
-
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 
         return false;
@@ -190,7 +187,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         }
 
         tutorialLabel.setVisible(true);
-        tutorialNextButton.setVisible(true);
         stage.removeListener(inputListener);
     }
 
@@ -428,12 +424,16 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         float size = screenWidth * 0.1f;
         TextureRegion tr = AssetManager.getInstance().getTextureRegion("arrow");
         tr.flip(false, true);
+        tutorialHelperArrow = new Image(tr);
+        tutorialHelperArrow.setSize(size, size);
+        tutorialHelperArrow.setOrigin(Align.center);
+        tutorialHelperArrow.setVisible(false);
+        tutorialHelperArrow.setColor(Color.BLACK);
         tutorialNextButton = new Image(tr);
         tutorialNextButton.setSize(size, size);
-        tutorialNextButton.setOrigin(Align.center);
-        tutorialNextButton.setX((screenWidth - size) / 2);
+        tutorialNextButton.setPosition(screenWidth - size, screenHeight - size);
+        tutorialNextButton.setVisible(true);
         tutorialNextButton.setRotation(90);
-        tutorialNextButton.setVisible(false);
         tutorialNextButton.setColor(Globals.OFF_COLOR);
         tutorialNextButton.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
            @Override
@@ -446,6 +446,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                        DESKTOP_TUTORIAL_MESSAGES.length - 1;
                if (tutorialPosition == lastPos) {
                    tutorialLabel.setVisible(false);
+                   tutorialHelperArrow.setVisible(false);
                    tutorialNextButton.setVisible(false);
                    stage.addListener(inputListener);
                    DAO.getInstance().putBoolean(DAO.IS_NEW_KEY, false);
@@ -459,18 +460,16 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                    }
 
                    if (Globals.isMobile()) {
-                       float size = tutorialNextButton.getWidth();
+                       float size = tutorialHelperArrow.getWidth();
                        if (tutorialPosition == 2) {
                            float moveButtonCenterX = moveButton.getX() + (moveButton.getWidth() / 2);
-                           tutorialNextButton.setRotation(0);
-                           tutorialNextButton.setPosition(moveButtonCenterX - (size / 2), moveButton.getTop() + padding);
-                           tutorialNextButton.setVisible(true);
+                           tutorialHelperArrow.setPosition(moveButtonCenterX - (size / 2), moveButton.getTop() + padding);
+                           tutorialHelperArrow.setVisible(true);
                        } else if (tutorialPosition == 3) {
                            float jumpButtonCenterX = jumpButton.getX() + (jumpButton.getWidth() / 2);
-                           tutorialNextButton.setPosition(jumpButtonCenterX - (size / 2), jumpButton.getTop() + padding);
+                           tutorialHelperArrow.setPosition(jumpButtonCenterX - (size / 2), jumpButton.getTop() + padding);
                        } else if (tutorialPosition == 5) {
-                           tutorialNextButton.setRotation(90);
-                           tutorialNextButton.setX((screenWidth - size) / 2);
+                           tutorialHelperArrow.setVisible(false);
                        }
                    }
                }
@@ -478,6 +477,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                return true;
            }
         });
+        stage.addActor(tutorialNextButton);
+        stage.addActor(tutorialHelperArrow);
 
         tutorialFlashTimer = new Timer();
         tutorialFlashTimer.scheduleTask(new Timer.Task() {
@@ -487,8 +488,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                 tutorialNextButton.setColor(curr.r, curr.g, curr.b, curr.a == 0 ? 1 : 0);
             }
         }, 0, 0.25f);
-
-        stage.addActor(tutorialNextButton);
     }
 
     private void checkMobileButtons() {
