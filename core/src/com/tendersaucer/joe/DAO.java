@@ -6,7 +6,7 @@ import com.badlogic.gdx.Preferences;
 import java.util.Map;
 
 /**
- * Slow-write, fast-read DAO for StatisticsListener
+ * Slow-write, fast-read DAO for StatsCollector
  *
  * Created by Alex on 7/27/2016.
  */

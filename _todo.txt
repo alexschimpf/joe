@@ -1,9 +1,7 @@
-- Level 0 should be easier
-- Level 1 is level with timer
-- Level 2 has vanishing shit
+- Make level 2 longer
 - Get custom entity texture working
 - Iteration-Complete dialog
 - Back button goes to Main Menu (with dialog making sure)
 - Fix input handling during tutorial (on desktop, at least)
-- Start using StringUtils class
+- Start using StringUtils class (and other utility classes)
 - Make sure everything (that needs it) is disposed of

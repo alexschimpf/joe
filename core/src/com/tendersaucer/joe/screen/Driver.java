@@ -13,7 +13,7 @@ import com.tendersaucer.joe.DAO;
 import com.tendersaucer.joe.GameState;
 import com.tendersaucer.joe.Globals;
 import com.tendersaucer.joe.MainCamera;
-import com.tendersaucer.joe.StatisticsListener;
+import com.tendersaucer.joe.StatsCollector;
 import com.tendersaucer.joe.event.EventManager;
 import com.tendersaucer.joe.event.GameStateChangeEvent;
 import com.tendersaucer.joe.event.LevelLoadBeginEvent;
@@ -58,7 +58,7 @@ public final class Driver implements Screen {
         eventManager.listen(LevelLoadBeginEvent.class, Canvas.getInstance());
         eventManager.listen(LevelLoadBeginEvent.class, ParticleEffectManager.getInstance());
         eventManager.listen(GameStateChangeEvent.class, HUD.getInstance());
-        eventManager.listen(GameStateChangeEvent.class, StatisticsListener.getInstance());
+        eventManager.listen(GameStateChangeEvent.class, StatsCollector.getInstance());
         eventManager.listen(GameStateChangeEvent.class, MainCamera.getInstance());
         eventManager.listen(NewUserEvent.class, HUD.getInstance());
 

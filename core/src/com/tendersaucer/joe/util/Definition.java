@@ -3,29 +3,15 @@ package com.tendersaucer.joe.util;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by Alex on 8/14/2016.
  */
 public abstract class Definition {
 
-    private final Map<String, String> propertyMap;
-
     public Definition() {
-        propertyMap = new HashMap<String, String>();
     }
 
     public abstract Object getProperty(String key);
-
-    public void addPropety(String name, String value) {
-        propertyMap.put(name, value);
-    }
-
-    public void removePropety(String name) {
-        propertyMap.remove(name);
-    }
 
     public boolean propertyExists(String key) {
         return getStringProperty(key) != null;

@@ -6,18 +6,18 @@ import com.tendersaucer.joe.event.IGameStateChangeListener;
 /**
  * Created by Alex on 7/27/2016.
  */
-public final class StatisticsListener implements IGameStateChangeListener {
+public final class StatsCollector implements IGameStateChangeListener {
 
-    private static final StatisticsListener instance = new StatisticsListener();
+    private static final StatsCollector instance = new StatsCollector();
 
     private Long runStartTime;
     private DAO dao;
 
-    private StatisticsListener() {
+    private StatsCollector() {
         dao = DAO.getInstance();
     }
 
-    public static StatisticsListener getInstance() {
+    public static StatsCollector getInstance() {
         return instance;
     }
 
