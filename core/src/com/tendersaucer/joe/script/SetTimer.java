@@ -66,6 +66,7 @@ public final class SetTimer extends Script implements IGameStateChangeListener {
         super.dispose();
 
         timerLabel.remove();
+        EventManager.getInstance().mute(GameStateChangeEvent.class, this);
     }
 
     @Override

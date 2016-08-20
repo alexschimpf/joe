@@ -45,6 +45,13 @@ public class TimerChainLink extends RenderedEntity implements IGameStateChangeLi
     }
 
     @Override
+    public void dispose() {
+        super.dispose();
+
+        EventManager.getInstance().mute(GameStateChangeEvent.class, this);
+    }
+
+    @Override
     public void tick() {
         super.tick();
 

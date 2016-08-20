@@ -37,18 +37,6 @@ public final class EventManager {
         eventListeners.put(eventClass, listeners);
     }
 
-    public <L> void mute(Class<? extends Event<L>> eventClass, L listener) {
-        ArrayList listeners = eventListeners.get(eventClass);
-        if (listeners != null) {
-            listeners.remove(listener);
-            eventListeners.put(eventClass, listeners);
-        }
-    }
-
-    public <L> void clear(Class<? extends Event<L>> eventClass) {
-        eventListeners.remove(eventClass);
-    }
-
     public <L> void notify(Event<L> event) {
         Class<Event<L>> eventClass = (Class<Event<L>>)event.getClass();
         if (eventListeners.containsKey(eventClass)) {
@@ -56,5 +44,16 @@ public final class EventManager {
                 event.notify(listener);
             }
         }
+    }
+
+    public <L> void mute(Class<? extends Event<L>> eventClass, L listener) {
+        ArrayList listeners = eventListeners.get(eventClass);
+        if (listeners != null) {
+            listeners.remove(listener);
+        }
+    }
+
+    public <L> void clear(Class<? extends Event<L>> eventClass) {
+        eventListeners.remove(eventClass);
     }
 }
