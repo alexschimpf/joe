@@ -47,18 +47,20 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     private static final String[] MOBILE_TUTORIAL_MESSAGES = new String[] {
         "Hi, I'm Joe.",
         "Now... mindlessly follow my commands.",
-        "To make me move left/right, slide your finger here...",
-        "To make me jump, touch here...",
-        "If you hold longer, I'll jump higher...",
-        "Goal: Reach the end of each level",
+        "To make me move left/right, slide your finger here.",
+        "To make me jump, touch here.",
+        "If you hold longer, I'll jump higher.",
+        "Your mission?",
+        "GUIDE ME TO THE RED SPINNING THINGIES!"
     };
     private static final String[] DESKTOP_TUTORIAL_MESSAGES = new String[] {
         "Hi, I'm Joe.",
         "Now... mindlessly follow my commands.",
-        "To make me move left/right, use the arrow keys...",
-        "To make me jump, press A...",
-        "If you hold longer, I'll jump higher...",
-        "Goal: Reach the end of each level",
+        "To make me move left/right, use the arrow keys.",
+        "To make me jump, press A.",
+        "If you hold longer, I'll jump higher.",
+        "Your mission?",
+        "GUIDE ME TO THE RED SPINNING THINGIES!"
     };
 
 
@@ -413,7 +415,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
         tutorialLabel = new Label("", skin);
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-        parameter.size = screenWidth / 50;
+        parameter.size = screenWidth / 40;
+        parameter.size = screenWidth / 40;
         BitmapFont font = fontGenerator.generateFont(parameter);
         LabelStyle labelStyle = new LabelStyle(font, Color.BLACK);
         tutorialLabel.setStyle(labelStyle);
@@ -468,7 +471,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                     tutorialFlashTimer.clear();
                 } else {
                     tutorialPosition++;
-                    if (tutorialPosition == 5) {
+                    if (tutorialPosition == 6) {
                         tutorialLabel.getStyle().fontColor = Globals.OFF_COLOR;
                     } else {
                         tutorialLabel.getStyle().fontColor = Color.BLACK;

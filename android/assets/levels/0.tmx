@@ -47,12 +47,6 @@
   <object id="222" x="2240" y="1792">
    <polyline points="0,0 0,64 64,64 64,128 192,128 192,64 256,64 256,0 128,0 128,-64 64,-64 64,0 0,0"/>
   </object>
-  <object id="226" type="moving_platform" gid="32" x="960" y="2304" width="64" height="256">
-   <properties>
-    <property name="duration" type="float" value="1400"/>
-    <property name="path" value="(0,6):(0,-6)"/>
-   </properties>
-  </object>
   <object id="228" type="moving_platform" gid="32" x="2496" y="2624" width="64" height="128">
    <properties>
     <property name="duration" type="float" value="1400"/>

@@ -1,7 +1,6 @@
 package com.tendersaucer.joe.entity;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.tendersaucer.joe.GameState;
@@ -26,7 +25,7 @@ public class NextLevelToken extends RenderedEntity {
         id = ID;
         obtained = false;
         body.setAngularVelocity(1.5f);
-        sprite.setColor(Color.RED);
+        sprite.setColor(Globals.OFF_COLOR);
 
         body.getFixtureList().get(0).setSensor(true);
     }
@@ -50,7 +49,7 @@ public class NextLevelToken extends RenderedEntity {
         Vector2 position = vector2Pool.obtain(getLeft(), getBottom() - (sizeRange.y / 2));
         ParticleEffect effect =
                 ParticleEffectManager.getInstance().buildParticleEffect(ParticleConstants.LEVEL_COMPLETE);
-        ParticleEffectManager.getInstance().beginParticleEffect(effect, position, sizeRange, 6);
+        ParticleEffectManager.getInstance().beginParticleEffect(effect, position, sizeRange, 9);
         vector2Pool.free(position);
         vector2Pool.free(sizeRange);
     }

@@ -47,7 +47,7 @@
   </object>
   <object id="204" type="vanishing_platform" gid="32" x="3904" y="3712" width="192" height="64"/>
   <object id="205" type="vanishing_platform" gid="32" x="3904" y="3520" width="192" height="64"/>
-  <object id="206" type="vanishing_platform" gid="32" x="3904" y="3328" width="192" height="64"/>
+  <object id="206" type="vanishing_platform" gid="32" x="3840" y="3328" width="192" height="64"/>
   <object id="208" x="3328" y="3712">
    <polyline points="0,0 -128,0 -128,64 -64,64 -64,128 64,128 64,64 0,64 0,0"/>
   </object>

@@ -1,4 +1,5 @@
 - Make level 2 longer
+- Color scheme?
 - Get custom entity texture working
 - Iteration-Complete dialog
 - Back button goes to Main Menu (with dialog making sure)
