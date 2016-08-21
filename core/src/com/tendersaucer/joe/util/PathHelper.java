@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.Array;
  */
 public class PathHelper {
 
+    private static final float MIN_SPEED = 0.0001f;
+
     private final Array<Vector2> legs;
     private final Vector2 velocity;
     private float totalDistance;
@@ -60,6 +62,13 @@ public class PathHelper {
             if (distanceCovered < 0) {
                 float theta = leg.angleRad();
                 velocity.set(MathUtils.cos(theta), MathUtils.sin(theta)).scl(speed);
+                if (Math.abs(velocity.x) < MIN_SPEED) {
+                    velocity.x = 0;
+                }
+                if (Math.abs(velocity.y) < MIN_SPEED) {
+                    velocity.y = 0;
+                }
+
                 break;
             }
         }

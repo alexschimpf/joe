@@ -38,6 +38,10 @@ public final class DAO {
         return instance;
     }
 
+    public boolean containsKey(String key) {
+        return preferencesCache.containsKey(key);
+    }
+
     public long getLong(String key, long defaultValue) {
         if (!preferencesCache.containsKey(key)) {
             return defaultValue;
@@ -99,9 +103,8 @@ public final class DAO {
     }
 
     public void add(String key, long amount) {
-        Gdx.app.debug("DAO", "Adding " + amount + " to " + key);
-        if (preferences.contains(key)) {
-            long curr = preferences.getLong(key);
+        if (containsKey(key)) {
+            long curr = getLong(key, 0);
             preferences.putLong(key, curr + amount);
         } else {
             preferences.putLong(key, amount);
@@ -111,9 +114,8 @@ public final class DAO {
         loadFromPreferences();
     }
 
-    public void reset(String key) {
-        Gdx.app.debug("DAO", "Resetting " + key);
-        if (preferences.contains(key)) {
+    public void remove(String key) {
+        if (containsKey(key)) {
             preferences.remove(key);
         }
 

@@ -14,6 +14,7 @@ import com.tendersaucer.joe.gen.EntityConstants;
 import com.tendersaucer.joe.level.ICollide;
 import com.tendersaucer.joe.level.Level;
 import com.tendersaucer.joe.util.BodyData;
+import com.tendersaucer.joe.util.StringUtils;
 import com.tendersaucer.joe.util.Vector2Pool;
 
 import java.lang.reflect.Constructor;
@@ -227,16 +228,20 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
         return body.getLinearVelocity();
     }
 
+    public void setLinearVelocity(float x, float y) {
+        body.setLinearVelocity(x, y);
+    }
+
+    public void setLinearVelocity(Vector2 velocity) {
+        body.setLinearVelocity(velocity);
+    }
+
     public float getAngularSpeed() {
         return body.getAngularVelocity();
     }
 
     public void setAngularSpeed(float speed) {
         body.setAngularVelocity(speed);
-    }
-
-    public void setLinearVelocity(float x, float y) {
-        body.setLinearVelocity(x, y);
     }
 
     public void setPosition(float centerX, float centerY) {
@@ -268,7 +273,7 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
 
     private String getOrCreateId() {
         String id = definition.getId();
-        if (id == null || id.equals("")) {
+        if (StringUtils.isEmpty(id)) {
             id = Level.getInstance().getAvailableEntityId();
         }
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.tendersaucer.joe.IDisposable;
 import com.tendersaucer.joe.IUpdate;
 import com.tendersaucer.joe.level.Level;
+import com.tendersaucer.joe.util.StringUtils;
 
 import java.lang.reflect.Constructor;
 
@@ -119,7 +120,7 @@ public abstract class Script implements IUpdate, IDisposable {
 
     private String getOrCreateId() {
         String id = definition.getId();
-        if (id == null || id.equals("")) {
+        if (StringUtils.isEmpty(id)) {
             id = Level.getInstance().getAvailableScriptId();
         }
 

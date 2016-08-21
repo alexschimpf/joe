@@ -36,13 +36,13 @@ public final class StatsCollector implements IGameStateChangeListener {
             runStartTime = null;
         }
         if (isLevelFirstRun(oldEvent, newEvent)) {
-            dao.reset(DAO.RUN_ID_KEY);
-            dao.reset(DAO.TOTAL_TIME_KEY);
+            dao.remove(DAO.RUN_ID_KEY);
+            dao.remove(DAO.TOTAL_TIME_KEY);
         }
         if (isLevelEnd(newEvent)) {
             int levelId = (int)dao.getLong(DAO.LEVEL_ID_KEY, 0);
             if (levelId >= Globals.NUM_LEVELS - 1) {
-                dao.reset(DAO.LEVEL_ID_KEY);
+                dao.remove(DAO.LEVEL_ID_KEY);
                 dao.increment(DAO.ITERATION_ID_KEY);
             } else {
                 dao.increment(DAO.LEVEL_ID_KEY);

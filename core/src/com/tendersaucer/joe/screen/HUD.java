@@ -63,6 +63,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
 
     private int tutorialPosition;
+    private boolean isTutorialNextButtonPressed;
     private Label tutorialLabel;
     private Image tutorialHelperArrow;
     private Image tutorialNextButton;
@@ -101,6 +102,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             tutorialPosition = 0;
             createTutorialUI();
         }
+
+        isTutorialNextButtonPressed = false;
     }
 
     public static HUD getInstance() {
@@ -430,52 +433,62 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         tutorialHelperArrow.setVisible(false);
         tutorialHelperArrow.setColor(Color.BLACK);
         tutorialNextButton = new Image(tr);
-        tutorialNextButton.setSize(size, size);
-        tutorialNextButton.setPosition(screenWidth - size, screenHeight - size);
+        tutorialNextButton.setSize(size * 2, size * 2);
+        tutorialNextButton.setOrigin(Align.center);
+        tutorialNextButton.setPosition(screenWidth - (size * 2.1f), screenHeight - (size * 1.55f));
         tutorialNextButton.setVisible(true);
         tutorialNextButton.setRotation(90);
         tutorialNextButton.setColor(Globals.OFF_COLOR);
         tutorialNextButton.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
-           @Override
-           public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-               if (!tutorialLabel.isVisible()) {
-                   return false;
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+               if (tutorialLabel.isVisible()) {
+                   isTutorialNextButtonPressed = true;
+                   Color color = tutorialNextButton.getColor();
+                   tutorialNextButton.setColor(color.r, color.g, color.b, 1);
+                   tutorialNextButton.setColor(Color.BLACK);
+                   return true;
                }
 
-               int lastPos = Globals.isMobile() ? MOBILE_TUTORIAL_MESSAGES.length - 1 :
-                       DESKTOP_TUTORIAL_MESSAGES.length - 1;
-               if (tutorialPosition == lastPos) {
-                   tutorialLabel.setVisible(false);
-                   tutorialHelperArrow.setVisible(false);
-                   tutorialNextButton.setVisible(false);
-                   stage.addListener(inputListener);
-                   DAO.getInstance().putBoolean(DAO.IS_NEW_KEY, false);
-                   tutorialFlashTimer.clear();
-               } else {
-                   tutorialPosition++;
-                   if (tutorialPosition == 5) {
-                       tutorialLabel.getStyle().fontColor = Globals.OFF_COLOR;
-                   } else {
-                       tutorialLabel.getStyle().fontColor = Color.BLACK;
-                   }
+               return false;
+            }
 
-                   if (Globals.isMobile()) {
-                       float size = tutorialHelperArrow.getWidth();
-                       if (tutorialPosition == 2) {
-                           float moveButtonCenterX = moveButton.getX() + (moveButton.getWidth() / 2);
-                           tutorialHelperArrow.setPosition(moveButtonCenterX - (size / 2), moveButton.getTop() + padding);
-                           tutorialHelperArrow.setVisible(true);
-                       } else if (tutorialPosition == 3) {
-                           float jumpButtonCenterX = jumpButton.getX() + (jumpButton.getWidth() / 2);
-                           tutorialHelperArrow.setPosition(jumpButtonCenterX - (size / 2), jumpButton.getTop() + padding);
-                       } else if (tutorialPosition == 5) {
-                           tutorialHelperArrow.setVisible(false);
-                       }
-                   }
-               }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                isTutorialNextButtonPressed = false;
+                int lastPos = Globals.isMobile() ? MOBILE_TUTORIAL_MESSAGES.length - 1 :
+                        DESKTOP_TUTORIAL_MESSAGES.length - 1;
+                tutorialNextButton.setColor(Globals.OFF_COLOR);
+                if (tutorialPosition == lastPos) {
+                    tutorialLabel.setVisible(false);
+                    tutorialHelperArrow.setVisible(false);
+                    tutorialNextButton.setVisible(false);
+                    stage.addListener(inputListener);
+                    DAO.getInstance().putBoolean(DAO.IS_NEW_KEY, false);
+                    tutorialFlashTimer.clear();
+                } else {
+                    tutorialPosition++;
+                    if (tutorialPosition == 5) {
+                        tutorialLabel.getStyle().fontColor = Globals.OFF_COLOR;
+                    } else {
+                        tutorialLabel.getStyle().fontColor = Color.BLACK;
+                    }
 
-               return true;
-           }
+                    if (Globals.isMobile()) {
+                        float size = tutorialHelperArrow.getWidth();
+                        if (tutorialPosition == 2) {
+                            float moveButtonCenterX = moveButton.getX() + (moveButton.getWidth() / 2);
+                            tutorialHelperArrow.setPosition(moveButtonCenterX - (size / 2), moveButton.getTop() + padding);
+                            tutorialHelperArrow.setVisible(true);
+                        } else if (tutorialPosition == 3) {
+                            float jumpButtonCenterX = jumpButton.getX() + (jumpButton.getWidth() / 2);
+                            tutorialHelperArrow.setPosition(jumpButtonCenterX - (size / 2), jumpButton.getTop() + padding);
+                        } else if (tutorialPosition == 5) {
+                            tutorialHelperArrow.setVisible(false);
+                        }
+                    }
+                }
+            }
         });
         stage.addActor(tutorialNextButton);
         stage.addActor(tutorialHelperArrow);
@@ -485,7 +498,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             @Override
             public void run() {
                 Color curr = tutorialNextButton.getColor();
-                tutorialNextButton.setColor(curr.r, curr.g, curr.b, curr.a == 0 ? 1 : 0);
+                tutorialNextButton.setColor(curr.r, curr.g, curr.b,
+                        curr.a == 0 || isTutorialNextButtonPressed ? 1 : 0);
             }
         }, 0, 0.25f);
     }

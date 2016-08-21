@@ -4,9 +4,8 @@ public class EntityConstants {
 
 	public static final String ENTITY = "entity";
 	public static final String RENDERED_ENTITY = "rendered_entity";
-	public static final String COLOR_SYSTEM_PROVIDER = "color_system_provider";
-	public static final String COLOR_SYSTEM_PLATFORM = "color_system_platform";
-	public static final String CHAIN_PLATFORM = "chain_platform";
-	public static final String LEVEL_COMPLETION_TOKEN = "level_completion_token";
+	public static final String NEXT_LEVEL_TOKEN = "next_level_token";
+	public static final String TIMER_CHAIN_LINK = "timer_chain_link";
 	public static final String PLAYER = "player";
+	public static final String VANISHING_PLATFORM = "vanishing_platform";
 }
