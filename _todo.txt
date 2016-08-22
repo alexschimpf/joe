@@ -1,3 +1,21 @@
+ColorScheme
+    - Singleton
+    - getPrimaryColor
+    - getSecondaryColor
+    - isShadeOf(Color color)
+        - Returns ColorSchemeColorType.PRIMARY or ColorSchemeColorType.SECONDARY
+    - These are reset on ILevelLoadBeginEvent
+    - Entities can decide which they want to be colored (via entity.json)
+        - Default is "primary"
+    - Player is always white
+        - This should be overridden when Entity gets color from EntityDefinition
+TiledMapObjectDetector
+    - This will be used in MapLayerWrapper.correctCells
+    - Detects the objects and then colors them via ColorScheme (which
+        will have reset color beforehand in ILevelLoadBegin)
+
+
+- All public/private static final variables should be all-uppercase
 - Make level 2 longer
 - Color scheme?
 - Get custom entity texture working

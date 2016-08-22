@@ -123,6 +123,10 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
         return canvasMap;
     }
 
+    public TiledMap getRawTiledMap() {
+        return tiledMap;
+    }
+
     private void processLayers() {
         final OrthogonalTiledMapRenderer renderer = new OrthogonalTiledMapRenderer(tiledMap,
                 MainCamera.getInstance().getTileMapScale(), Driver.spriteBatch) {

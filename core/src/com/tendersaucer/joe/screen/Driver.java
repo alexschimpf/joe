@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.tendersaucer.joe.AssetManager;
+import com.tendersaucer.joe.ColorScheme;
 import com.tendersaucer.joe.DAO;
 import com.tendersaucer.joe.GameState;
 import com.tendersaucer.joe.Globals;
@@ -57,6 +58,7 @@ public final class Driver implements Screen {
         EventManager eventManager = EventManager.getInstance();
         eventManager.listen(LevelLoadBeginEvent.class, Canvas.getInstance());
         eventManager.listen(LevelLoadBeginEvent.class, ParticleEffectManager.getInstance());
+        eventManager.listen(LevelLoadBeginEvent.class, ColorScheme.getInstance());
         eventManager.listen(GameStateChangeEvent.class, HUD.getInstance());
         eventManager.listen(GameStateChangeEvent.class, StatsCollector.getInstance());
         eventManager.listen(GameStateChangeEvent.class, MainCamera.getInstance());

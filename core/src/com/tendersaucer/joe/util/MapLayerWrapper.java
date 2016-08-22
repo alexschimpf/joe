@@ -50,6 +50,7 @@ public final class MapLayerWrapper implements IRender {
                 TiledMapTileLayer.Cell cell = rawLayer.getCell(col, row);
                 if (cell != null) {
                     cell.setFlipVertically(true);
+                    // TODO: Paint!
                 }
             }
         }
