@@ -13,6 +13,7 @@ TiledMapObjectDetector
     - This will be used in MapLayerWrapper.correctCells
     - Detects the objects and then colors them via ColorScheme (which
         will have reset color beforehand in ILevelLoadBegin)
+    - This will be run for ALL layers with 0 objects
 
 
 - All public/private static final variables should be all-uppercase

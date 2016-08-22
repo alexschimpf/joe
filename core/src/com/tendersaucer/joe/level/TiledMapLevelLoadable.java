@@ -11,14 +11,13 @@ import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Array;
 import com.tendersaucer.joe.AssetManager;
+import com.tendersaucer.joe.util.ColoredOrthogonalTiledMapRenderer;
 import com.tendersaucer.joe.MainCamera;
 import com.tendersaucer.joe.background.ParallaxBackground;
 import com.tendersaucer.joe.background.TextureParallaxLayer;
@@ -128,14 +127,8 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
     }
 
     private void processLayers() {
-        final OrthogonalTiledMapRenderer renderer = new OrthogonalTiledMapRenderer(tiledMap,
-                MainCamera.getInstance().getTileMapScale(), Driver.spriteBatch) {
-            @Override
-            public void renderTileLayer(TiledMapTileLayer layer) {
-                setView(MainCamera.getInstance().getRawCamera());
-                super.renderTileLayer(layer);
-            }
-        };
+        final ColoredOrthogonalTiledMapRenderer renderer = new ColoredOrthogonalTiledMapRenderer(tiledMap,
+                MainCamera.getInstance().getTileMapScale(), Driver.spriteBatch);
 
         Array<MapLayerWrapper> layersToProcess = new Array<MapLayerWrapper>();
         for (MapLayer layer : tiledMap.getLayers()) {

@@ -1,12 +1,17 @@
 package com.tendersaucer.joe.util;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.utils.Array;
+import com.tendersaucer.joe.ColorScheme;
 import com.tendersaucer.joe.screen.IRender;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Wrapper around TiledMapLayer
@@ -16,9 +21,9 @@ import com.tendersaucer.joe.screen.IRender;
 public final class MapLayerWrapper implements IRender {
 
     private final MapLayer rawLayer;
-    private final OrthogonalTiledMapRenderer renderer;
+    private final ColoredOrthogonalTiledMapRenderer renderer;
 
-    public MapLayerWrapper(OrthogonalTiledMapRenderer renderer, MapLayer rawLayer) {
+    public MapLayerWrapper(ColoredOrthogonalTiledMapRenderer renderer, MapLayer rawLayer) {
         this.renderer = renderer;
 
         if (rawLayer instanceof TiledMapTileLayer) {
@@ -45,12 +50,45 @@ public final class MapLayerWrapper implements IRender {
     }
 
     private void correctCells(TiledMapTileLayer rawLayer) {
+        Array<Array<TiledMapTileLayer.Cell>> objects = null;
+        if (rawLayer.getObjects().getCount() == 0) {
+            TiledMapObjectDetector detector = new TiledMapObjectDetector(rawLayer);
+            objects = detector.findObjects();
+        }
+
+        if (objects != null) {
+            ColorScheme.ColorType layerColorType = null;
+            MapProperties properties = rawLayer.getProperties();
+            if (properties.containsKey("color_type")) {
+                String colorType = properties.get("color_type").toString();
+                if ("primary".equals(colorType)) {
+                    layerColorType = ColorScheme.ColorType.PRIMARY;
+                } else if ("secondary".equals(colorType)) {
+                    layerColorType = ColorScheme.ColorType.SECONDARY;
+                }
+            }
+
+            Color objectColor;
+            Map<TiledMapTileLayer.Cell, Color> cellColorMap = new HashMap<TiledMapTileLayer.Cell, Color>();
+            for (Array<TiledMapTileLayer.Cell> object : objects) {
+                if (layerColorType == ColorScheme.ColorType.PRIMARY) {
+                    objectColor = ColorScheme.getInstance().getShadedPrimaryColor();
+                } else {
+                    objectColor = ColorScheme.getInstance().getShadedSecondaryColor();
+                }
+
+                for (TiledMapTileLayer.Cell cell : object) {
+                    cellColorMap.put(cell, objectColor);
+                }
+            }
+            renderer.addCellColorMap(cellColorMap);
+        }
+
         for (int col = 0; col < rawLayer.getWidth(); col++) {
             for (int row = 0; row < rawLayer.getHeight(); row++) {
                 TiledMapTileLayer.Cell cell = rawLayer.getCell(col, row);
                 if (cell != null) {
                     cell.setFlipVertically(true);
-                    // TODO: Paint!
                 }
             }
         }

@@ -11,6 +11,8 @@ import com.tendersaucer.joe.util.RandomUtils;
 public final class ColorScheme implements ILevelLoadBeginListener {
 
     private static final ColorScheme instance = new ColorScheme();
+    private static final float MIN_SHADE_BRIGHTNESS = 0.9f;
+    private static final float MAX_SHADE_BRIGHTNESS = 1.1f;
 
     // Tetrad complimentary colors
     private static final Color[] COLOR_BANK = new Color[] {
@@ -47,21 +49,31 @@ public final class ColorScheme implements ILevelLoadBeginListener {
     public Color getPrimaryColor(ReturnType returnType) {
         if (returnType == ReturnType.SHARED) {
             return primaryColor;
-        } else if (returnType == ReturnType.NEW) {
-            return new Color(primaryColor);
         }
 
-        return null;
+        return new Color(primaryColor);
     }
 
     public Color getSecondaryColor(ReturnType returnType) {
         if (returnType == ReturnType.SHARED) {
             return secondaryColor;
-        } else if (returnType == ReturnType.NEW) {
-            return new Color(secondaryColor);
         }
 
-        return null;
+        return new Color(secondaryColor);
+    }
+
+    public Color getShadedPrimaryColor() {
+        Color color = getPrimaryColor(ReturnType.NEW);
+        color.mul(RandomUtils.pickFromRange(MIN_SHADE_BRIGHTNESS, MAX_SHADE_BRIGHTNESS)).clamp();
+
+        return color;
+    }
+
+    public Color getShadedSecondaryColor() {
+        Color color = getSecondaryColor(ReturnType.NEW);
+        color.mul(RandomUtils.pickFromRange(MIN_SHADE_BRIGHTNESS, MAX_SHADE_BRIGHTNESS)).clamp();
+
+        return color;
     }
 
     public ColorType isShadeOf(Color color) {
