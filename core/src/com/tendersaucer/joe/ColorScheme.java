@@ -15,6 +15,7 @@ public final class ColorScheme implements ILevelLoadBeginListener {
     private static final float MAX_SHADE_BRIGHTNESS = 1.1f;
 
     // Tetrad complimentary colors
+    // TODO: http://paletton.com/#uid=70f0s0kllllaFw0g0qFqFg0w0aF
     private static final Color[] COLOR_BANK = new Color[] {
         new Color(), new Color(), new Color(), new Color()
     };
