@@ -51,10 +51,38 @@ public final class TiledMapObjectDetector {
         }
 
         Array<TiledMapTileLayer.Cell> object = new Array<TiledMapTileLayer.Cell>();
-
-        // TODO
+        Array<Vector2> stack = new Array<Vector2>();
+        stack.add(new Vector2(x, y));
+        while (stack.size > 0) {
+            Vector2 curr = stack.pop();
+            if (!isVisited(curr)) {
+                object.add(layer.getCell((int)curr.x, (int)curr.y));
+                setVisited(curr, true);
+                for (Vector2 neighbor : getNeighbors(curr)) {
+                    stack.add(neighbor);
+                }
+            }
+        }
 
         return object;
+    }
+
+    private Array<Vector2> getNeighbors(Vector2 pos) {
+        Array<Vector2> neighbors = new Array<Vector2>();
+        if (layer.getCell((int)pos.x - 1, (int)pos.y) != null) {
+            neighbors.add(new Vector2(pos.x - 1, pos.y));
+        }
+        if (layer.getCell((int)pos.x + 1, (int)pos.y) != null) {
+            neighbors.add(new Vector2(pos.x + 1, pos.y));
+        }
+        if (layer.getCell((int)pos.x, (int)pos.y - 1) != null) {
+            neighbors.add(new Vector2(pos.x, pos.y - 1));
+        }
+        if (layer.getCell((int)pos.x, (int)pos.y + 1) != null) {
+            neighbors.add(new Vector2(pos.x, pos.y + 1));
+        }
+
+        return neighbors;
     }
 
     private void setVisited(Vector2 pos, boolean visited) {
