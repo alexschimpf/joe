@@ -13,8 +13,8 @@ import java.util.List;
 public final class ColorScheme {
 
     private static final ColorScheme instance = new ColorScheme();
-    private static final float MIN_SHADE_BRIGHTNESS = 0.92f;
-    private static final float MAX_SHADE_BRIGHTNESS = 1.08f;
+    private static final float MIN_SHADE_BRIGHTNESS = 0.95f;
+    private static final float MAX_SHADE_BRIGHTNESS = 1.05f;
 
     public enum ColorType {
         PRIMARY, SECONDARY
