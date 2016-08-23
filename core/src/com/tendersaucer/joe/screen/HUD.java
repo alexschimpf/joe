@@ -295,15 +295,15 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         levelCompleteBackground = new Image(AssetManager.getInstance().getTextureRegion("default"));
         levelCompleteBackground.setPosition(0, 0);
         levelCompleteBackground.setSize(screenWidth, screenHeight);
-        levelCompleteBackground.setColor(0.7f, 0.7f, 0.7f, 0.8f);
+        levelCompleteBackground.setColor(0, 0, 0, 0.3f);
         stage.addActor(levelCompleteBackground);
 
-        int nextButtonHeight = (int)(Gdx.graphics.getWidth() * 0.1f);
+        int nextButtonHeight = (int)(Gdx.graphics.getWidth() * 0.2f);
         FreeTypeFontParameter fontParam = new FreeTypeFontParameter();
         fontParam.size = nextButtonHeight;
         TextButton.TextButtonStyle nextButtonStyle = new TextButton.TextButtonStyle();
         nextButtonStyle.font = fontGenerator.generateFont(fontParam);
-        nextButtonStyle.fontColor = Color.BLACK;
+        nextButtonStyle.fontColor = Color.WHITE;
         nextButtonStyle.downFontColor = Color.WHITE;
         nextButton = new TextButton("\nNEXT", skin);
         nextButton.setSize(screenWidth, nextButtonHeight);

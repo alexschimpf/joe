@@ -1,25 +1,20 @@
 package com.tendersaucer.joe;
 
 import com.badlogic.gdx.graphics.Color;
-import com.tendersaucer.joe.event.ILevelLoadBeginListener;
-import com.tendersaucer.joe.level.ILevelLoadable;
 import com.tendersaucer.joe.util.RandomUtils;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Alex on 8/21/2016.
  */
-public final class ColorScheme implements ILevelLoadBeginListener {
+public final class ColorScheme {
 
     private static final ColorScheme instance = new ColorScheme();
-    private static final float MIN_SHADE_BRIGHTNESS = 0.9f;
-    private static final float MAX_SHADE_BRIGHTNESS = 1.1f;
-
-    // http://paletton.com/#uid=70f0s0kllllaFw0g0qFqFg0w0aF
-    private static final Color[] COLOR_BANK = new Color[] {
-        new Color(121 / 255.0f, 173 / 255.0f, 173 / 255.0f, 1),
-        new Color(255 / 255.0f, 229 / 255.0f, 179 / 255.0f, 1),
-        new Color(255 / 255.0f, 183 / 255.0f, 179 / 255.0f, 1)
-    };
+    private static final float MIN_SHADE_BRIGHTNESS = 0.92f;
+    private static final float MAX_SHADE_BRIGHTNESS = 1.08f;
 
     public enum ColorType {
         PRIMARY, SECONDARY
@@ -29,6 +24,12 @@ public final class ColorScheme implements ILevelLoadBeginListener {
         SHARED, NEW
     }
 
+    // http://paletton.com/#uid=70f0s0kllllaFw0g0qFqFg0w0aF
+    private static Color[] colorBank = new Color[] {
+            new Color(121 / 255.0f, 173 / 255.0f, 173 / 255.0f, 1),
+            new Color(255 / 255.0f, 229 / 255.0f, 179 / 255.0f, 1),
+            new Color(255 / 255.0f, 183 / 255.0f, 179 / 255.0f, 1)
+    };
     private Color secondaryColor;
     private Color primaryColor;
 
@@ -39,12 +40,17 @@ public final class ColorScheme implements ILevelLoadBeginListener {
         return instance;
     }
 
-    @Override
-    public void onLevelLoadBegin(ILevelLoadable loadable) {
-        primaryColor = COLOR_BANK[RandomUtils.pickIndex(COLOR_BANK)];
+    public void reset() {
+        // TODO: Is MathUtils.random legit?
+        List<Color> colorBankList = Arrays.asList(colorBank);
+        Collections.shuffle(colorBankList);
+        colorBank = new Color[colorBank.length];
+        colorBankList.toArray(colorBank);
+
+        primaryColor = colorBank[RandomUtils.pickIndex(colorBank)];
         secondaryColor = primaryColor;
         while (secondaryColor == primaryColor) {
-            secondaryColor = COLOR_BANK[RandomUtils.pickIndex(COLOR_BANK)];
+            secondaryColor = colorBank[RandomUtils.pickIndex(colorBank)];
         }
     }
 

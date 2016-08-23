@@ -1,6 +1,5 @@
 package com.tendersaucer.joe.level;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -17,7 +16,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Array;
 import com.tendersaucer.joe.AssetManager;
-import com.tendersaucer.joe.util.ColoredOrthogonalTiledMapRenderer;
 import com.tendersaucer.joe.MainCamera;
 import com.tendersaucer.joe.background.ParallaxBackground;
 import com.tendersaucer.joe.background.TextureParallaxLayer;
@@ -31,6 +29,7 @@ import com.tendersaucer.joe.screen.IRender;
 import com.tendersaucer.joe.script.ScriptDefinition;
 import com.tendersaucer.joe.script.ScriptPropertyConfiguration;
 import com.tendersaucer.joe.script.TiledScriptDefinition;
+import com.tendersaucer.joe.util.ColoredOrthogonalTiledMapRenderer;
 import com.tendersaucer.joe.util.FixtureBodyDefinition;
 import com.tendersaucer.joe.util.InvalidConfigException;
 import com.tendersaucer.joe.util.MapLayerWrapper;
@@ -79,12 +78,7 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
         background = new ParallaxBackground();
         setBackground();
 
-        try {
-            processLayers();
-        } catch (Exception e) {
-            Gdx.app.log("tiled", "Error processing layers");
-            Gdx.app.log("tiled", e.toString());
-        }
+        processLayers();
     }
 
     @Override

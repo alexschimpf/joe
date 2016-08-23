@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.tendersaucer.joe.ColorScheme;
 import com.tendersaucer.joe.GameState;
 import com.tendersaucer.joe.Globals;
 import com.tendersaucer.joe.IDisposable;
@@ -116,13 +117,14 @@ public final class Level implements IUpdate, IDisposable {
         id = levelId;
         this.iterationId = iterationId;
 
+        ColorScheme.getInstance().reset();
         TiledMapLevelLoadable loadable = new TiledMapLevelLoadable(levelId);
         EventManager.getInstance().notify(new LevelLoadBeginEvent(loadable));
 
         id = loadable.getId();
         respawnPosition.set(loadable.getRespawnPosition());
 
-        Canvas.getInstance().addToLayer(0, loadable.getBackground());
+        //Canvas.getInstance().addToLayer(0, loadable.getBackground());
 
         // Add non-entity/background canvas objects.
         Map<IRender, Integer> canvasMap = loadable.getCanvasMap();

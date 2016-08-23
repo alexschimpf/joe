@@ -119,6 +119,7 @@
  </objectgroup>
  <layer name="foreground" width="64" height="64">
   <properties>
+   <property name="color_type" value="primary"/>
    <property name="layer" type="int" value="7"/>
   </properties>
   <data encoding="csv">

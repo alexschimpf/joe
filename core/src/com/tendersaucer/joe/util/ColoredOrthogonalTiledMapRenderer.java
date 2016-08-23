@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.tendersaucer.joe.MainCamera;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static com.badlogic.gdx.graphics.g2d.Batch.C1;
@@ -41,6 +42,8 @@ public class ColoredOrthogonalTiledMapRenderer extends OrthogonalTiledMapRendere
 
     public ColoredOrthogonalTiledMapRenderer(TiledMap map, float unitScale, Batch batch) {
         super(map, unitScale, batch);
+
+        cellColorMap = new HashMap<TiledMapTileLayer.Cell, Color>();
     }
 
     @Override

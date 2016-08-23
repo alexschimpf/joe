@@ -3,6 +3,7 @@ package com.tendersaucer.joe.screen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,10 +23,6 @@ import com.tendersaucer.joe.event.NewUserEvent;
 import com.tendersaucer.joe.level.Level;
 import com.tendersaucer.joe.particle.ParticleEffectManager;
 import com.tendersaucer.joe.util.Vector2Pool;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Main update and render logic
@@ -58,7 +55,6 @@ public final class Driver implements Screen {
         EventManager eventManager = EventManager.getInstance();
         eventManager.listen(LevelLoadBeginEvent.class, Canvas.getInstance());
         eventManager.listen(LevelLoadBeginEvent.class, ParticleEffectManager.getInstance());
-        eventManager.listen(LevelLoadBeginEvent.class, ColorScheme.getInstance());
         eventManager.listen(GameStateChangeEvent.class, HUD.getInstance());
         eventManager.listen(GameStateChangeEvent.class, StatsCollector.getInstance());
         eventManager.listen(GameStateChangeEvent.class, MainCamera.getInstance());
@@ -71,8 +67,6 @@ public final class Driver implements Screen {
 
         if (dao.getBoolean(DAO.IS_NEW_KEY, true)) {
             eventManager.notify(new NewUserEvent());
-            dao.putString(DAO.COLOR_ORDER_KEY, getRandomColorOrder());
-            //Gdx.input.setInputProcessor(null);
         }
     }
 
@@ -134,7 +128,8 @@ public final class Driver implements Screen {
             Gdx.app.debug("debug", "Heap size (MB): " + Gdx.app.getJavaHeap() / 1000000.0f);
         }
 
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Color c = ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.SHARED);
+        Gdx.gl.glClearColor(c.r, c.g, c.b, c.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         OrthographicCamera camera = MainCamera.getInstance().getRawCamera();
@@ -151,18 +146,5 @@ public final class Driver implements Screen {
         }
 
         HUD.getInstance().render(spriteBatch);
-    }
-
-    private String getRandomColorOrder() {
-        List<String> codes = new ArrayList<String>();
-        codes.add("r"); codes.add("g"); codes.add("b");
-        Collections.shuffle(codes);
-
-        String order = "";
-        for (int i = 0; i < codes.size(); i++) {
-            order += codes.get(i);
-        }
-
-        return order;
     }
 }

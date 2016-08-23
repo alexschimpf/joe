@@ -30,7 +30,6 @@
                             "class": "Player",
                             "properties": {
                                 "optional": [
-                                    { "name": "color", "default": "1,0.95,0.95,1" },
                                     { "name": "body_type", "default": "dynamic" }
                                 ]
                             }
