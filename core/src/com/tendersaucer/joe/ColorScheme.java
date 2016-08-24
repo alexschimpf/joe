@@ -32,6 +32,7 @@ public final class ColorScheme {
                     new Color(255 / 255.0f, 183 / 255.0f, 179 / 255.0f, 1)
             }
     };
+    private Color tertiaryColor;
     private Color secondaryColor;
     private Color primaryColor;
 
@@ -55,6 +56,13 @@ public final class ColorScheme {
         while (secondaryColor == primaryColor) {
             secondaryColor = colorScheme[RandomUtils.pickIndex(colorScheme)];
         }
+
+        for (int i = 0; i <= 2; i++) {
+            if (primaryColor != colorScheme[i] && secondaryColor != colorScheme[i]) {
+                tertiaryColor = colorScheme[i];
+                break;
+            }
+        }
     }
 
     public Color getPrimaryColor(ReturnType returnType) {
@@ -73,6 +81,14 @@ public final class ColorScheme {
         return new Color(secondaryColor);
     }
 
+    public Color getTertiaryColor(ReturnType returnType) {
+        if (returnType == ReturnType.SHARED) {
+            return tertiaryColor;
+        }
+
+        return new Color(tertiaryColor);
+    }
+
     public Color getShadedPrimaryColor() {
         Color color = getPrimaryColor(ReturnType.NEW);
         color.mul(RandomUtils.pickFromRange(MIN_SHADE_BRIGHTNESS, MAX_SHADE_BRIGHTNESS)).clamp();
@@ -82,6 +98,13 @@ public final class ColorScheme {
 
     public Color getShadedSecondaryColor() {
         Color color = getSecondaryColor(ReturnType.NEW);
+        color.mul(RandomUtils.pickFromRange(MIN_SHADE_BRIGHTNESS, MAX_SHADE_BRIGHTNESS)).clamp();
+
+        return color;
+    }
+
+    public Color getShadedTertiaryColor() {
+        Color color = getTertiaryColor(ReturnType.NEW);
         color.mul(RandomUtils.pickFromRange(MIN_SHADE_BRIGHTNESS, MAX_SHADE_BRIGHTNESS)).clamp();
 
         return color;

@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
@@ -43,7 +44,8 @@ import com.tendersaucer.joe.level.Level;
 public final class HUD implements IUpdate, IRender, IGameStateChangeListener, INewUserEventListener {
 
     private static final HUD instance = new HUD();
-    private static final float BUTTON_ALPHA = 0.5f;
+    private Color MOBILE_BUTTON_DOWN_COLOR = new Color(0.8f, 0.8f, 0.8f, 0.5f);
+    private Color MOBILE_BUTTON_UP_COLOR = new Color(1, 1, 1, 0.5f);
     private static final String[] MOBILE_TUTORIAL_MESSAGES = new String[] {
         "Hi, I'm Joe.",
         "Now... mindlessly follow my commands.",
@@ -62,7 +64,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         "Your mission?",
         "GUIDE ME TO THE RED SPINNING THINGIES!"
     };
-
 
     private int tutorialPosition;
     private boolean isTutorialNextButtonPressed;
@@ -233,7 +234,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     private void hideLevelComplete() {
         levelCompleteBackground.setVisible(false);
         nextButton.setVisible(false);
-
         levelSummaryLabel.setText("");
         levelSummaryLabel.setVisible(false);
 
@@ -342,7 +342,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         float screenHeight = Gdx.graphics.getHeight();
 
         moveButton = new Button(skin);
-        moveButton.setColor(1, 1, 1, BUTTON_ALPHA);
+        moveButton.getStyle().down = new TextureRegionDrawable(AssetManager.getInstance().getTextureRegion("default")).tint(MOBILE_BUTTON_DOWN_COLOR);
+        moveButton.getStyle().up = new TextureRegionDrawable(AssetManager.getInstance().getTextureRegion("default")).tint(MOBILE_BUTTON_UP_COLOR);
         moveButton.setSize(screenWidth / 3f, screenHeight / 5f);
         moveButton.setPosition(screenWidth / 32, screenHeight / 32f);
         moveButton.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
@@ -368,7 +369,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         float screenHeight = Gdx.graphics.getHeight();
 
         jumpButton = new Button(skin);
-        jumpButton.setColor(1, 1, 1, BUTTON_ALPHA);
+        jumpButton.getStyle().down = new TextureRegionDrawable(AssetManager.getInstance().getTextureRegion("default")).tint(MOBILE_BUTTON_DOWN_COLOR);
+        jumpButton.getStyle().up = new TextureRegionDrawable(AssetManager.getInstance().getTextureRegion("default")).tint(MOBILE_BUTTON_UP_COLOR);
         jumpButton.setSize(screenWidth / 5f, screenHeight / 5f);
         float buttonWidth = jumpButton.getWidth();
         jumpButton.setPosition(((31.0f / 32.0f) * screenWidth) - buttonWidth, screenHeight / 32f);
@@ -438,7 +440,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                    isTutorialNextButtonPressed = true;
                    Color color = tutorialNextButton.getColor();
                    tutorialNextButton.setColor(color.r, color.g, color.b, 1);
-                   tutorialNextButton.setColor(Color.BLACK);
+                   tutorialNextButton.setColor(Color.WHITE);
                    return true;
                }
 

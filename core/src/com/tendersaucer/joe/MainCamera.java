@@ -22,7 +22,7 @@ public final class MainCamera implements IUpdate, IGameStateChangeListener {
     private static final int TILE_SIZE_PIXELS = 64;
     private static final int BASE_VIEWPORT_WIDTH = 50; // 50m is small enough for Box2D to handle
     private static final int BASE_VIEWPORT_HEIGHT = 50;
-    private static final float PATH_DURATION = 30000;
+    private static final float PATH_DURATION = 20000;
 
     private boolean playerFocus;
     private long preLoopStartTime;
