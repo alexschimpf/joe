@@ -163,7 +163,7 @@ public class MainMenu implements Screen {
     }
 
     private void createLoadingLabel() {
-        int height = (int)(Gdx.graphics.getWidth() * 0.08f);
+        int height = (int)(Gdx.graphics.getWidth() * 0.1f);
         FreeTypeFontParameter fontParam = new FreeTypeFontParameter();
         fontParam.size = height;
         Label.LabelStyle style = new Label.LabelStyle();
