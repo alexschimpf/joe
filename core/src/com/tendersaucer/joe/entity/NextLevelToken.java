@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
+import com.tendersaucer.joe.ColorScheme;
 import com.tendersaucer.joe.GameState;
 import com.tendersaucer.joe.Globals;
 import com.tendersaucer.joe.gen.ParticleConstants;
@@ -50,6 +51,12 @@ public class NextLevelToken extends RenderedEntity {
         Vector2 position = vector2Pool.obtain(getLeft(), getBottom() - (sizeRange.y / 2));
         ParticleEffect effect =
                 ParticleEffectManager.getInstance().buildParticleEffect(ParticleConstants.LEVEL_COMPLETE);
+        Color color = ColorScheme.getInstance().getPrimaryColor(ColorScheme.ReturnType.NEW);
+        effect.setRedRange(color.r, color.r);
+        effect.setGreenRange(color.g, color.g);
+        effect.setBlueRange(color.b, color.b);
+        effect.setAlphaRange(color.a, color.a);
+
         ParticleEffectManager.getInstance().beginParticleEffect(effect, position, sizeRange, 9);
         vector2Pool.free(position);
         vector2Pool.free(sizeRange);

@@ -1,6 +1,5 @@
 package com.tendersaucer.joe;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -48,22 +47,23 @@ public final class MainCamera implements IUpdate, IGameStateChangeListener {
 
     @Override
     public boolean update() {
-        float deltaMs = Gdx.graphics.getDeltaTime() * 1000;
-        if (preLoopStartTime != 0) {
-            float preLoopDuration = PATH_DURATION / 8;
-            float pathAge = TimeUtils.timeSinceMillis(preLoopStartTime);
-            if (pathAge < preLoopDuration) {
-                float speed = (pathWidth / 2) / preLoopDuration;
-                rawCamera.translate(0, -speed * deltaMs);
-            } else {
-                preLoopStartTime = 0;
-                pathStartTime = TimeUtils.millis();
-            }
-        } else if (pathStartTime != 0) {
-            float pathAge = TimeUtils.timeSinceMillis(pathStartTime);
-            Vector2 velocity = pathHelper.getVelocity(PATH_DURATION, pathAge);
-            rawCamera.translate(velocity.x * deltaMs, velocity.y * deltaMs);
-        } else if (playerFocus) {
+//        float deltaMs = Gdx.graphics.getDeltaTime() * 1000;
+//        if (preLoopStartTime != 0) {
+//            float preLoopDuration = PATH_DURATION / 8;
+//            float pathAge = TimeUtils.timeSinceMillis(preLoopStartTime);
+//            if (pathAge < preLoopDuration) {
+//                float speed = (pathWidth / 2) / preLoopDuration;
+//                rawCamera.translate(0, -speed * deltaMs);
+//            } else {
+//                preLoopStartTime = 0;
+//                pathStartTime = TimeUtils.millis();
+//            }
+//        } else if (pathStartTime != 0) {
+//            float pathAge = TimeUtils.timeSinceMillis(pathStartTime);
+//            Vector2 velocity = pathHelper.getVelocity(PATH_DURATION, pathAge);
+//            rawCamera.translate(velocity.x * deltaMs, velocity.y * deltaMs);
+//        } else
+        if (playerFocus) {
             Player player = Level.getInstance().getPlayer();
             if (player != null) {
                 rawCamera.position.set(player.getCenterX(), player.getCenterY(), 0);

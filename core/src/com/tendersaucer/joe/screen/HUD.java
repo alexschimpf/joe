@@ -303,7 +303,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         fontParam.size = nextButtonHeight;
         TextButton.TextButtonStyle nextButtonStyle = new TextButton.TextButtonStyle();
         nextButtonStyle.font = fontGenerator.generateFont(fontParam);
-        nextButtonStyle.fontColor = Color.WHITE;
+        nextButtonStyle.fontColor = Color.BLACK;
         nextButtonStyle.downFontColor = Color.WHITE;
         nextButton = new TextButton("\nNEXT", skin);
         nextButton.setSize(screenWidth, nextButtonHeight);
@@ -311,23 +311,12 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         nextButton.setStyle(nextButtonStyle);
         nextButton.addListener(new ClickListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (!nextButton.isVisible()) {
-                    return false;
-                }
-
-                nextButton.getStyle().fontColor = Color.WHITE;
-                return true;
-            }
-
-            @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 if (!nextButton.isVisible()) {
                     return;
                 }
 
                 hideLevelComplete();
-                nextButton.getStyle().fontColor = Color.BLACK;
                 Level.getInstance().loadNext();
             }
         });
@@ -441,7 +430,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         tutorialNextButton.setPosition(screenWidth - (size * 2.1f), screenHeight - (size * 1.55f));
         tutorialNextButton.setVisible(true);
         tutorialNextButton.setRotation(90);
-        tutorialNextButton.setColor(Color.RED);
+        tutorialNextButton.setColor(Color.BLACK);
         tutorialNextButton.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -461,7 +450,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                 isTutorialNextButtonPressed = false;
                 int lastPos = Globals.isMobile() ? MOBILE_TUTORIAL_MESSAGES.length - 1 :
                         DESKTOP_TUTORIAL_MESSAGES.length - 1;
-                tutorialNextButton.setColor(Color.RED);
+                tutorialNextButton.setColor(Color.BLACK);
                 if (tutorialPosition == lastPos) {
                     tutorialLabel.setVisible(false);
                     tutorialHelperArrow.setVisible(false);
@@ -471,12 +460,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                     tutorialFlashTimer.clear();
                 } else {
                     tutorialPosition++;
-                    if (tutorialPosition == 6) {
-                        tutorialLabel.getStyle().fontColor =Color.RED;
-                    } else {
-                        tutorialLabel.getStyle().fontColor = Color.BLACK;
-                    }
-
                     if (Globals.isMobile()) {
                         float size = tutorialHelperArrow.getWidth();
                         if (tutorialPosition == 2) {

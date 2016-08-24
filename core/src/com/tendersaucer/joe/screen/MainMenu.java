@@ -126,7 +126,7 @@ public class MainMenu implements Screen {
         style2.font = fontGenerator.generateFont(fontParam);
         style2.fontColor = Color.WHITE;
 
-        Label footer = new Label("(click anywhere to begin)", skin);
+        Label footer = new Label("(touch anywhere to begin)", skin);
         footer.setAlignment(Align.center);
         footer.setSize(Gdx.graphics.getWidth(), height);
         footer.setPosition(0, (Gdx.graphics.getHeight() / 2) - (height * 3));
@@ -163,7 +163,7 @@ public class MainMenu implements Screen {
     }
 
     private void createLoadingLabel() {
-        int height = (int)(Gdx.graphics.getWidth() * 0.1f);
+        int height = (int)(Gdx.graphics.getWidth() * 0.08f);
         FreeTypeFontParameter fontParam = new FreeTypeFontParameter();
         fontParam.size = height;
         Label.LabelStyle style = new Label.LabelStyle();

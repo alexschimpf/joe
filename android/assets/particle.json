@@ -14,7 +14,6 @@
                 "num_particles": [190, 210],
                 "position_offset": [[-1.5, -1.5], [1.5, 1.5]],
                 "angular_velocity": [0, 60],
-                "color": [[0.1, 0.1, 0.1, 1], [0.9, 0.9, 0.9, 1]],
                 "velocity": {
                     "range": [[-12, -12], [12, 12]],
                     "splits": [0, 0]
@@ -22,7 +21,7 @@
             },
             "modifiers": {
                 "color_linear": {
-                    "end": [0, 0, 0, 0]
+                    "end": [1, 1, 1, 0]
                 }
             }
         },
