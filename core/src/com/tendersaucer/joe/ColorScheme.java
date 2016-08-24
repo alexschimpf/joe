@@ -25,10 +25,12 @@ public final class ColorScheme {
     }
 
     // http://paletton.com/#uid=70f0s0kllllaFw0g0qFqFg0w0aF
-    private static Color[] colorBank = new Color[] {
-            new Color(121 / 255.0f, 173 / 255.0f, 173 / 255.0f, 1),
-            new Color(255 / 255.0f, 229 / 255.0f, 179 / 255.0f, 1),
-            new Color(255 / 255.0f, 183 / 255.0f, 179 / 255.0f, 1)
+    private static Color[][] colorSchemes = new Color[][] {
+            new Color[] {
+                    new Color(121 / 255.0f, 173 / 255.0f, 173 / 255.0f, 1),
+                    new Color(255 / 255.0f, 229 / 255.0f, 179 / 255.0f, 1),
+                    new Color(255 / 255.0f, 183 / 255.0f, 179 / 255.0f, 1)
+            }
     };
     private Color secondaryColor;
     private Color primaryColor;
@@ -42,15 +44,16 @@ public final class ColorScheme {
 
     public void reset() {
         // TODO: Is MathUtils.random legit?
-        List<Color> colorBankList = Arrays.asList(colorBank);
+        List<Color[]> colorBankList = Arrays.asList(colorSchemes);
         Collections.shuffle(colorBankList);
-        colorBank = new Color[colorBank.length];
-        colorBankList.toArray(colorBank);
+        colorSchemes = new Color[colorSchemes.length][colorSchemes[0].length];
+        colorBankList.toArray(colorSchemes);
 
-        primaryColor = colorBank[RandomUtils.pickIndex(colorBank)];
+        Color[] colorScheme = colorSchemes[RandomUtils.pickIndex(colorSchemes)];
+        primaryColor = colorScheme[RandomUtils.pickIndex(colorScheme)];
         secondaryColor = primaryColor;
         while (secondaryColor == primaryColor) {
-            secondaryColor = colorBank[RandomUtils.pickIndex(colorBank)];
+            secondaryColor = colorScheme[RandomUtils.pickIndex(colorScheme)];
         }
     }
 
