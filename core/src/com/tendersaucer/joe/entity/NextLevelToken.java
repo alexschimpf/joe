@@ -1,6 +1,7 @@
 package com.tendersaucer.joe.entity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.tendersaucer.joe.GameState;
@@ -25,7 +26,7 @@ public class NextLevelToken extends RenderedEntity {
         id = ID;
         obtained = false;
         body.setAngularVelocity(1.5f);
-        sprite.setColor(Globals.OFF_COLOR);
+        sprite.setColor(Color.RED);
 
         body.getFixtureList().get(0).setSensor(true);
     }

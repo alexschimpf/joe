@@ -441,7 +441,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         tutorialNextButton.setPosition(screenWidth - (size * 2.1f), screenHeight - (size * 1.55f));
         tutorialNextButton.setVisible(true);
         tutorialNextButton.setRotation(90);
-        tutorialNextButton.setColor(Globals.OFF_COLOR);
+        tutorialNextButton.setColor(Color.RED);
         tutorialNextButton.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -461,7 +461,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                 isTutorialNextButtonPressed = false;
                 int lastPos = Globals.isMobile() ? MOBILE_TUTORIAL_MESSAGES.length - 1 :
                         DESKTOP_TUTORIAL_MESSAGES.length - 1;
-                tutorialNextButton.setColor(Globals.OFF_COLOR);
+                tutorialNextButton.setColor(Color.RED);
                 if (tutorialPosition == lastPos) {
                     tutorialLabel.setVisible(false);
                     tutorialHelperArrow.setVisible(false);
@@ -472,7 +472,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                 } else {
                     tutorialPosition++;
                     if (tutorialPosition == 6) {
-                        tutorialLabel.getStyle().fontColor = Globals.OFF_COLOR;
+                        tutorialLabel.getStyle().fontColor =Color.RED;
                     } else {
                         tutorialLabel.getStyle().fontColor = Color.BLACK;
                     }

@@ -1,13 +1,13 @@
 package com.tendersaucer.joe.script;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.tendersaucer.joe.GameState;
-import com.tendersaucer.joe.Globals;
 import com.tendersaucer.joe.event.EventManager;
 import com.tendersaucer.joe.event.GameStateChangeEvent;
 import com.tendersaucer.joe.event.IGameStateChangeListener;
@@ -85,7 +85,7 @@ public final class SetTimer extends Script implements IGameStateChangeListener {
 
         Label.LabelStyle style = new Label.LabelStyle();
         style.font = fontGenerator.generateFont(fontParam);
-        style.fontColor = Globals.OFF_COLOR;
+        style.fontColor = Color.WHITE;
 
         final Label timerLabel = new Label(String.valueOf(duration), HUD.getInstance().getSkin());
         timerLabel.setStyle(style);

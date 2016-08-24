@@ -3,7 +3,6 @@ package com.tendersaucer.joe;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.tendersaucer.joe.event.EventManager;
 import com.tendersaucer.joe.event.GameStateChangeEvent;
 
@@ -22,8 +21,6 @@ public final class Globals {
     public static boolean CUSTOM_CAMERA_MODE = false;
     public static boolean CLEAR_PREFERENCES = true;
     public static final int LOG_LEVEL = Application.LOG_DEBUG;
-    public static final Color ON_COLOR = new Color(0, 0.7f, 0, 1);
-    public static final Color OFF_COLOR = new Color(0.7f, 0, 0, 1);
 
     private Globals() {
         gameState = GameState.RUNNING;

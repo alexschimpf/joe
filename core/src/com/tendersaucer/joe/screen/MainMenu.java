@@ -5,12 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -19,8 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tendersaucer.joe.AssetManager;
-import com.tendersaucer.joe.DAO;
-import com.tendersaucer.joe.Globals;
+import com.tendersaucer.joe.ColorScheme;
 import com.tendersaucer.joe.InputListener;
 
 /**
@@ -49,12 +46,14 @@ public class MainMenu implements Screen {
         Gdx.input.setCatchBackKey(false);
 
         AssetManager.getInstance().load();
+        ColorScheme.getInstance().reset();
         createUI();
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Color c = ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.SHARED);
+        Gdx.gl.glClearColor(c.r, c.g, c.b, c.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.draw();
@@ -86,52 +85,23 @@ public class MainMenu implements Screen {
     }
 
     private void createUI() {
-        float titleY = createTitleLabel();
-        createPlayButton(titleY);
-        createAudioButton();
+        createPlayButton();
+        //createAudioButton();
         createLoadingLabel();
     }
 
-    private float createTitleLabel() {
+    private void createPlayButton() {
         int height = (int)(Gdx.graphics.getWidth() * 0.25f);
-        FreeTypeFontParameter fontParam = new FreeTypeFontParameter();
-        fontParam.size = height;
-        fontParam.spaceX = height / 5;
-
-        Label.LabelStyle style = new Label.LabelStyle();
-        style.font = fontGenerator.generateFont(fontParam);
-        style.fontColor = Color.WHITE;
-        Label title = new Label("JOE", skin);
-        title.setStyle(style);
-        title.setAlignment(Align.center);
-        title.setSize(Gdx.graphics.getWidth(), height);
-        title.setPosition(0, (Gdx.graphics.getHeight() - height) / 2 + (height / 4));
-
-        TextureRegion textureRegion = AssetManager.getInstance().getTextureRegion("default");
-        Image background = new Image(textureRegion);
-        background.setColor(Color.BLACK);
-        background.setSize(title.getWidth(), title.getHeight());
-        background.setPosition(title.getX(), title.getY());
-
-        stage.addActor(background);
-        stage.addActor(title);
-
-        return title.getY();
-    }
-
-    private void createPlayButton(float titleY) {
-        int height = (int)(Gdx.graphics.getWidth() * 0.1f);
         FreeTypeFontParameter fontParam = new FreeTypeFontParameter();
         fontParam.size = height;
 
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.font = fontGenerator.generateFont(fontParam);
-        style.fontColor = Color.BLACK;
-        style.downFontColor = Color.WHITE;
+        style.fontColor = Color.WHITE;
 
-        final TextButton playButton = new TextButton("PLAY", skin);
-        playButton.setSize(Gdx.graphics.getWidth(), height);
-        playButton.setPosition(0, (titleY - height) / 2);
+        final TextButton playButton = new TextButton("JOE", skin);
+        playButton.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        playButton.setPosition(0, 0);
         playButton.setStyle(style);
         playButton.addListener(new ClickListener() {
             @Override
@@ -147,34 +117,49 @@ public class MainMenu implements Screen {
         });
 
         stage.addActor(playButton);
+
+        height = (int)(Gdx.graphics.getWidth() * 0.05f);
+        fontParam = new FreeTypeFontParameter();
+        fontParam.size = height;
+
+        Label.LabelStyle style2 = new Label.LabelStyle();
+        style2.font = fontGenerator.generateFont(fontParam);
+        style2.fontColor = Color.WHITE;
+
+        Label footer = new Label("(click anywhere to begin)", skin);
+        footer.setAlignment(Align.center);
+        footer.setSize(Gdx.graphics.getWidth(), height);
+        footer.setPosition(0, (Gdx.graphics.getHeight() / 2) - (height * 3));
+        footer.setStyle(style2);
+
+        stage.addActor(footer);
     }
 
     private void createAudioButton() {
-        int height = (int)(Gdx.graphics.getWidth() * 0.05f);
-        FreeTypeFontParameter fontParam = new FreeTypeFontParameter();
-        fontParam.size = height;
-
-        Label.LabelStyle style = new Label.LabelStyle();
-        style.font = fontGenerator.generateFont(fontParam);
-        style.fontColor = DAO.getInstance().getBoolean(DAO.IS_AUDIO_ENABLED, true) ? Globals.ON_COLOR : Globals.OFF_COLOR;
-
-        final Label audioButton = new Label("AUDIO?", skin);
-        audioButton.setStyle(style);
-        audioButton.setSize(Gdx.graphics.getWidth() * 0.95f, height);
-        audioButton.setPosition(0, Gdx.graphics.getHeight() - height - (Gdx.graphics.getWidth() * 0.025f));
-        audioButton.setAlignment(Align.right);
-        audioButton.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                boolean wasEnabled = DAO.getInstance().getBoolean(DAO.IS_AUDIO_ENABLED, true);
-                DAO.getInstance().putBoolean(DAO.IS_AUDIO_ENABLED, !wasEnabled );
-                boolean isEnabled = DAO.getInstance().getBoolean(DAO.IS_AUDIO_ENABLED, true);
-                audioButton.getStyle().fontColor = isEnabled ? Globals.ON_COLOR : Globals.OFF_COLOR;
-                return true;
-            }
-        });
-
-        stage.addActor(audioButton);
+//        int height = (int)(Gdx.graphics.getWidth() * 0.05f);
+//        FreeTypeFontParameter fontParam = new FreeTypeFontParameter();
+//        fontParam.size = height;
+//
+//        Label.LabelStyle style = new Label.LabelStyle();
+//        style.font = fontGenerator.generateFont(fontParam);
+//        style.fontColor = DAO.getInstance().getBoolean(DAO.IS_AUDIO_ENABLED, true) ? Color.RED : Color.GREEN;
+//        final Label audioButton = new Label("AUDIO?", skin);
+//        audioButton.setStyle(style);
+//        audioButton.setSize(Gdx.graphics.getWidth() * 0.95f, height);
+//        audioButton.setPosition(0, Gdx.graphics.getHeight() - height - (Gdx.graphics.getWidth() * 0.025f));
+//        audioButton.setAlignment(Align.right);
+//        audioButton.addListener(new ClickListener() {
+//            @Override
+//            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+//                boolean wasEnabled = DAO.getInstance().getBoolean(DAO.IS_AUDIO_ENABLED, true);
+//                DAO.getInstance().putBoolean(DAO.IS_AUDIO_ENABLED, !wasEnabled );
+//                boolean isEnabled = DAO.getInstance().getBoolean(DAO.IS_AUDIO_ENABLED, true);
+//                audioButton.getStyle().fontColor = isEnabled ? Color.RED : Color.GREEN;
+//                return true;
+//            }
+//        });
+//
+//        stage.addActor(audioButton);
     }
 
     private void createLoadingLabel() {
