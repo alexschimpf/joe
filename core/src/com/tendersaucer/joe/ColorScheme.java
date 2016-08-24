@@ -27,9 +27,19 @@ public final class ColorScheme {
     // http://paletton.com/#uid=70f0s0kllllaFw0g0qFqFg0w0aF
     private static Color[][] colorSchemes = new Color[][] {
             new Color[] {
-                    new Color(121 / 255.0f, 173 / 255.0f, 173 / 255.0f, 1),
-                    new Color(255 / 255.0f, 229 / 255.0f, 179 / 255.0f, 1),
-                    new Color(255 / 255.0f, 183 / 255.0f, 179 / 255.0f, 1)
+                    new Color(255 / 255.0f, 179 / 255.0f, 179 / 255.0f, 1),
+                    new Color(124 / 255.0f, 177 / 255.0f, 171 / 255.0f, 1),
+                    new Color(213 / 255.0f, 240 / 255.0f, 168 / 255.0f, 1)
+            },
+            new Color[] {
+                    new Color(255 / 255.0f, 255 / 255.0f, 179 / 255.0f, 1),
+                    new Color(210 / 255.0f, 147 / 255.0f, 187 / 255.0f, 1),
+                    new Color(153 / 255.0f, 140 / 255.0f, 191 / 255.0f, 1)
+            },
+            new Color[] {
+                    new Color(137 / 255.0f, 152 / 255.0f, 187 / 255.0f, 1),
+                    new Color(255 / 255.0f, 241 / 255.0f, 179 / 255.0f, 1),
+                    new Color(255 / 255.0f, 215 / 255.0f, 179 / 255.0f, 1)
             }
     };
     private Color tertiaryColor;
