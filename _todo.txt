@@ -1,6 +1,6 @@
+- Singletons in game application... problematic?
+- Might need to mute events registered in Driver.show.
 - Rename NextLevelToken (LevelEnd?)
-- Next button on Level Complete should have semi-opaque background behind it
-    - Screen width x Button height
 - Make everything else fit color scheme:
     - What color should background be?
     - Main Menu

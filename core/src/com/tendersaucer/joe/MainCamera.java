@@ -2,13 +2,19 @@ package com.tendersaucer.joe;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.BufferUtils;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.tendersaucer.joe.entity.Player;
 import com.tendersaucer.joe.event.IGameStateChangeListener;
 import com.tendersaucer.joe.level.Level;
 import com.tendersaucer.joe.util.PathHelper;
+
+import java.util.UUID;
 
 /**
  * Main game camera
@@ -83,6 +89,16 @@ public final class MainCamera implements IUpdate, IGameStateChangeListener {
             pathStartTime = 0;
             setPath();
         }
+    }
+
+    public void takeScreenshot() {
+        byte[] pixels = ScreenUtils.getFrameBufferPixels(0, 0, Gdx.graphics.getBackBufferWidth(),
+                Gdx.graphics.getBackBufferHeight(), true);
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getBackBufferWidth(),
+                Gdx.graphics.getBackBufferHeight(), Pixmap.Format.RGBA8888);
+        BufferUtils.copy(pixels, 0, pixmap.getPixels(), pixels.length);
+        PixmapIO.writePNG(Gdx.files.external(UUID.randomUUID().toString() + ".png"), pixmap);
+        pixmap.dispose();
     }
 
     public OrthographicCamera getRawCamera() {
