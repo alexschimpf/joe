@@ -28,7 +28,6 @@ public final class Player extends RenderedEntity {
 
     private static final String JUMP_ANIMATION_ID = "jump";
     private static final String MOVE_ANIMATION_ID = "move";
-    private static final float TARGET_COLOR_BRIGHTNESS = 0.7f;
     public static final float MOVE_SPEED = 1800;
     public static final float JUMP_IMPULSE = -160;
     public static final short COLLISION_MASK = 0x0002;
@@ -45,18 +44,6 @@ public final class Player extends RenderedEntity {
 
         numFootContacts = 0;
         direction = Direction.RIGHT;
-
-//        String colorCodes = dao.getString(DAO.COLOR_ORDER_KEY, "");
-//        char colorCode = colorCodes.charAt((int)(Level.getInstance().getIterationId() % 3));
-//        float progress = Math.min((Level.getInstance().getId() + 1) / Globals.NUM_LEVELS, 1);
-//        float brightness = TARGET_COLOR_BRIGHTNESS;
-//        if (colorCode == 'r') {
-//            sprite.setColor(new Color(brightness, brightness - progress, brightness - progress, 1));
-//        } else if (colorCode == 'g') {
-//            sprite.setColor(new Color(brightness - progress, brightness, brightness - progress, 1));
-//        } else {
-//            sprite.setColor(new Color(brightness - progress, brightness - progress, brightness, 1));
-//        }
     }
 
     @Override
@@ -150,7 +137,6 @@ public final class Player extends RenderedEntity {
     }
 
     public void land() {
-        beginLandParticleEffect();
     }
 
     public void stopJump() {
@@ -277,16 +263,5 @@ public final class Player extends RenderedEntity {
         fixtureDef.restitution = 0;
 
         return fixtureDef;
-    }
-
-    private void beginLandParticleEffect() {
-//        Vector2Pool vector2Pool = Vector2Pool.getInstance();
-//        Vector2 sizeRange = vector2Pool.obtain(getWidth() * 0.3f, getWidth() * 0.7f);
-//        Vector2 position = vector2Pool.obtain(getCenterX(), getBottom() - (sizeRange.y / 2));
-//        ParticleEffect effect =
-//                ParticleEffectManager.getInstance().buildParticleEffect(ParticleConstants.PLAYER_LAND);
-//        ParticleEffectManager.getInstance().beginParticleEffect(effect, position, sizeRange, 1);
-//        vector2Pool.free(position);
-//        vector2Pool.free(sizeRange);
     }
 }
