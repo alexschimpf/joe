@@ -14,8 +14,8 @@ import java.util.List;
 public final class ColorScheme {
 
     private static final ColorScheme instance = new ColorScheme();
-    private static final float MIN_SHADE_BRIGHTNESS = 0.91f;
-    private static final float MAX_SHADE_BRIGHTNESS = 1.01f;
+    private static final float MIN_SHADE_BRIGHTNESS = 0.98f;
+    private static final float MAX_SHADE_BRIGHTNESS = 1.02f;
 
     public enum ColorType {
         PRIMARY, SECONDARY
@@ -125,11 +125,4 @@ public final class ColorScheme {
 
         return color;
     }
-
-    public ColorType isShadeOf(Color color) {
-        return ColorUtils.dist(color, primaryColor) < ColorUtils.dist(color, secondaryColor) ?
-                ColorType.PRIMARY : ColorType.SECONDARY;
-    }
-
-
 }
