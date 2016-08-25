@@ -1,15 +1,10 @@
 - Singletons in game application... problematic?
-- "Secondary", "Primary" - use enum.getValue
 - CirclePathHelper
-- Rename NextLevelToken (LevelEnd?)
-- Make everything else fit color scheme:
-    - What color should background be?
-    - Main Menu
-    - Tutorial
-    - LevelEnd
-    - Text color
-    - Level complete
-    - Particles
+- What if you get 5 "lives" per level and once you use them all up, you get
+moved to a new incomplete level?
+    - If there is only one level left, it would ignore this
+    - Keeps everything fresh and new
+    - Prevents problem of getting "stuck" on a particular level (can deter people from continuing the game)
 
 Levels get shuffled around each iteration.
 First level has no entities.
