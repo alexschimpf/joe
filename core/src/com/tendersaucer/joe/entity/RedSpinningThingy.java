@@ -14,13 +14,13 @@ import com.tendersaucer.joe.util.Vector2Pool;
 /**
  * Created by Alex on 5/31/2016.
  */
-public class NextLevelToken extends RenderedEntity {
+public class RedSpinningThingy extends RenderedEntity {
 
-    public static final String ID = "next_level_token";
+    public static final String ID = "red_spinning_thingy";
 
     private boolean obtained;
 
-    private NextLevelToken(EntityDefinition def) {
+    private RedSpinningThingy(EntityDefinition def) {
         super(def);
 
         id = ID;

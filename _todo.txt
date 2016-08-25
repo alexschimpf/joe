@@ -1,5 +1,6 @@
 - Singletons in game application... problematic?
-- Might need to mute events registered in Driver.show.
+- "Secondary", "Primary" - use enum.getValue
+- CirclePathHelper
 - Rename NextLevelToken (LevelEnd?)
 - Make everything else fit color scheme:
     - What color should background be?

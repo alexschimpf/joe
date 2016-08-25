@@ -303,13 +303,18 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         fontParam.size = nextButtonHeight;
         TextButton.TextButtonStyle nextButtonStyle = new TextButton.TextButtonStyle();
         nextButtonStyle.font = fontGenerator.generateFont(fontParam);
-        nextButtonStyle.fontColor = Color.BLACK;
-        nextButtonStyle.downFontColor = Color.WHITE;
+        nextButtonStyle.fontColor = Color.WHITE;
+        nextButtonStyle.downFontColor = Color.BLACK;
         nextButton = new TextButton("\nNEXT", skin);
         nextButton.setSize(screenWidth, nextButtonHeight);
         nextButton.setPosition(0, screenHeight / 2);
         nextButton.setStyle(nextButtonStyle);
         nextButton.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return nextButton.isVisible();
+            }
+
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 if (!nextButton.isVisible()) {

@@ -56,4 +56,8 @@ public final class EventManager {
     public <L> void clear(Class<? extends Event<L>> eventClass) {
         eventListeners.remove(eventClass);
     }
+
+    public void clearAll() {
+        eventListeners.clear();
+    }
 }

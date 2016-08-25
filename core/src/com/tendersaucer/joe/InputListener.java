@@ -107,7 +107,8 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
                 MainCamera.getInstance().takeScreenshot();
                 break;
             default:
-                if (Globals.getGameState() != GameState.RUNNING) {
+                if (Level.getInstance().getPlayer() != null &&
+                        Globals.getGameState() == GameState.WAIT_FOR_INPUT) {
                     Globals.setGameState(GameState.RUNNING);
                 }
 

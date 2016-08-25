@@ -34,8 +34,8 @@
                                 ]
                             }
                         },
-                        "next_level_token": {
-                            "class": "NextLevelToken",
+                        "red_spinning_thingy": {
+                            "class": "RedSpinningThingy",
                             "properties": {
                                 "optional": [
                                     { "name": "body_type", "default": "kinematic" },

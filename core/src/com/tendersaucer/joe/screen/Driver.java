@@ -107,6 +107,7 @@ public final class Driver implements Screen {
     @Override
     public void dispose() {
         Globals.setGameState(GameState.SHUTDOWN);
+        EventManager.getInstance().clearAll();
     }
 
     public SpriteBatch getSpriteBatch() {

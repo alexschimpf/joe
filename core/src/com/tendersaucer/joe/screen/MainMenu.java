@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tendersaucer.joe.AssetManager;
 import com.tendersaucer.joe.ColorScheme;
 import com.tendersaucer.joe.InputListener;
+import com.tendersaucer.joe.util.ColorUtils;
 
 /**
  * Created by Alex on 8/3/2016.
@@ -30,6 +31,7 @@ public class MainMenu implements Screen {
     private Skin skin;
     private Stage stage;
     private Label loadingLabel;
+    private Color textColor;
 
     public MainMenu(Game game) {
         this.game = game;
@@ -47,6 +49,12 @@ public class MainMenu implements Screen {
 
         AssetManager.getInstance().load();
         ColorScheme.getInstance().reset();
+
+        Color backgroundColor = ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.SHARED);
+        double distanceToWhite = ColorUtils.dist(Color.WHITE, backgroundColor);
+        double maxDist = 3;
+        textColor = distanceToWhite < maxDist * 0.04f ? Color.BLACK : Color.WHITE;
+
         createUI();
     }
 
@@ -91,16 +99,17 @@ public class MainMenu implements Screen {
     }
 
     private void createPlayButton() {
+        float correction = (int)(Gdx.graphics.getWidth() * 0.1f);
         int height = (int)(Gdx.graphics.getWidth() * 0.25f);
         FreeTypeFontParameter fontParam = new FreeTypeFontParameter();
         fontParam.size = height;
 
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.font = fontGenerator.generateFont(fontParam);
-        style.fontColor = Color.WHITE;
+        style.fontColor = textColor;
 
         final TextButton playButton = new TextButton("JOE", skin);
-        playButton.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        playButton.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() + correction);
         playButton.setPosition(0, 0);
         playButton.setStyle(style);
         playButton.addListener(new ClickListener() {
@@ -124,7 +133,7 @@ public class MainMenu implements Screen {
 
         Label.LabelStyle style2 = new Label.LabelStyle();
         style2.font = fontGenerator.generateFont(fontParam);
-        style2.fontColor = Color.WHITE;
+        style2.fontColor = textColor;
 
         Label footer = new Label("(touch anywhere to begin)", skin);
         footer.setAlignment(Align.center);

@@ -1,6 +1,7 @@
 package com.tendersaucer.joe;
 
 import com.badlogic.gdx.graphics.Color;
+import com.tendersaucer.joe.util.ColorUtils;
 import com.tendersaucer.joe.util.RandomUtils;
 
 import java.util.Arrays;
@@ -13,8 +14,8 @@ import java.util.List;
 public final class ColorScheme {
 
     private static final ColorScheme instance = new ColorScheme();
-    private static final float MIN_SHADE_BRIGHTNESS = 0.95f;
-    private static final float MAX_SHADE_BRIGHTNESS = 1.05f;
+    private static final float MIN_SHADE_BRIGHTNESS = 0.91f;
+    private static final float MAX_SHADE_BRIGHTNESS = 1.01f;
 
     public enum ColorType {
         PRIMARY, SECONDARY
@@ -91,6 +92,11 @@ public final class ColorScheme {
         return new Color(secondaryColor);
     }
 
+    /**
+     * As of now, this is only allowed for level-complete particles.
+     * @param returnType
+     * @return
+     */
     public Color getTertiaryColor(ReturnType returnType) {
         if (returnType == ReturnType.SHARED) {
             return tertiaryColor;
@@ -101,31 +107,29 @@ public final class ColorScheme {
 
     public Color getShadedPrimaryColor() {
         Color color = getPrimaryColor(ReturnType.NEW);
-        color.mul(RandomUtils.pickFromRange(MIN_SHADE_BRIGHTNESS, MAX_SHADE_BRIGHTNESS)).clamp();
+        ColorUtils.shade(color, RandomUtils.pickFromRange(MIN_SHADE_BRIGHTNESS, MAX_SHADE_BRIGHTNESS));
 
         return color;
     }
 
     public Color getShadedSecondaryColor() {
         Color color = getSecondaryColor(ReturnType.NEW);
-        color.mul(RandomUtils.pickFromRange(MIN_SHADE_BRIGHTNESS, MAX_SHADE_BRIGHTNESS)).clamp();
+        ColorUtils.shade(color, RandomUtils.pickFromRange(MIN_SHADE_BRIGHTNESS, MAX_SHADE_BRIGHTNESS));
 
         return color;
     }
 
     public Color getShadedTertiaryColor() {
         Color color = getTertiaryColor(ReturnType.NEW);
-        color.mul(RandomUtils.pickFromRange(MIN_SHADE_BRIGHTNESS, MAX_SHADE_BRIGHTNESS)).clamp();
+        ColorUtils.shade(color, RandomUtils.pickFromRange(MIN_SHADE_BRIGHTNESS, MAX_SHADE_BRIGHTNESS));
 
         return color;
     }
 
     public ColorType isShadeOf(Color color) {
-        return dist(color, primaryColor) < dist(color, secondaryColor) ?
+        return ColorUtils.dist(color, primaryColor) < ColorUtils.dist(color, secondaryColor) ?
                 ColorType.PRIMARY : ColorType.SECONDARY;
     }
 
-    private double dist(Color x, Color y) {
-        return Math.pow(x.r - y.r, 2) + Math.pow(x.g - y.g, 2) + Math.pow(x.b - y.b, 2);
-    }
+
 }

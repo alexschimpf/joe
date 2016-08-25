@@ -103,7 +103,7 @@ public final class Player extends RenderedEntity {
     public void onBeginContact(Contact contact, Entity entity) {
         handleFootContact(contact, true);
 
-        if (entity instanceof NextLevelToken) {
+        if (entity instanceof RedSpinningThingy) {
             setDone();
         }
     }
