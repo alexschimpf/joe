@@ -5,14 +5,14 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
 import com.tendersaucer.joe.particle.Particle;
 import com.tendersaucer.joe.util.ConversionUtils;
-import com.tendersaucer.joe.util.PathHelper;
+import com.tendersaucer.joe.util.LinearPathHelper;
 
 /**
  * Created by Alex on 5/5/2016.
  */
 public class LinearPathParticleModifier extends ParticleModifier {
 
-    private PathHelper pathHelper;
+    private LinearPathHelper pathHelper;
 
     public LinearPathParticleModifier(JsonValue json) {
         super(json);
@@ -31,6 +31,6 @@ public class LinearPathParticleModifier extends ParticleModifier {
             legs.add(ConversionUtils.toVector2(leg));
         }
 
-        pathHelper = new PathHelper(legs);
+        pathHelper = new LinearPathHelper(legs);
     }
 }

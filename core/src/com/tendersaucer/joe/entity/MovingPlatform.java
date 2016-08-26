@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.tendersaucer.joe.MainCamera;
-import com.tendersaucer.joe.util.PathHelper;
+import com.tendersaucer.joe.util.LinearPathHelper;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,7 +17,7 @@ public class MovingPlatform extends RenderedEntity {
     protected static final Pattern pattern = Pattern.compile("\\((.+?),(.+?)\\)");
 
     protected Long startTime;
-    protected final PathHelper pathHelper;
+    protected final LinearPathHelper pathHelper;
     protected final float duration;
 
     protected MovingPlatform(EntityDefinition definition) {
@@ -37,7 +37,7 @@ public class MovingPlatform extends RenderedEntity {
             }
         }
 
-        pathHelper = new PathHelper(path, true);
+        pathHelper = new LinearPathHelper(path, true);
     }
 
     @Override
