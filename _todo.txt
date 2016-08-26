@@ -1,56 +1,11 @@
+- Levels are shuffled (and flipped horizontally) around each iteration
+- Each level should introduce some kind of new idea or "challenge" (except level 0)
+- Fuck games with stories and shit
+    - Think of this game as a collection of ideas, in the form of levels
+    - The user gets to "explore" all these ideas
+
 - Singletons in game application... problematic?
 - CirclePathHelper
-- What if you get 5 "lives" per level and once you use them all up, you get
-moved to a new incomplete level?
-    - If there is only one level left, it would ignore this
-    - Keeps everything fresh and new
-    - Prevents problem of getting "stuck" on a particular level (can deter people from continuing the game)
-
-Levels get shuffled around each iteration.
-First level has no entities.
-    - Just a "Tutorial" level
-    - You climb up really high.
-        - At one point, you have to cross some bridge to the bottom of another "tower"
-        - Tests both lateral and vertical movement
-
-IMPORTANT:
-Level design needs to be approached in the following way:
-1. What entity/entities will be used?
-    - Not all entities have to be created strictly for puzzles (e.g. moving platforms)
-2. What puzzles can be created from it/them?
-3. Each level consists of sections
-    - Each section presents one puzzle
-    - OR: Each level is allowed one "tutorial-section"
-        - This simply introduces the player to the showcased entity/entities
-        - This should help ease them into the puzzles involving them
-4. Sections are connected via pathways that aren't TOO cumbersome
-    - Focus should be more on solving the puzzles, not just simply being good at the mechanics
-    - When is it a "puzzle" and when is it just simply "timing"?
-5. Plain rectangles are boring - design with some randomness in mind!
-
-1. Need to figure out how feasible it is for ONLY PUZZLE-based levels.
-2. What to do about the level with the TimerChainLink entities?
-    - It's not really a puzzle at all!
-3. Having some levels be mechanics-based and some puzzle-based is weird
-    - Makes it feel unfocused, including during development
-
-ColorScheme
-    - Singleton
-    - getPrimaryColor
-    - getSecondaryColor
-    - isShadeOf(Color color)
-        - Returns ColorSchemeColorType.PRIMARY or ColorSchemeColorType.SECONDARY
-    - These are reset on ILevelLoadBeginEvent
-    - Entities can decide which they want to be colored (via entity.json)
-        - Default is "primary"
-    - Player is always white
-        - This should be overridden when Entity gets color from EntityDefinition
-TiledMapObjectDetector
-    - This will be used in MapLayerWrapper.correctCells
-    - Detects the objects and then colors them via ColorScheme (which
-        will have reset color beforehand in ILevelLoadBegin)
-    - This will be run for ALL layers with 0 objects
-
 
 - All public/private static final variables should be all-uppercase
 - Make level 2 longer
@@ -60,3 +15,4 @@ TiledMapObjectDetector
 - Back button goes to Main Menu (with dialog making sure)
 - Fix input handling during tutorial (on desktop, at least)
 - Make sure everything (that needs it) is disposed of
+

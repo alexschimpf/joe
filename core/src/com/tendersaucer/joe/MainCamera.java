@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.tendersaucer.joe.entity.Player;
 import com.tendersaucer.joe.event.IGameStateChangeListener;
 import com.tendersaucer.joe.level.Level;
-import com.tendersaucer.joe.util.PathHelper;
+import com.tendersaucer.joe.util.LinearPathHelper;
 
 import java.util.UUID;
 
@@ -35,7 +35,7 @@ public final class MainCamera implements IUpdate, IGameStateChangeListener {
     private long pathStartTime;
     private float pathWidth;
     private final Array<Vector2> path;
-    private final PathHelper pathHelper;
+    private final LinearPathHelper pathHelper;
     private final OrthographicCamera rawCamera;
 
     private MainCamera() {
@@ -45,7 +45,7 @@ public final class MainCamera implements IUpdate, IGameStateChangeListener {
 
         playerFocus = true;
         path = new Array<Vector2>();
-        pathHelper = new PathHelper(true);
+        pathHelper = new LinearPathHelper(true);
     }
 
     public static MainCamera getInstance() {

@@ -1,9 +1,8 @@
 [Description]
 - a variation of the typical platformer
-	- small, quick levels
-	- more puzzle-y, less guidance, sometimes less straightforward
-	- environment and the interactions with it are sometimes less obvious
-	- VERY minimal, has little color
-	- each level is more about solidly grasping and executing one, single concept
-		- as opposed to just simply avoiding obstacles
-	- soothing, peaceful, painless replaying/loading/setup/etc
+    - super minimal
+	- open-source, free
+	- a BUNCH of small, quick levels
+	- lots of randomness and variation
+	- no storyline to slow things down
+	- painless respawns
