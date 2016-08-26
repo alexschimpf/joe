@@ -13,32 +13,20 @@ import java.util.List;
  */
 public final class RandomUtils {
 
-    public static boolean pick(boolean a, boolean b) {
+    public static <T> T pick(T a, T b) {
         return MathUtils.random() < 0.5f ? a : b;
     }
 
-    public static float pick(float a, float b) {
-        return MathUtils.random() < 0.5f ? a : b;
+    public static <T> T pickFrom(T... t) {
+        return t[MathUtils.random(0, t.length - 1)];
     }
 
-    public static int pick(int a, int b) {
-        return MathUtils.random() < 0.5f ? a : b;
+    public static <T> T pickFrom(List<T> t) {
+        return t.get(MathUtils.random(0, t.size() - 1));
     }
 
-    public static String pick(String a, String b) {
-        return MathUtils.random() < 0.5f ? a : b;
-    }
-
-    public static int pickIndex(Object... objects) {
-        return MathUtils.random(0, objects.length - 1);
-    }
-
-    public static int pickIndex(List list) {
-        return MathUtils.random(0, list.size() - 1);
-    }
-
-    public static int pickIndex(Array array) {
-        return MathUtils.random(0, array.size - 1);
+    public static <T> T pickFrom(Array<T> t) {
+        return t.get(MathUtils.random(0, t.size - 1));
     }
 
     public static float pickFromRange(float a, float b) {
@@ -64,5 +52,14 @@ public final class RandomUtils {
 
         split = Math.abs(split);
         return pick(pickFromRange(a, -split), pickFromRange(split, b));
+    }
+
+    public static <T> void shuffle(T[] array) {
+        for (int i = array.length - 1; i > 0; i--) {
+            int swapIndex = RandomUtils.pickFromRange(0, i);
+            T temp = array[i];
+            array[i] = array[swapIndex];
+            array[swapIndex] = temp;
+        }
     }
 }

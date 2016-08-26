@@ -4,10 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.tendersaucer.joe.util.ColorUtils;
 import com.tendersaucer.joe.util.RandomUtils;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * Created by Alex on 8/21/2016.
  */
@@ -16,6 +12,7 @@ public final class ColorScheme {
     private static final ColorScheme instance = new ColorScheme();
     private static final float MIN_SHADE_BRIGHTNESS = 0.98f;
     private static final float MAX_SHADE_BRIGHTNESS = 1.02f;
+    private static final float BRIGHTNESS_CORRECTION = 1.1f;
 
     public enum ColorType {
         PRIMARY, SECONDARY
@@ -26,7 +23,7 @@ public final class ColorScheme {
     }
 
     // http://paletton.com/#uid=70f0s0kllllaFw0g0qFqFg0w0aF
-    private static Color[][] colorSchemes = new Color[][] {
+    private Color[][] colorSchemes = new Color[][] {
             new Color[] {
                     new Color(255 / 255.0f, 179 / 255.0f, 179 / 255.0f, 1),
                     new Color(124 / 255.0f, 177 / 255.0f, 171 / 255.0f, 1),
@@ -36,11 +33,6 @@ public final class ColorScheme {
                     new Color(255 / 255.0f, 255 / 255.0f, 179 / 255.0f, 1),
                     new Color(210 / 255.0f, 147 / 255.0f, 187 / 255.0f, 1),
                     new Color(153 / 255.0f, 140 / 255.0f, 191 / 255.0f, 1)
-            },
-            new Color[] {
-                    new Color(137 / 255.0f, 152 / 255.0f, 187 / 255.0f, 1),
-                    new Color(255 / 255.0f, 241 / 255.0f, 179 / 255.0f, 1),
-                    new Color(255 / 255.0f, 215 / 255.0f, 179 / 255.0f, 1)
             }
     };
     private Color tertiaryColor;
@@ -56,24 +48,17 @@ public final class ColorScheme {
 
     public void reset() {
         // TODO: Is MathUtils.random legit?
-        List<Color[]> colorBankList = Arrays.asList(colorSchemes);
-        Collections.shuffle(colorBankList);
-        colorSchemes = new Color[colorSchemes.length][colorSchemes[0].length];
-        colorBankList.toArray(colorSchemes);
+        RandomUtils.shuffle(colorSchemes);
+        Color[] colorScheme = RandomUtils.pickFrom(colorSchemes);
+        RandomUtils.shuffle(colorScheme);
+        primaryColor = new Color(colorScheme[0]);
+        secondaryColor = new Color(colorScheme[1]);
+        tertiaryColor = new Color(colorScheme[2]);
 
-        Color[] colorScheme = colorSchemes[RandomUtils.pickIndex(colorSchemes)];
-        primaryColor = colorScheme[RandomUtils.pickIndex(colorScheme)];
-        secondaryColor = primaryColor;
-        while (secondaryColor == primaryColor) {
-            secondaryColor = colorScheme[RandomUtils.pickIndex(colorScheme)];
-        }
-
-        for (int i = 0; i <= 2; i++) {
-            if (primaryColor != colorScheme[i] && secondaryColor != colorScheme[i]) {
-                tertiaryColor = colorScheme[i];
-                break;
-            }
-        }
+        // TODO: Remove this.
+        ColorUtils.shade(primaryColor, BRIGHTNESS_CORRECTION);
+        ColorUtils.shade(secondaryColor, BRIGHTNESS_CORRECTION);
+        ColorUtils.shade(tertiaryColor, BRIGHTNESS_CORRECTION);
     }
 
     public Color getPrimaryColor(ReturnType returnType) {

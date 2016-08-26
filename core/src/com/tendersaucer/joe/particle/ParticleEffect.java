@@ -348,7 +348,7 @@ public class ParticleEffect implements IUpdate, IRender, Disposable {
     }
 
     protected void setParticleProperties(Particle particle) {
-        Sprite sprite = sprites.get(RandomUtils.pickIndex(sprites));
+        Sprite sprite = RandomUtils.pickFrom(sprites);
         particle.setSprite(sprite);
 
         float dx = RandomUtils.pickFromRange(xOffsetRange);
