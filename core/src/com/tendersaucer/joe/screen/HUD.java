@@ -44,8 +44,8 @@ import com.tendersaucer.joe.level.Level;
 public final class HUD implements IUpdate, IRender, IGameStateChangeListener, INewUserEventListener {
 
     private static final HUD instance = new HUD();
-    private Color MOBILE_BUTTON_DOWN_COLOR = new Color(0.8f, 0.8f, 0.8f, 0.5f);
-    private Color MOBILE_BUTTON_UP_COLOR = new Color(1, 1, 1, 0.5f);
+    private Color MOBILE_BUTTON_DOWN_COLOR = new Color(0.45f, 0.45f, 0.45f, 0.5f);
+    private Color MOBILE_BUTTON_UP_COLOR = new Color(0.65f, 0.65f, 0.65f, 0.5f);
     private static final String[] MOBILE_TUTORIAL_MESSAGES = new String[] {
         "Hi, I'm Joe.",
         "Now... mindlessly follow my commands.",

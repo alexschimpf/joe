@@ -57,7 +57,7 @@ public final class ColorScheme {
 
         // TODO: Remove this.
         ColorUtils.shade(primaryColor, BRIGHTNESS_CORRECTION);
-        ColorUtils.shade(secondaryColor, BRIGHTNESS_CORRECTION);
+        ColorUtils.shade(secondaryColor, BRIGHTNESS_CORRECTION + ((BRIGHTNESS_CORRECTION - 1) * 2));
         ColorUtils.shade(tertiaryColor, BRIGHTNESS_CORRECTION);
     }
 
