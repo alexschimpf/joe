@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.Array;
 import com.tendersaucer.joe.AssetManager;
 import com.tendersaucer.joe.MainCamera;
 import com.tendersaucer.joe.background.ParallaxBackground;
-import com.tendersaucer.joe.background.TextureParallaxLayer;
+import com.tendersaucer.joe.background.SpriteParallaxLayer;
 import com.tendersaucer.joe.entity.EntityDefinition;
 import com.tendersaucer.joe.entity.EntityPropertyConfiguration;
 import com.tendersaucer.joe.entity.TiledEntityDefinition;
@@ -34,6 +34,7 @@ import com.tendersaucer.joe.util.FixtureBodyDefinition;
 import com.tendersaucer.joe.util.InvalidConfigException;
 import com.tendersaucer.joe.util.MapLayerWrapper;
 import com.tendersaucer.joe.util.PropertyValidator;
+import com.tendersaucer.joe.util.RandomUtils;
 import com.tendersaucer.joe.util.StringUtils;
 import com.tendersaucer.joe.util.TiledUtils;
 
@@ -275,15 +276,16 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
 
     private void setBackground() {
         if (!tiledMap.getProperties().containsKey("background")) {
-            return;
+            String name = "background" + RandomUtils.pickFromRange(1, 3);
+            tiledMap.getProperties().put("background", name + ",0.8");
         }
 
-        // Format: "texture1, 0.8, texture2, 0.3, ..."
-        String[] backgroundInfo = tiledMap.getProperties().get("background").toString().split(", ");
+        // Format: "texture1,0.8,texture2,0.3, ..."
+        String[] backgroundInfo = tiledMap.getProperties().get("background").toString().split(",");
         for (int i = 0; i < backgroundInfo.length; i += 2) {
             String textureName = backgroundInfo[i];
             float parallaxRatio = Float.parseFloat(backgroundInfo[i + 1]);
-            background.addLayer(new TextureParallaxLayer(parallaxRatio, textureName));
+            background.addLayer(new SpriteParallaxLayer(parallaxRatio, textureName));
         }
     }
 

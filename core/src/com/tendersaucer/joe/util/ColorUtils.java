@@ -15,6 +15,8 @@ public final class ColorUtils {
     }
 
     public static void shade(Color color, float amount) {
+        float a = color.a;
         color.mul(amount).clamp();
+        color.a = a;
     }
 }

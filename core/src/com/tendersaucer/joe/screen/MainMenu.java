@@ -51,10 +51,8 @@ public class MainMenu implements Screen {
         AssetManager.getInstance().load();
         ColorScheme.getInstance().reset();
 
-        Color backgroundColor = ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.SHARED);
-        double distanceToWhite = ColorUtils.dist(Color.WHITE, backgroundColor);
-        double maxDist = 3;
-        textColor = distanceToWhite < maxDist * 0.04f ? Color.BLACK : Color.WHITE;
+        textColor = ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.NEW);
+        ColorUtils.shade(textColor, ColorScheme.TEXT_ON_SHADE);
 
         createUI();
     }
@@ -174,12 +172,15 @@ public class MainMenu implements Screen {
     }
 
     private void createLoadingLabel() {
+        Color textColor = new Color(1, 1, 1, 1);
+        ColorUtils.shade(textColor, ColorScheme.TEXT_ON_SHADE);
+
         int height = (int)(Gdx.graphics.getWidth() * 0.1f);
         FreeTypeFontParameter fontParam = new FreeTypeFontParameter();
         fontParam.size = height;
         Label.LabelStyle style = new Label.LabelStyle();
         style.font = fontGenerator.generateFont(fontParam);
-        style.fontColor = Color.BLACK;
+        style.fontColor = textColor;
         style.background = new TextureRegionDrawable(AssetManager.getInstance().getTextureRegion("default"));
         loadingLabel = new Label("LOADING", skin);
         loadingLabel.setStyle(style);

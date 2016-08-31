@@ -29,14 +29,31 @@ public final class RandomUtils {
         return t.get(MathUtils.random(0, t.size - 1));
     }
 
+    /**
+     * Returns random number from range
+     * @param a inclusive
+     * @param b EXCLUSIVE
+     * @return
+     */
     public static float pickFromRange(float a, float b) {
         return MathUtils.random(a, b);
     }
 
+    /**
+     * Returns random number from range
+     * @param a inclusive
+     * @param b inclusive
+     * @return
+     */
     public static int pickFromRange(int a, int b) {
         return MathUtils.random(a, b);
     }
 
+    /**
+     * Returns random number from range
+     * @param range - x = inclusive, y = EXCLUSIVE
+     * @return
+     */
     public static float pickFromRange(Vector2 range) {
         return pickFromRange(range.x, range.y);
     }

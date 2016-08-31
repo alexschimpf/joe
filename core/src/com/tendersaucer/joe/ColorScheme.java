@@ -9,6 +9,8 @@ import com.tendersaucer.joe.util.RandomUtils;
  */
 public final class ColorScheme {
 
+    public static final float TEXT_ON_SHADE = 0.2f;
+    public static final float TEXT_OFF_SHADE = 0.3f;
     private static final ColorScheme instance = new ColorScheme();
     private static final float MIN_SHADE_BRIGHTNESS = 0.98f;
     private static final float MAX_SHADE_BRIGHTNESS = 1.02f;

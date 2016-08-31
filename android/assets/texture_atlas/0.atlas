@@ -11,331 +11,352 @@ arrow
   orig: 32, 32
   offset: 0, 0
   index: -1
+background1
+  rotate: false
+  xy: 1, 363
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
+background2
+  rotate: false
+  xy: 1, 233
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
+background3
+  rotate: false
+  xy: 259, 363
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
 chain
   rotate: false
-  xy: 67, 163
+  xy: 711, 427
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 0
 chain
   rotate: false
-  xy: 133, 357
+  xy: 1, 35
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 1
 chain
   rotate: false
-  xy: 583, 423
+  xy: 131, 101
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 2
 chain
   rotate: false
-  xy: 67, 97
+  xy: 777, 427
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 3
 chain
   rotate: false
-  xy: 133, 291
+  xy: 67, 35
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 4
 chain
   rotate: false
-  xy: 199, 357
+  xy: 843, 427
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 5
 chain
   rotate: false
-  xy: 649, 423
+  xy: 909, 427
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 6
 chain
   rotate: false
-  xy: 133, 225
+  xy: 517, 361
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 7
 chain
   rotate: false
-  xy: 199, 291
+  xy: 583, 361
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 8
 chain
   rotate: false
-  xy: 265, 357
+  xy: 649, 361
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 9
 chain
   rotate: false
-  xy: 715, 423
+  xy: 715, 361
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 10
 chain
   rotate: false
-  xy: 133, 159
+  xy: 781, 361
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 11
 icon
   rotate: false
-  xy: 133, 159
+  xy: 781, 361
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 chain
   rotate: false
-  xy: 199, 225
+  xy: 847, 361
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 12
 chain
   rotate: false
-  xy: 265, 291
+  xy: 325, 103
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 13
 chain
   rotate: false
-  xy: 331, 357
+  xy: 391, 167
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 14
 chain
   rotate: false
-  xy: 781, 423
+  xy: 133, 35
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 15
 default
   rotate: false
-  xy: 199, 159
+  xy: 391, 101
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 player_default
   rotate: false
-  xy: 265, 225
+  xy: 913, 361
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 player_jump
   rotate: false
-  xy: 265, 225
+  xy: 913, 361
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 0
 player_move
   rotate: false
-  xy: 265, 225
+  xy: 913, 361
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 0
 rectangle_1
   rotate: false
-  xy: 265, 225
+  xy: 913, 361
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 1
 player_jump
   rotate: false
-  xy: 331, 291
+  xy: 457, 295
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 1
 player_jump
   rotate: false
-  xy: 397, 357
+  xy: 457, 229
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 2
 player_jump
   rotate: false
-  xy: 847, 423
+  xy: 523, 295
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 3
 player_jump
   rotate: false
-  xy: 265, 159
+  xy: 457, 163
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 4
 player_jump
   rotate: false
-  xy: 331, 225
+  xy: 523, 229
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 5
 player_jump
   rotate: false
-  xy: 397, 291
+  xy: 589, 295
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 6
 player_jump
   rotate: false
-  xy: 463, 357
+  xy: 523, 163
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 7
 player_jump
   rotate: false
-  xy: 913, 423
+  xy: 589, 229
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 8
 player_jump
   rotate: false
-  xy: 331, 159
+  xy: 655, 295
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 9
 player_jump
   rotate: false
-  xy: 397, 225
+  xy: 589, 163
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 10
 player_jump
   rotate: false
-  xy: 463, 291
+  xy: 655, 229
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 11
 player_jump
   rotate: false
-  xy: 529, 357
+  xy: 721, 295
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 12
 player_jump
   rotate: false
-  xy: 397, 159
+  xy: 655, 163
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 13
 player_jump
   rotate: false
-  xy: 463, 225
+  xy: 721, 229
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 14
 player_jump
   rotate: false
-  xy: 529, 291
+  xy: 787, 295
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 15
 player_move
   rotate: false
-  xy: 595, 357
+  xy: 721, 163
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 1
 player_move
   rotate: false
-  xy: 463, 159
+  xy: 787, 229
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 2
 player_move
   rotate: false
-  xy: 529, 225
+  xy: 853, 295
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 3
 player_move
   rotate: false
-  xy: 595, 291
+  xy: 787, 163
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 4
 rectangle_1
   rotate: false
-  xy: 1, 423
+  xy: 1, 167
   size: 256, 64
   orig: 256, 64
   offset: 0, 0
   index: 4
 rectangle_1
   rotate: false
-  xy: 259, 423
+  xy: 517, 427
   size: 192, 64
   orig: 192, 64
   offset: 0, 0
   index: 3
 rectangle_1
   rotate: false
-  xy: 453, 423
+  xy: 1, 101
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
   index: 2
 rectangle_2
   rotate: false
-  xy: 1, 35
+  xy: 391, 233
   size: 64, 128
   orig: 64, 128
   offset: 0, 0
   index: 1
 rectangle_3
   rotate: false
-  xy: 67, 229
+  xy: 325, 169
   size: 64, 192
   orig: 64, 192
   offset: 0, 0
   index: 1
 rectangle_4
   rotate: false
-  xy: 1, 165
+  xy: 259, 105
   size: 64, 256
   orig: 64, 256
   offset: 0, 0

@@ -1,5 +1,6 @@
 package com.tendersaucer.joe.background;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -31,21 +32,39 @@ public class ParallaxBackground implements IRender {
         for (ParallaxLayer layer : layers) {
             adjustCamera(spriteBatch, layer.getParallaxRatio());
 
+            int correction = MainCamera.getInstance().isFlipped() ? 1 : 0;
+
             // Reposition camera based on layer's parallax ratio.
             // Determine start/end positions for layer rendering, since each layer repeats.
             MainCamera camera = MainCamera.getInstance();
             float width = layer.getWidth();
             float height = layer.getHeight();
-            float startLeft = MathUtils.floor(camera.getLeft() / width) * width;
-            float startTop = MathUtils.floor(camera.getTop() / height) * height;
-            int numXRepeats = MathUtils.ceil(Math.abs(startLeft - camera.getRight()) / width);
-            int numYRepeats = MathUtils.ceil(Math.abs(startTop - camera.getBottom()) / height);
-            float endLeft = startLeft + (numXRepeats * width);
-            float endTop = startTop + (numYRepeats * height);
-            for (float left = startLeft; left < endLeft; left += width) {
-                for (float top = startTop; top < endTop; top += height) {
-                    layer.setTopLeft(left, top);
-                    layer.render(spriteBatch);
+            if (camera.isFlipped()) {
+                // left = 100, right = 0, w/h = 50
+                float startLeft = (MathUtils.floor(camera.getLeft() / width) + 1) * width;
+                float startTop = (MathUtils.floor(camera.getTop() / height) - 2) * height;
+                int numXRepeats = MathUtils.ceil(Math.abs(startLeft + camera.getRight()) / width) + 3;
+                int numYRepeats = MathUtils.ceil(Math.abs(startTop - camera.getBottom()) / height) + 2;
+                float endLeft = startLeft - (numXRepeats * width);
+                float endTop = startTop + (numYRepeats * height);
+                for (float left = startLeft; left > endLeft; left -= width) {
+                    for (float top = startTop; top < endTop; top += height) {
+                        layer.setTopLeft(left, top);
+                        layer.render(spriteBatch);
+                    }
+                }
+            } else {
+                float startLeft = (MathUtils.floor(camera.getLeft() / width) - 2) * width;
+                float startTop = (MathUtils.floor(camera.getTop() / height) - 2) * height;
+                int numXRepeats = MathUtils.ceil(Math.abs(startLeft - camera.getRight()) / width) + 2;
+                int numYRepeats = MathUtils.ceil(Math.abs(startTop - camera.getBottom()) / height) + 2;
+                float endLeft = startLeft + (numXRepeats * width);
+                float endTop = startTop + (numYRepeats * height);
+                for (float left = startLeft; left < endLeft; left += width) {
+                    for (float top = startTop; top < endTop; top += height) {
+                        layer.setTopLeft(left, top);
+                        layer.render(spriteBatch);
+                    }
                 }
             }
 
@@ -55,6 +74,12 @@ public class ParallaxBackground implements IRender {
 
     public void addLayer(ParallaxLayer layer) {
         layers.add(layer);
+    }
+
+    public void setColor(Color color) {
+        for (ParallaxLayer layer : layers) {
+            layer.setColor(color);
+        }
     }
 
     private void adjustCamera(SpriteBatch spriteBatch, float parallaxRatio) {

@@ -10,6 +10,7 @@ import com.tendersaucer.joe.Globals;
 import com.tendersaucer.joe.IDisposable;
 import com.tendersaucer.joe.IUpdate;
 import com.tendersaucer.joe.MainCamera;
+import com.tendersaucer.joe.background.ParallaxBackground;
 import com.tendersaucer.joe.entity.Entity;
 import com.tendersaucer.joe.entity.EntityDefinition;
 import com.tendersaucer.joe.entity.Player;
@@ -46,6 +47,7 @@ public final class Level implements IUpdate, IDisposable {
     private Player player;
     private World physicsWorld;
     private Vector2 respawnPosition;
+    private ParallaxBackground background;
     private final Map<String, Entity> entityMap;
     private final Map<String, Script> scriptMap;
 
@@ -124,7 +126,8 @@ public final class Level implements IUpdate, IDisposable {
         id = loadable.getId();
         respawnPosition.set(loadable.getRespawnPosition());
 
-        //Canvas.getInstance().addToLayer(0, loadable.getBackground());
+        Canvas.getInstance().addToLayer(0, loadable.getBackground());
+        background = loadable.getBackground();
 
         // Add non-entity/background canvas objects.
         Map<IRender, Integer> canvasMap = loadable.getCanvasMap();
@@ -184,6 +187,10 @@ public final class Level implements IUpdate, IDisposable {
 
     public boolean hasPlayer() {
         return player != null;
+    }
+
+    public ParallaxBackground getBackground() {
+        return background;
     }
 
     public void addEntity(Entity entity) {

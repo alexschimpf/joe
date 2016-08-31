@@ -1,5 +1,6 @@
 package com.tendersaucer.joe.background;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.tendersaucer.joe.screen.IRender;
 
@@ -21,6 +22,8 @@ public abstract class ParallaxLayer implements IRender {
     public abstract float getWidth();
 
     public abstract float getHeight();
+
+    public abstract void setColor(Color color);
 
     public void setTopLeft(float left, float top) {
         topLeft.set(left, top);

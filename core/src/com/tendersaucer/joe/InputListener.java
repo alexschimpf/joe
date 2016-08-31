@@ -58,6 +58,13 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
             } else if (!Globals.isAndroid()) {
                 player.stopHorizontalMove();
             }
+
+            if (Gdx.input.isKeyPressed(Keys.Z)) {
+                MainCamera.getInstance().getRawCamera().zoom += 0.1f;
+            }
+            if (Gdx.input.isKeyPressed(Keys.X)) {
+                MainCamera.getInstance().getRawCamera().zoom -= 0.1f;
+            }
         }
 
         return false;
@@ -83,12 +90,6 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
                 break;
             case Keys.ESCAPE:
                 Gdx.app.exit();
-                break;
-            case Keys.Z:
-                MainCamera.getInstance().getRawCamera().zoom += 0.1f;
-                break;
-            case Keys.X:
-                MainCamera.getInstance().getRawCamera().zoom -= 0.1f;
                 break;
             case Keys.D:
                 Globals.DEBUG_PHYSICS = !Globals.DEBUG_PHYSICS;

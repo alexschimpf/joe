@@ -129,8 +129,8 @@ public final class Driver implements Screen {
             Gdx.app.debug("debug", "Heap size (MB): " + Gdx.app.getJavaHeap() / 1000000.0f);
         }
 
-        Color c = ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.SHARED);
-        Gdx.gl.glClearColor(c.r, c.g, c.b, c.a);
+        Color color = ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.SHARED);
+        Gdx.gl.glClearColor(color.r, color.g, color.b, color.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         OrthographicCamera camera = MainCamera.getInstance().getRawCamera();

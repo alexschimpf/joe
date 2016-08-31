@@ -151,7 +151,7 @@ public final class MainCamera implements IUpdate, IGameStateChangeListener {
     }
 
     public float getLeft() {
-        return getCenterX() - (getViewportWidth() / 2);
+        return isFlipped() ? getCenterX() + (getViewportWidth() / 2) : getCenterX() - (getViewportWidth() / 2);
     }
 
     public float getTop() {
@@ -159,7 +159,7 @@ public final class MainCamera implements IUpdate, IGameStateChangeListener {
     }
 
     public float getRight() {
-        return getCenterX() + (getViewportWidth() / 2);
+        return isFlipped() ? getCenterX() - (getViewportWidth() / 2) : getCenterX() + (getViewportWidth() / 2);
     }
 
     public float getBottom() {

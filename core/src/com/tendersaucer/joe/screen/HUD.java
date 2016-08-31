@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tendersaucer.joe.AssetManager;
+import com.tendersaucer.joe.ColorScheme;
 import com.tendersaucer.joe.DAO;
 import com.tendersaucer.joe.GameState;
 import com.tendersaucer.joe.Globals;
@@ -33,6 +34,7 @@ import com.tendersaucer.joe.entity.Player;
 import com.tendersaucer.joe.event.IGameStateChangeListener;
 import com.tendersaucer.joe.event.INewUserEventListener;
 import com.tendersaucer.joe.level.Level;
+import com.tendersaucer.joe.util.ColorUtils;
 
 /**
  * Game heads up display
@@ -118,7 +120,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         stage.draw();
     }
 
-
     @Override
     public boolean update() {
         if (Globals.isDesktop()) {
@@ -181,6 +182,15 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
         if (oldEvent == GameState.RUNNING && newEvent == GameState.WAIT_FOR_INPUT) {
             setFlash(true);
+        }
+
+        if (newEvent == GameState.WAIT_FOR_INPUT) {
+            Color textColor = ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.NEW);
+            ColorUtils.shade(textColor, ColorScheme.TEXT_ON_SHADE);
+            Color downTextColor = ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.NEW);
+            ColorUtils.shade(downTextColor, ColorScheme.TEXT_OFF_SHADE);
+            nextButton.getStyle().fontColor = textColor;
+            nextButton.getStyle().downFontColor = downTextColor;
         }
     }
 
@@ -275,11 +285,14 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     private void createProgressLabel() {
         progressLabel = new Label("", skin);
 
+        Color textColor = new Color(1, 1, 1, 1);
+        ColorUtils.shade(textColor, ColorScheme.TEXT_ON_SHADE);
+
         FreeTypeFontParameter fontParameter = new FreeTypeFontParameter();
         fontParameter.size = Gdx.graphics.getWidth() / 30;
         LabelStyle style = new LabelStyle();
         style.font = fontGenerator.generateFont(fontParameter);
-        style.fontColor = Color.BLACK;
+        style.fontColor = textColor;
         progressLabel.setStyle(style);
 
         stage.addActor(progressLabel);
@@ -303,8 +316,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         fontParam.size = nextButtonHeight;
         TextButton.TextButtonStyle nextButtonStyle = new TextButton.TextButtonStyle();
         nextButtonStyle.font = fontGenerator.generateFont(fontParam);
-        nextButtonStyle.fontColor = Color.WHITE;
-        nextButtonStyle.downFontColor = Color.BLACK;
         nextButton = new TextButton("\nNEXT", skin);
         nextButton.setSize(screenWidth, nextButtonHeight);
         nextButton.setPosition(0, screenHeight / 2);
