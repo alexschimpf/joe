@@ -34,7 +34,6 @@ import com.tendersaucer.joe.util.FixtureBodyDefinition;
 import com.tendersaucer.joe.util.InvalidConfigException;
 import com.tendersaucer.joe.util.MapLayerWrapper;
 import com.tendersaucer.joe.util.PropertyValidator;
-import com.tendersaucer.joe.util.RandomUtils;
 import com.tendersaucer.joe.util.StringUtils;
 import com.tendersaucer.joe.util.TiledUtils;
 
@@ -276,8 +275,7 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
 
     private void setBackground() {
         if (!tiledMap.getProperties().containsKey("background")) {
-            String name = "background" + RandomUtils.pickFromRange(1, 3);
-            tiledMap.getProperties().put("background", name + ",0.8");
+            tiledMap.getProperties().put("background", "background2,0.8,background,0.4");
         }
 
         // Format: "texture1,0.8,texture2,0.3, ..."

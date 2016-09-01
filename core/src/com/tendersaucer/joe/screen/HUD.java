@@ -23,7 +23,6 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tendersaucer.joe.AssetManager;
-import com.tendersaucer.joe.ColorScheme;
 import com.tendersaucer.joe.DAO;
 import com.tendersaucer.joe.GameState;
 import com.tendersaucer.joe.Globals;
@@ -34,7 +33,6 @@ import com.tendersaucer.joe.entity.Player;
 import com.tendersaucer.joe.event.IGameStateChangeListener;
 import com.tendersaucer.joe.event.INewUserEventListener;
 import com.tendersaucer.joe.level.Level;
-import com.tendersaucer.joe.util.ColorUtils;
 
 /**
  * Game heads up display
@@ -185,12 +183,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         }
 
         if (newEvent == GameState.WAIT_FOR_INPUT) {
-            Color textColor = ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.NEW);
-            ColorUtils.shade(textColor, ColorScheme.TEXT_ON_SHADE);
-            Color downTextColor = ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.NEW);
-            ColorUtils.shade(downTextColor, ColorScheme.TEXT_OFF_SHADE);
-            nextButton.getStyle().fontColor = textColor;
-            nextButton.getStyle().downFontColor = downTextColor;
+            nextButton.getStyle().fontColor = Color.WHITE;
+            nextButton.getStyle().downFontColor = new Color(0.9f, 0.9f, 0.9f, 1);
         }
     }
 
@@ -285,14 +279,11 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     private void createProgressLabel() {
         progressLabel = new Label("", skin);
 
-        Color textColor = new Color(1, 1, 1, 1);
-        ColorUtils.shade(textColor, ColorScheme.TEXT_ON_SHADE);
-
         FreeTypeFontParameter fontParameter = new FreeTypeFontParameter();
         fontParameter.size = Gdx.graphics.getWidth() / 30;
         LabelStyle style = new LabelStyle();
         style.font = fontGenerator.generateFont(fontParameter);
-        style.fontColor = textColor;
+        style.fontColor = Color.WHITE;
         progressLabel.setStyle(style);
 
         stage.addActor(progressLabel);
@@ -316,6 +307,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         fontParam.size = nextButtonHeight;
         TextButton.TextButtonStyle nextButtonStyle = new TextButton.TextButtonStyle();
         nextButtonStyle.font = fontGenerator.generateFont(fontParam);
+        nextButtonStyle.fontColor = Color.WHITE;
+        nextButtonStyle.downFontColor = new Color(0.9f, 0.9f, 0.9f, 1);
         nextButton = new TextButton("\nNEXT", skin);
         nextButton.setSize(screenWidth, nextButtonHeight);
         nextButton.setPosition(0, screenHeight / 2);
@@ -342,7 +335,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         fontParameter.size = Gdx.graphics.getWidth() / 30;
         LabelStyle style = new LabelStyle();
         style.font = fontGenerator.generateFont(fontParameter);
-        style.fontColor = Color.BLACK;
+        style.fontColor = Color.WHITE;
         levelSummaryLabel = new Label("", skin);
         levelSummaryLabel.setStyle(style);
         stage.addActor(levelSummaryLabel);
@@ -425,7 +418,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         parameter.size = screenWidth / 40;
         parameter.size = screenWidth / 40;
         BitmapFont font = fontGenerator.generateFont(parameter);
-        LabelStyle labelStyle = new LabelStyle(font, Color.BLACK);
+        LabelStyle labelStyle = new LabelStyle(font, Color.WHITE);
         tutorialLabel.setStyle(labelStyle);
         tutorialLabel.setAlignment(Align.center);
         tutorialLabel.setWrap(true);
@@ -441,14 +434,14 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         tutorialHelperArrow.setSize(size, size);
         tutorialHelperArrow.setOrigin(Align.center);
         tutorialHelperArrow.setVisible(false);
-        tutorialHelperArrow.setColor(Color.BLACK);
+        tutorialHelperArrow.setColor(Color.WHITE);
         tutorialNextButton = new Image(tr);
         tutorialNextButton.setSize(size * 2, size * 2);
         tutorialNextButton.setOrigin(Align.center);
         tutorialNextButton.setPosition(screenWidth - (size * 2.1f), screenHeight - (size * 1.55f));
         tutorialNextButton.setVisible(true);
         tutorialNextButton.setRotation(90);
-        tutorialNextButton.setColor(Color.BLACK);
+        tutorialNextButton.setColor(Color.WHITE);
         tutorialNextButton.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -456,7 +449,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                    isTutorialNextButtonPressed = true;
                    Color color = tutorialNextButton.getColor();
                    tutorialNextButton.setColor(color.r, color.g, color.b, 1);
-                   tutorialNextButton.setColor(Color.WHITE);
+                   tutorialNextButton.setColor(new Color(0.9f, 0.9f, 0.9f, 1));
                    return true;
                }
 
@@ -468,7 +461,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                 isTutorialNextButtonPressed = false;
                 int lastPos = Globals.isMobile() ? MOBILE_TUTORIAL_MESSAGES.length - 1 :
                         DESKTOP_TUTORIAL_MESSAGES.length - 1;
-                tutorialNextButton.setColor(Color.BLACK);
+                tutorialNextButton.setColor(Color.WHITE);
                 if (tutorialPosition == lastPos) {
                     tutorialLabel.setVisible(false);
                     tutorialHelperArrow.setVisible(false);

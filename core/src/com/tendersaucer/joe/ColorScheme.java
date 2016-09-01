@@ -9,12 +9,10 @@ import com.tendersaucer.joe.util.RandomUtils;
  */
 public final class ColorScheme {
 
-    public static final float TEXT_ON_SHADE = 0.2f;
-    public static final float TEXT_OFF_SHADE = 0.3f;
     private static final ColorScheme instance = new ColorScheme();
     private static final float MIN_SHADE_BRIGHTNESS = 0.98f;
     private static final float MAX_SHADE_BRIGHTNESS = 1.02f;
-    private static final float BRIGHTNESS_CORRECTION = 1.1f;
+    private static final float BRIGHTNESS_CORRECTION = 1.02f;
 
     public enum ColorType {
         PRIMARY, SECONDARY
@@ -27,14 +25,14 @@ public final class ColorScheme {
     // http://paletton.com/#uid=70f0s0kllllaFw0g0qFqFg0w0aF
     private Color[][] colorSchemes = new Color[][] {
             new Color[] {
-                    new Color(255 / 255.0f, 179 / 255.0f, 179 / 255.0f, 1),
-                    new Color(124 / 255.0f, 177 / 255.0f, 171 / 255.0f, 1),
-                    new Color(213 / 255.0f, 240 / 255.0f, 168 / 255.0f, 1)
+                    new Color(229 / 255.0f, 2 / 255.0f, 245 / 255.0f, 1),
+                    new Color(255 / 255.0f, 174 / 255.0f, 0 / 255.0f, 1),
+                    new Color(0 / 255.0f, 245 / 255.0f, 190 / 255.0f, 1)
             },
             new Color[] {
-                    new Color(255 / 255.0f, 255 / 255.0f, 179 / 255.0f, 1),
-                    new Color(210 / 255.0f, 147 / 255.0f, 187 / 255.0f, 1),
-                    new Color(153 / 255.0f, 140 / 255.0f, 191 / 255.0f, 1)
+                    new Color(16 / 255.0f, 142 / 255.0f, 246 / 255.0f, 1),
+                    new Color(253 / 255.0f, 0 / 255.0f, 63 / 255.0f, 1),
+                    new Color(255 / 255.0f, 231 / 255.0f, 0 / 255.0f, 1)
             }
     };
     private Color tertiaryColor;
@@ -54,12 +52,12 @@ public final class ColorScheme {
         Color[] colorScheme = RandomUtils.pickFrom(colorSchemes);
         RandomUtils.shuffle(colorScheme);
         primaryColor = new Color(colorScheme[0]);
-        secondaryColor = new Color(colorScheme[1]);
+        secondaryColor = new Color(Color.WHITE);//colorScheme[1]);
         tertiaryColor = new Color(colorScheme[2]);
 
         // TODO: Remove this.
         ColorUtils.shade(primaryColor, BRIGHTNESS_CORRECTION);
-        ColorUtils.shade(secondaryColor, BRIGHTNESS_CORRECTION + ((BRIGHTNESS_CORRECTION - 1) * 2));
+        ColorUtils.shade(secondaryColor, BRIGHTNESS_CORRECTION * 0.1f);
         ColorUtils.shade(tertiaryColor, BRIGHTNESS_CORRECTION);
     }
 

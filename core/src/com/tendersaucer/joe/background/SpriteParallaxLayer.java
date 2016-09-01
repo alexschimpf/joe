@@ -13,8 +13,8 @@ import com.tendersaucer.joe.ColorScheme;
  */
 public class SpriteParallaxLayer extends ParallaxLayer {
 
-    private static int WIDTH = 100;
-    private static int HEIGHT = 50;
+    private static int WIDTH = 35;
+    private static int HEIGHT = 35;
 
     protected final Sprite sprite;
 

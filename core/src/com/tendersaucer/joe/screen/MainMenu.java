@@ -20,7 +20,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tendersaucer.joe.AssetManager;
 import com.tendersaucer.joe.ColorScheme;
 import com.tendersaucer.joe.InputListener;
-import com.tendersaucer.joe.util.ColorUtils;
 
 /**
  * Created by Alex on 8/3/2016.
@@ -32,7 +31,6 @@ public class MainMenu implements Screen {
     private Skin skin;
     private Stage stage;
     private Label loadingLabel;
-    private Color textColor;
 
     public MainMenu(Game game) {
         this.game = game;
@@ -50,9 +48,6 @@ public class MainMenu implements Screen {
 
         AssetManager.getInstance().load();
         ColorScheme.getInstance().reset();
-
-        textColor = ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.NEW);
-        ColorUtils.shade(textColor, ColorScheme.TEXT_ON_SHADE);
 
         createUI();
     }
@@ -105,7 +100,7 @@ public class MainMenu implements Screen {
 
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.font = fontGenerator.generateFont(fontParam);
-        style.fontColor = textColor;
+        style.fontColor = Color.WHITE;
 
         final TextButton playButton = new TextButton("JOE", skin);
         playButton.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() + correction);
@@ -132,7 +127,7 @@ public class MainMenu implements Screen {
 
         Label.LabelStyle style2 = new Label.LabelStyle();
         style2.font = fontGenerator.generateFont(fontParam);
-        style2.fontColor = textColor;
+        style2.fontColor = Color.WHITE;
 
         Label footer = new Label("(touch anywhere to begin)", skin);
         footer.setAlignment(Align.center);
@@ -172,16 +167,14 @@ public class MainMenu implements Screen {
     }
 
     private void createLoadingLabel() {
-        Color textColor = new Color(1, 1, 1, 1);
-        ColorUtils.shade(textColor, ColorScheme.TEXT_ON_SHADE);
-
         int height = (int)(Gdx.graphics.getWidth() * 0.1f);
         FreeTypeFontParameter fontParam = new FreeTypeFontParameter();
         fontParam.size = height;
         Label.LabelStyle style = new Label.LabelStyle();
         style.font = fontGenerator.generateFont(fontParam);
-        style.fontColor = textColor;
-        style.background = new TextureRegionDrawable(AssetManager.getInstance().getTextureRegion("default"));
+        style.fontColor = Color.WHITE;
+        Color backgroundColor = ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.SHARED);
+        style.background = new TextureRegionDrawable(AssetManager.getInstance().getTextureRegion("default")).tint(backgroundColor);
         loadingLabel = new Label("LOADING", skin);
         loadingLabel.setStyle(style);
         loadingLabel.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
