@@ -29,7 +29,6 @@ public final class ColorScheme {
         Color.valueOf("69FFB4FF"), // teal
         Color.valueOf("B469FFFF"), // purple
         Color.valueOf("FFFF69FF"), // yellow
-        Color.valueOf("#FFB4FFFF")   // pink
     };
     private Color primaryColor;
     private Color secondaryColor;

@@ -58,7 +58,6 @@
                             "class": "VanishingPlatform",
                             "properties": {
                                 "optional": [
-                                    { "name": "color", "default": "0.9,0.9,0.9,1" },
                                     { "name": "vanish_duration", "default": "750" },
                                     { "name": "reappear_delay", "default": "750" }
                                 ]
