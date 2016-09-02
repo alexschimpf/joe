@@ -1,6 +1,7 @@
 package com.tendersaucer.joe;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 import com.tendersaucer.joe.util.ColorUtils;
 import com.tendersaucer.joe.util.RandomUtils;
 
@@ -92,21 +93,21 @@ public final class ColorScheme {
 
     public Color getShadedPrimaryColor() {
         Color color = getPrimaryColor(ReturnType.NEW);
-        ColorUtils.shade(color, RandomUtils.pickFromRange(MIN_SHADE_BRIGHTNESS, MAX_SHADE_BRIGHTNESS));
+        ColorUtils.shade(color, MathUtils.random(MIN_SHADE_BRIGHTNESS, MAX_SHADE_BRIGHTNESS));
 
         return color;
     }
 
     public Color getShadedSecondaryColor() {
         Color color = getSecondaryColor(ReturnType.NEW);
-        ColorUtils.shade(color, RandomUtils.pickFromRange(MIN_SHADE_BRIGHTNESS, MAX_SHADE_BRIGHTNESS));
+        ColorUtils.shade(color, MathUtils.random(MIN_SHADE_BRIGHTNESS, MAX_SHADE_BRIGHTNESS));
 
         return color;
     }
 
     public Color getShadedTertiaryColor() {
         Color color = getTertiaryColor(ReturnType.NEW);
-        ColorUtils.shade(color, RandomUtils.pickFromRange(MIN_SHADE_BRIGHTNESS, MAX_SHADE_BRIGHTNESS));
+        ColorUtils.shade(color, MathUtils.random(MIN_SHADE_BRIGHTNESS, MAX_SHADE_BRIGHTNESS));
 
         return color;
     }

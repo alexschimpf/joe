@@ -31,31 +31,11 @@ public final class RandomUtils {
 
     /**
      * Returns random number from range
-     * @param a inclusive
-     * @param b EXCLUSIVE
-     * @return
-     */
-    public static float pickFromRange(float a, float b) {
-        return MathUtils.random(a, b);
-    }
-
-    /**
-     * Returns random number from range
-     * @param a inclusive
-     * @param b inclusive
-     * @return
-     */
-    public static int pickFromRange(int a, int b) {
-        return MathUtils.random(a, b);
-    }
-
-    /**
-     * Returns random number from range
      * @param range - x = inclusive, y = EXCLUSIVE
      * @return
      */
     public static float pickFromRange(Vector2 range) {
-        return pickFromRange(range.x, range.y);
+        return MathUtils.random(range.x, range.y);
     }
 
     public static float pickFromSplitRange(Vector2 range, float split) {
@@ -64,16 +44,16 @@ public final class RandomUtils {
 
     public static float pickFromSplitRange(float a, float b, float split) {
         if (split == 0) {
-            return pickFromRange(a, b);
+            return MathUtils.random(a, b);
         }
 
         split = Math.abs(split);
-        return pick(pickFromRange(a, -split), pickFromRange(split, b));
+        return pick(MathUtils.random(a, -split), MathUtils.random(split, b));
     }
 
     public static <T> void shuffle(T[] array) {
         for (int i = array.length - 1; i > 0; i--) {
-            int swapIndex = RandomUtils.pickFromRange(0, i);
+            int swapIndex = MathUtils.random(0, i);
             T temp = array[i];
             array[i] = array[swapIndex];
             array[swapIndex] = temp;

@@ -3,7 +3,6 @@
     - What if a particular entity's texture is not the same size as the other tiles?
         - Create a new tileset with just that image?
         - Or allow for 'texture' property for entities?
-- Player should have rounded corners
 - Are textures being cached properly?
 - Should I be using singletons?
 - Need to figure out ColorScheme
@@ -11,7 +10,6 @@
     - How many schemes do we need?
     - What is the background color???
 - Is it possible now to pack textures inside DesktopLauncher?
-- Get rid of RandomUtils functions that aren't providing new functionality
 - REFACTOR HUD!
     - Separate out tutorial stuff
     - Separate out level complete stuff
