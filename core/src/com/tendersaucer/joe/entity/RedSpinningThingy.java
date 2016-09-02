@@ -9,6 +9,7 @@ import com.tendersaucer.joe.Globals;
 import com.tendersaucer.joe.gen.ParticleConstants;
 import com.tendersaucer.joe.particle.ParticleEffect;
 import com.tendersaucer.joe.particle.ParticleEffectManager;
+import com.tendersaucer.joe.screen.Canvas;
 import com.tendersaucer.joe.util.Vector2Pool;
 
 /**
@@ -42,27 +43,21 @@ public class RedSpinningThingy extends RenderedEntity {
     }
 
     private void beginParticleEffect() {
-        beginParticleEffect(1);
-        beginParticleEffect(3);
-        beginParticleEffect(5);
-        beginParticleEffect(7);
-        beginParticleEffect(9);
-    }
+        for (int layer = 1; layer < Canvas.NUM_LAYERS; layer += 2) {
+            Vector2Pool vector2Pool = Vector2Pool.getInstance();
+            Vector2 sizeRange = vector2Pool.obtain(-getWidth() * 2, getWidth() * 2);
+            Vector2 position = vector2Pool.obtain(getLeft(), getBottom() - (sizeRange.y / 2));
+            ParticleEffect effect =
+                    ParticleEffectManager.getInstance().buildParticleEffect(ParticleConstants.LEVEL_COMPLETE);
+            Color color = ColorScheme.getInstance().getTertiaryColor(ColorScheme.ReturnType.NEW);
+            effect.setRedRange(color.r, color.r);
+            effect.setGreenRange(color.g, color.g);
+            effect.setBlueRange(color.b, color.b);
+            effect.setAlphaRange(color.a, color.a);
 
-    private void beginParticleEffect(int layer) {
-        Vector2Pool vector2Pool = Vector2Pool.getInstance();
-        Vector2 sizeRange = vector2Pool.obtain(-getWidth() * 2, getWidth() * 2);
-        Vector2 position = vector2Pool.obtain(getLeft(), getBottom() - (sizeRange.y / 2));
-        ParticleEffect effect =
-                ParticleEffectManager.getInstance().buildParticleEffect(ParticleConstants.LEVEL_COMPLETE);
-        Color color = ColorScheme.getInstance().getTertiaryColor(ColorScheme.ReturnType.NEW);
-        effect.setRedRange(color.r, color.r);
-        effect.setGreenRange(color.g, color.g);
-        effect.setBlueRange(color.b, color.b);
-        effect.setAlphaRange(color.a, color.a);
-
-        ParticleEffectManager.getInstance().beginParticleEffect(effect, position, sizeRange, layer);
-        vector2Pool.free(position);
-        vector2Pool.free(sizeRange);
+            ParticleEffectManager.getInstance().beginParticleEffect(effect, position, sizeRange, layer);
+            vector2Pool.free(position);
+            vector2Pool.free(sizeRange);
+        }
     }
 }
