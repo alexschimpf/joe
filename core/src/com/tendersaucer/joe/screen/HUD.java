@@ -184,7 +184,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
         if (newEvent == GameState.WAIT_FOR_INPUT) {
             nextButton.getStyle().fontColor = Color.WHITE;
-            nextButton.getStyle().downFontColor = new Color(0.9f, 0.9f, 0.9f, 1);
+            nextButton.getStyle().downFontColor = new Color(0.8f, 0.8f, 0.8f, 1);
         }
     }
 
@@ -308,7 +308,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         TextButton.TextButtonStyle nextButtonStyle = new TextButton.TextButtonStyle();
         nextButtonStyle.font = fontGenerator.generateFont(fontParam);
         nextButtonStyle.fontColor = Color.WHITE;
-        nextButtonStyle.downFontColor = new Color(0.9f, 0.9f, 0.9f, 1);
+        nextButtonStyle.downFontColor = new Color(0.8f, 0.8f, 0.8f, 1);
         nextButton = new TextButton("\nNEXT", skin);
         nextButton.setSize(screenWidth, nextButtonHeight);
         nextButton.setPosition(0, screenHeight / 2);
@@ -449,7 +449,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                    isTutorialNextButtonPressed = true;
                    Color color = tutorialNextButton.getColor();
                    tutorialNextButton.setColor(color.r, color.g, color.b, 1);
-                   tutorialNextButton.setColor(new Color(0.9f, 0.9f, 0.9f, 1));
+                   tutorialNextButton.setColor(new Color(0.8f, 0.8f, 0.8f, 1));
                    return true;
                }
 
