@@ -129,7 +129,7 @@ public final class Driver implements Screen {
             Gdx.app.debug("debug", "Heap size (MB): " + Gdx.app.getJavaHeap() / 1000000.0f);
         }
 
-        Color color = ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.SHARED);
+        Color color = ColorScheme.getInstance().getBackgroundColor();
         Gdx.gl.glClearColor(color.r, color.g, color.b, color.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

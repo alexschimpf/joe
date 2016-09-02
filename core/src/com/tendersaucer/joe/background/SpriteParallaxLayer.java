@@ -27,7 +27,7 @@ public class SpriteParallaxLayer extends ParallaxLayer {
 
     @Override
     public void render(SpriteBatch spriteBatch) {
-        sprite.setColor(ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.SHARED));
+        sprite.setColor(ColorScheme.getInstance().getBackgroundColor());
         sprite.setPosition(topLeft.x, topLeft.y);
         sprite.draw(spriteBatch);
     }

@@ -49,7 +49,7 @@ public class RedSpinningThingy extends RenderedEntity {
             Vector2 position = vector2Pool.obtain(getLeft(), getBottom() - (sizeRange.y / 2));
             ParticleEffect effect =
                     ParticleEffectManager.getInstance().buildParticleEffect(ParticleConstants.LEVEL_COMPLETE);
-            Color color = ColorScheme.getInstance().getTertiaryColor(ColorScheme.ReturnType.NEW);
+            Color color = ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.NEW);
             effect.setRedRange(color.r, color.r);
             effect.setGreenRange(color.g, color.g);
             effect.setBlueRange(color.b, color.b);

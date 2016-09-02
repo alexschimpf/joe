@@ -54,7 +54,7 @@ public class MainMenu implements Screen {
 
     @Override
     public void render(float delta) {
-        Color c = ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.SHARED);
+        Color c = ColorScheme.getInstance().getBackgroundColor();
         Gdx.gl.glClearColor(c.r, c.g, c.b, c.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -173,7 +173,7 @@ public class MainMenu implements Screen {
         Label.LabelStyle style = new Label.LabelStyle();
         style.font = fontGenerator.generateFont(fontParam);
         style.fontColor = Color.WHITE;
-        Color backgroundColor = ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.SHARED);
+        Color backgroundColor = ColorScheme.getInstance().getBackgroundColor();
         style.background = new TextureRegionDrawable(AssetManager.getInstance().getTextureRegion("default")).tint(backgroundColor);
         loadingLabel = new Label("LOADING", skin);
         loadingLabel.setStyle(style);
