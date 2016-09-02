@@ -42,6 +42,14 @@ public class RedSpinningThingy extends RenderedEntity {
     }
 
     private void beginParticleEffect() {
+        beginParticleEffect(1);
+        beginParticleEffect(3);
+        beginParticleEffect(5);
+        beginParticleEffect(7);
+        beginParticleEffect(9);
+    }
+
+    private void beginParticleEffect(int layer) {
         Vector2Pool vector2Pool = Vector2Pool.getInstance();
         Vector2 sizeRange = vector2Pool.obtain(-getWidth() * 2, getWidth() * 2);
         Vector2 position = vector2Pool.obtain(getLeft(), getBottom() - (sizeRange.y / 2));
@@ -53,7 +61,7 @@ public class RedSpinningThingy extends RenderedEntity {
         effect.setBlueRange(color.b, color.b);
         effect.setAlphaRange(color.a, color.a);
 
-        ParticleEffectManager.getInstance().beginParticleEffect(effect, position, sizeRange, 9);
+        ParticleEffectManager.getInstance().beginParticleEffect(effect, position, sizeRange, layer);
         vector2Pool.free(position);
         vector2Pool.free(sizeRange);
     }
