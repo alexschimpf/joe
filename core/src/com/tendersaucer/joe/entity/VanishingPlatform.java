@@ -20,7 +20,6 @@ public class VanishingPlatform extends RenderedEntity {
     private long vanishStartTime;
     private final float vanishDuration;
     private final float reappearDelay;
-    private final Timer timer;
 
     private VanishingPlatform(EntityDefinition def) {
         super(def);
@@ -29,7 +28,6 @@ public class VanishingPlatform extends RenderedEntity {
         reappearDelay = def.getFloatProperty("reappear_delay");
         isVanishing = false;
         isReappearWait = false;
-        timer = new Timer();
     }
 
     @Override
@@ -54,13 +52,6 @@ public class VanishingPlatform extends RenderedEntity {
     }
 
     @Override
-    public void dispose() {
-        super.dispose();
-
-        timer.clear();
-    }
-
-    @Override
     public void onBeginContact(Contact contact, Entity entity) {
         if(!isVanishing && !isReappearWait && Entity.isPlayer(entity)) {
             vanish();
@@ -76,12 +67,17 @@ public class VanishingPlatform extends RenderedEntity {
     }
 
     private void scheduleReappear() {
-        timer.scheduleTask(new Timer.Task() {
+        final int oldLevelId = Level.getInstance().getId();
+        new Timer().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
                     public void run() {
+                        if (oldLevelId != Level.getInstance().getId()) {
+                            return;
+                        }
+
                         TiledEntityDefinition offspringDefinition =
                                 new TiledEntityDefinition(UUID.randomUUID().toString(), (TiledEntityDefinition)definition);
                         VanishingPlatform offspring = (VanishingPlatform)Entity.build(offspringDefinition);
