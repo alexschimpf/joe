@@ -42,7 +42,6 @@ public final class ColorScheme {
     }
 
     public void reset() {
-        // TODO: Is MathUtils.random legit?
         RandomUtils.shuffle(colorBank);
         primaryColor = new Color(colorBank[0]);
         secondaryColor = new Color(colorBank[1]);

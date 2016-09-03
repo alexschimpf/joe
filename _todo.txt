@@ -1,3 +1,4 @@
+- When will the background change?
 - What to do about textures in Tiled?
     - What if a particular entity's texture is not the same size as the other tiles?
         - Create a new tileset with just that image?

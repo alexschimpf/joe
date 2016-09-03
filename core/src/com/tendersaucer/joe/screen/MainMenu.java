@@ -3,13 +3,13 @@ package com.tendersaucer.joe.screen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -54,8 +54,7 @@ public class MainMenu implements Screen {
 
     @Override
     public void render(float delta) {
-        Color c = ColorScheme.getInstance().getBackgroundColor();
-        Gdx.gl.glClearColor(c.r, c.g, c.b, c.a);
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.draw();
@@ -87,8 +86,14 @@ public class MainMenu implements Screen {
     }
 
     private void createUI() {
+        Image background = new Image();
+        background.setDrawable(new TextureRegionDrawable(AssetManager.getInstance().getTextureRegion("main_menu_background")));
+        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        background.setPosition(0, 0);
+        stage.addActor(background);
+
         createPlayButton();
-        //createAudioButton();
+        createAudioButton();
         createLoadingLabel();
     }
 
@@ -100,7 +105,7 @@ public class MainMenu implements Screen {
 
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.font = fontGenerator.generateFont(fontParam);
-        style.fontColor = Color.WHITE;
+        style.fontColor = ColorScheme.getInstance().getBackgroundColor();
 
         final TextButton playButton = new TextButton("JOE", skin);
         playButton.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() + correction);
@@ -109,6 +114,8 @@ public class MainMenu implements Screen {
         playButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                stage.clear();
+                stage.addActor(loadingLabel);
                 loadingLabel.setVisible(true);
                 return true;
             }
@@ -127,9 +134,9 @@ public class MainMenu implements Screen {
 
         Label.LabelStyle style2 = new Label.LabelStyle();
         style2.font = fontGenerator.generateFont(fontParam);
-        style2.fontColor = Color.WHITE;
+        style2.fontColor = ColorScheme.getInstance().getBackgroundColor();
 
-        Label footer = new Label("(touch anywhere to begin)", skin);
+        final Label footer = new Label("(touch anywhere to begin)", skin);
         footer.setAlignment(Align.center);
         footer.setSize(Gdx.graphics.getWidth(), height);
         footer.setPosition(0, (Gdx.graphics.getHeight() / 2) - (height * 3));
@@ -137,6 +144,22 @@ public class MainMenu implements Screen {
         footer.setTouchable(Touchable.disabled);
 
         stage.addActor(footer);
+    }
+
+    private void createLoadingLabel() {
+        int height = (int)(Gdx.graphics.getWidth() * 0.1f);
+        FreeTypeFontParameter fontParam = new FreeTypeFontParameter();
+        fontParam.size = height;
+        Label.LabelStyle style = new Label.LabelStyle();
+        style.font = fontGenerator.generateFont(fontParam);
+        style.fontColor = ColorScheme.getInstance().getBackgroundColor();
+        loadingLabel = new Label("LOADING", skin);
+        loadingLabel.setStyle(style);
+        loadingLabel.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        loadingLabel.setAlignment(Align.center);
+        loadingLabel.setPosition(0, 0);
+        loadingLabel.setVisible(false);
+        stage.addActor(loadingLabel);
     }
 
     private void createAudioButton() {
@@ -164,23 +187,5 @@ public class MainMenu implements Screen {
 //        });
 //
 //        stage.addActor(audioButton);
-    }
-
-    private void createLoadingLabel() {
-        int height = (int)(Gdx.graphics.getWidth() * 0.1f);
-        FreeTypeFontParameter fontParam = new FreeTypeFontParameter();
-        fontParam.size = height;
-        Label.LabelStyle style = new Label.LabelStyle();
-        style.font = fontGenerator.generateFont(fontParam);
-        style.fontColor = Color.WHITE;
-        Color backgroundColor = ColorScheme.getInstance().getBackgroundColor();
-        style.background = new TextureRegionDrawable(AssetManager.getInstance().getTextureRegion("default")).tint(backgroundColor);
-        loadingLabel = new Label("LOADING", skin);
-        loadingLabel.setStyle(style);
-        loadingLabel.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        loadingLabel.setAlignment(Align.center);
-        loadingLabel.setPosition(0, 0);
-        loadingLabel.setVisible(false);
-        stage.addActor(loadingLabel);
     }
 }

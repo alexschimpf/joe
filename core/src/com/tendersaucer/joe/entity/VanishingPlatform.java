@@ -1,5 +1,6 @@
 package com.tendersaucer.joe.entity;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -19,6 +20,7 @@ public class VanishingPlatform extends RenderedEntity {
     private long vanishStartTime;
     private final float vanishDuration;
     private final float reappearDelay;
+    private final Timer timer;
 
     private VanishingPlatform(EntityDefinition def) {
         super(def);
@@ -27,6 +29,7 @@ public class VanishingPlatform extends RenderedEntity {
         reappearDelay = def.getFloatProperty("reappear_delay");
         isVanishing = false;
         isReappearWait = false;
+        timer = new Timer();
     }
 
     @Override
@@ -51,6 +54,13 @@ public class VanishingPlatform extends RenderedEntity {
     }
 
     @Override
+    public void dispose() {
+        super.dispose();
+
+        timer.clear();
+    }
+
+    @Override
     public void onBeginContact(Contact contact, Entity entity) {
         if(!isVanishing && !isReappearWait && Entity.isPlayer(entity)) {
             vanish();
@@ -66,16 +76,20 @@ public class VanishingPlatform extends RenderedEntity {
     }
 
     private void scheduleReappear() {
-        Timer timer = new Timer();
         timer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                TiledEntityDefinition offspringDefinition =
-                        new TiledEntityDefinition(UUID.randomUUID().toString(), (TiledEntityDefinition)definition);
-                VanishingPlatform offspring = (VanishingPlatform)Entity.build(offspringDefinition);
-                offspring.setReappearWait(true);
-                Level.getInstance().addEntity(offspring);
-                Canvas.getInstance().addToLayer(offspringDefinition.getLayer(), offspring);
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        TiledEntityDefinition offspringDefinition =
+                                new TiledEntityDefinition(UUID.randomUUID().toString(), (TiledEntityDefinition)definition);
+                        VanishingPlatform offspring = (VanishingPlatform)Entity.build(offspringDefinition);
+                        offspring.setReappearWait(true);
+                        Level.getInstance().addEntity(offspring);
+                        Canvas.getInstance().addToLayer(offspringDefinition.getLayer(), offspring);
+                    }
+                });
             }
         }, reappearDelay / 1000);
     }
