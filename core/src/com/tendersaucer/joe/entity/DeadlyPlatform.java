@@ -46,7 +46,7 @@ public final class DeadlyPlatform extends RenderedEntity {
 
     @Override
     public void onBeginContact(Contact contact, Entity entity) {
-        if(Entity.isPlayer(entity)) {
+        if(duration != 0 && Entity.isPlayer(entity)) {
             isPlayerTouching = true;
             touchStartTime = TimeUtils.millis();
         }
@@ -54,7 +54,7 @@ public final class DeadlyPlatform extends RenderedEntity {
 
     @Override
     public void onEndContact(Contact contact, Entity entity) {
-        if(Entity.isPlayer(entity)) {
+        if(duration != 0 && Entity.isPlayer(entity)) {
             isPlayerTouching = false;
             sprite.setColor(1, 1, 1, 1);
         }

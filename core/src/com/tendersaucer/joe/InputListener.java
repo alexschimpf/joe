@@ -107,6 +107,9 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
             case Keys.Q:
                 MainCamera.getInstance().takeScreenshot();
                 break;
+            case Keys.ENTER:
+                Level.getInstance().loadNext();
+                break;
             default:
                 if (Level.getInstance().getPlayer() != null &&
                         Globals.getGameState() == GameState.WAIT_FOR_INPUT) {
