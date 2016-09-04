@@ -14,7 +14,7 @@
   </object>
   <object id="303" type="red_spinning_thingy" gid="24" x="1344" y="128" width="64" height="64"/>
   <object id="319" type="vanishing_platform" gid="24" x="1344" y="832" width="64" height="64"/>
-  <object id="321" type="vanishing_platform" gid="24" x="896" y="1024" width="128" height="64"/>
+  <object id="321" type="vanishing_platform" gid="24" x="960" y="1024" width="128" height="64"/>
   <object id="322" type="vanishing_platform" gid="24" x="1344" y="768" width="64" height="64"/>
   <object id="323" type="vanishing_platform" gid="24" x="1344" y="384" width="64" height="64"/>
   <object id="324" x="1280" y="512" width="192" height="64"/>
