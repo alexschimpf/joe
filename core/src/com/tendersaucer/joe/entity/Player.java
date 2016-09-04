@@ -26,6 +26,10 @@ public final class Player extends RenderedEntity {
         LEFT, RIGHT
     }
 
+    public enum InteractionType {
+        SIMPLE
+    }
+
     private static final String JUMP_ANIMATION_ID = "jump";
     private static final String MOVE_ANIMATION_ID = "move";
     public static final float MOVE_SPEED = 1800;

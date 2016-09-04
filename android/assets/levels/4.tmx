@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="45" height="25" tilewidth="64" tileheight="64" nextobjectid="346">
+ <tileset firstgid="1" name="tiles" tilewidth="64" tileheight="64" spacing="1" margin="1" tilecount="225" columns="15">
+  <image source="tiles.png" width="976" height="975"/>
+ </tileset>
+ <objectgroup name="bodies">
+  <properties>
+   <property name="layer" type="int" value="5"/>
+  </properties>
+  <object id="302" name="player" type="player" gid="2" x="64" y="1536" width="64" height="64">
+   <properties>
+    <property name="layer" type="int" value="6"/>
+   </properties>
+  </object>
+  <object id="306" type="red_spinning_thingy" gid="24" x="1920" y="1152" width="64" height="64"/>
+  <object id="310" x="0" y="1536" width="448" height="64"/>
+  <object id="312" type="deadly_platform" gid="24" x="512" y="1408" width="64" height="64">
+   <properties>
+    <property name="duration" type="float" value="500"/>
+   </properties>
+  </object>
+  <object id="322" type="deadly_platform" gid="24" x="1344" y="320" width="64" height="64"/>
+  <object id="327" type="deadly_platform" gid="24" x="1792" y="1152" width="64" height="768"/>
+  <object id="328" type="deadly_platform" gid="24" x="2048" y="1152" width="64" height="768"/>
+  <object id="329" type="deadly_platform" gid="24" x="1152" y="512" width="64" height="64"/>
+  <object id="330" type="deadly_platform" gid="24" x="1088" y="256" width="64" height="64"/>
+  <object id="331" type="deadly_platform" gid="24" x="1024" y="320" width="64" height="64"/>
+  <object id="332" type="deadly_platform" gid="24" x="960" y="384" width="64" height="64"/>
+  <object id="338" type="deadly_platform" gid="24" x="768" y="1216" width="64" height="64">
+   <properties>
+    <property name="duration" type="float" value="500"/>
+   </properties>
+  </object>
+  <object id="339" type="deadly_platform" gid="24" x="512" y="1024" width="64" height="64">
+   <properties>
+    <property name="duration" type="float" value="500"/>
+   </properties>
+  </object>
+  <object id="340" type="deadly_platform" gid="24" x="768" y="832" width="64" height="64">
+   <properties>
+    <property name="duration" type="float" value="500"/>
+   </properties>
+  </object>
+  <object id="344" type="deadly_platform" gid="24" x="1024" y="640" width="64" height="64">
+   <properties>
+    <property name="duration" type="float" value="500"/>
+   </properties>
+  </object>
+  <object id="345" type="deadly_platform" gid="24" x="1280" y="448" width="64" height="64">
+   <properties>
+    <property name="duration" type="float" value="500"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <layer name="foreground" width="45" height="25">
+  <properties>
+   <property name="color_type" value="primary"/>
+   <property name="layer" type="int" value="7"/>
+  </properties>
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,2,2,2,2,2,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>

@@ -43,23 +43,20 @@
                                 ]
                             }
                         },
-                        "timer_chain_link": {
-                            "class": "TimerChainLink",
-                            "properties": {
-                                "optional": [
-                                    { "name": "is_start", "default": "false" },
-                                    { "name": "is_end", "default": "false" },
-                                    { "name": "delay", "default": "145 " },
-                                    { "name": "is_body_active", "default": "false" }
-                                ]
-                            }
-                        },
                         "vanishing_platform": {
                             "class": "VanishingPlatform",
                             "properties": {
                                 "optional": [
                                     { "name": "vanish_duration", "default": "750" },
                                     { "name": "reappear_delay", "default": "750" }
+                                ]
+                            }
+                        },
+                        "deadly_platform": {
+                            "class": "DeadlyPlatform",
+                            "properties": {
+                                "optional": [
+                                    { "name": "duration", "default": "0" }
                                 ]
                             }
                         },

@@ -353,7 +353,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         moveButton = new Button(skin);
         moveButton.getStyle().down = new TextureRegionDrawable(AssetManager.getInstance().getTextureRegion("default")).tint(MOBILE_BUTTON_DOWN_COLOR);
         moveButton.getStyle().up = new TextureRegionDrawable(AssetManager.getInstance().getTextureRegion("default")).tint(MOBILE_BUTTON_UP_COLOR);
-        moveButton.setSize(screenWidth / 3f, screenHeight / 5f);
+        moveButton.setSize(screenWidth * 0.35f, screenHeight * 0.2f);
         moveButton.setPosition(screenWidth / 32, screenHeight / 32f);
         moveButton.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
             @Override

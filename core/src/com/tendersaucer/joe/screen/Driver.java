@@ -61,6 +61,10 @@ public final class Driver implements Screen {
         eventManager.listen(NewUserEvent.class, HUD.getInstance());
 
         DAO dao = DAO.getInstance();
+        if (Globals.START_LEVEL != null) {
+            dao.putLong(DAO.ITERATION_ID_KEY, 0);
+            dao.putLong(DAO.LEVEL_ID_KEY, Globals.START_LEVEL);
+        }
         long iterationId = dao.getLong(DAO.ITERATION_ID_KEY, 0);
         int levelId = (int)dao.getLong(DAO.LEVEL_ID_KEY, 0);
         Level.getInstance().load(iterationId, levelId);

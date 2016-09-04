@@ -109,13 +109,6 @@ chain
   orig: 64, 64
   offset: 0, 0
   index: 11
-icon
-  rotate: false
-  xy: 265, 291
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
 chain
   rotate: false
   xy: 331, 357
@@ -165,156 +158,163 @@ main_menu_background
   orig: 64, 64
   offset: 0, 0
   index: -1
-player_default
+move_button
   rotate: false
   xy: 265, 159
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-player_jump
+player_default
   rotate: false
-  xy: 265, 159
+  xy: 331, 225
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 0
+  index: -1
 player_jump
   rotate: false
   xy: 331, 225
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 1
+  index: 0
 player_jump
   rotate: false
   xy: 397, 291
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 2
+  index: 1
 player_jump
   rotate: false
   xy: 463, 357
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 3
+  index: 2
 player_jump
   rotate: false
   xy: 913, 423
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 4
+  index: 3
 player_jump
   rotate: false
   xy: 331, 159
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 5
+  index: 4
 player_jump
   rotate: false
   xy: 397, 225
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 6
+  index: 5
 player_jump
   rotate: false
   xy: 463, 291
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 7
+  index: 6
 player_jump
   rotate: false
   xy: 529, 357
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 8
+  index: 7
 player_jump
   rotate: false
   xy: 397, 159
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 9
+  index: 8
 player_jump
   rotate: false
   xy: 463, 225
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 10
+  index: 9
 player_jump
   rotate: false
   xy: 529, 291
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 11
+  index: 10
 player_jump
   rotate: false
   xy: 595, 357
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 12
+  index: 11
 player_jump
   rotate: false
   xy: 463, 159
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 13
+  index: 12
 player_jump
   rotate: false
   xy: 529, 225
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 14
+  index: 13
 player_jump
   rotate: false
   xy: 595, 291
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 15
-player_move
+  index: 14
+player_jump
   rotate: false
   xy: 661, 357
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 0
+  index: 15
 player_move
   rotate: false
   xy: 529, 159
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 1
+  index: 0
 player_move
   rotate: false
   xy: 595, 225
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 2
+  index: 1
 player_move
   rotate: false
   xy: 661, 291
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 3
+  index: 2
 player_move
   rotate: false
   xy: 727, 357
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
+player_move
+  rotate: false
+  xy: 595, 159
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -342,7 +342,7 @@ rectangle_1
   index: 2
 rectangle_1
   rotate: false
-  xy: 595, 159
+  xy: 661, 225
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
