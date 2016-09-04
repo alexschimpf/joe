@@ -458,6 +458,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                setFlash(true);
+
                 isTutorialNextButtonPressed = false;
                 int lastPos = Globals.isMobile() ? MOBILE_TUTORIAL_MESSAGES.length - 1 :
                         DESKTOP_TUTORIAL_MESSAGES.length - 1;
