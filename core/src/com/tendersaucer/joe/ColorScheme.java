@@ -28,7 +28,7 @@ public final class ColorScheme {
         Color.valueOf("FFB469FF"), // orange
         Color.valueOf("69FFB4FF"), // teal
         Color.valueOf("B469FFFF"), // purple
-        Color.valueOf("FFFF69FF"), // yellow
+        Color.valueOf("FFFF69FF")  // yellow
     };
     private Color primaryColor;
     private Color secondaryColor;
