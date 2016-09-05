@@ -118,19 +118,8 @@ public final class TiledUtils {
             return BodyType.StaticBody;
         }
 
-        BodyType bodyType;
         String bodyTypeName = object.getProperties().get(BODY_TYPE_PROP).toString();
-        if (bodyTypeName.equals(STATIC_BODY_TYPE)) {
-            bodyType = BodyType.StaticBody;
-        } else if (bodyTypeName.equals(KINEMATIC_BODY_TYPE)) {
-            bodyType = BodyType.KinematicBody;
-        } else if (bodyTypeName.equals(DYNAMIC_BODY_TYPE)) {
-            bodyType = BodyType.DynamicBody;
-        } else {
-            throw new InvalidConfigException(BODY_TYPE_PROP, bodyTypeName);
-        }
-
-        return bodyType;
+        return BodyType.valueOf(StringUtils.capitalize(bodyTypeName) + "Body");
     }
 
     public static boolean propertyExists(MapLayerWrapper layer, String key) {
