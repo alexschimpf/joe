@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="19" height="15" tilewidth="64" tileheight="64" nextobjectid="305">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="19" height="15" tilewidth="64" tileheight="64" nextobjectid="311">
  <tileset firstgid="1" name="tiles" tilewidth="64" tileheight="64" spacing="1" margin="1" tilecount="225" columns="15">
   <image source="tiles.png" width="976" height="975"/>
  </tileset>
@@ -13,12 +13,13 @@
    </properties>
   </object>
   <object id="299" x="128" y="512" width="64" height="64"/>
-  <object id="300" x="704" y="512">
-   <polyline points="0,0 448,0 448,64 74.6667,64 74.6667,128 0,128 0,0"/>
-  </object>
   <object id="301" x="128" y="704" width="64" height="64"/>
   <object id="302" x="128" y="896" width="64" height="64"/>
   <object id="303" type="red_spinning_thingy" gid="24" x="960" y="320" width="64" height="64"/>
+  <object id="307" x="704" y="512" width="448" height="64"/>
+  <object id="308" x="704" y="576" width="256" height="64"/>
+  <object id="309" x="768" y="640" width="128" height="64"/>
+  <object id="310" x="832" y="704" width="64" height="64"/>
  </objectgroup>
  <layer name="foreground" width="19" height="15">
   <properties>
@@ -34,10 +35,10 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,49,0,0,0,0,0,0,0,0,16,2,2,2,2,2,3,0,
-0,0,0,0,0,0,0,0,0,0,0,34,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,49,0,0,0,0,0,0,0,0,16,17,17,17,2,2,3,0,
+0,0,0,0,0,0,0,0,0,0,0,46,32,32,48,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,46,33,0,0,0,0,0,
+0,0,49,0,0,0,0,0,0,0,0,0,0,34,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
