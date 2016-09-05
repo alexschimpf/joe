@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Array;
 import com.tendersaucer.joe.AssetManager;
+import com.tendersaucer.joe.Globals;
 import com.tendersaucer.joe.MainCamera;
 import com.tendersaucer.joe.background.ParallaxBackground;
 import com.tendersaucer.joe.background.SpriteParallaxLayer;
@@ -69,7 +70,8 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
         canvasMap = new LinkedHashMap<IRender, Integer>();
         bodySkeletonMap = new HashMap<String, MapObject>();
 
-        filename = AssetManager.getFilePath("levels", levelId + ".tmx");
+        String tileMapName = Globals.getLevelTileMapName(levelId);
+        filename = AssetManager.getFilePath("levels", tileMapName + ".tmx");
         TmxMapLoader.Parameters params = new TmxMapLoader.Parameters();
         params.flipY = false;
 

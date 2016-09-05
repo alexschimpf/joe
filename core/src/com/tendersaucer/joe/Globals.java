@@ -5,6 +5,7 @@ import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.tendersaucer.joe.event.EventManager;
 import com.tendersaucer.joe.event.GameStateChangeEvent;
+import com.tendersaucer.joe.util.RandomUtils;
 
 /**
  * Game global variables
@@ -25,7 +26,6 @@ public final class Globals {
     public static final int LOG_LEVEL = Application.LOG_DEBUG;
 
     private Globals() {
-        gameState = GameState.RUNNING;
     }
 
     public static boolean isDesktop() {
@@ -54,5 +54,24 @@ public final class Globals {
 
     public static GameState getGameState() {
         return gameState;
+    }
+
+    public static String getLevelTileMapName(int levelId) {
+        String[] levelOrder = DAO.getInstance().getString(DAO.LEVEL_ORDER_KEY, "").split(",");
+        return levelOrder[levelId];
+    }
+
+    public static void setRandomLevelOrder() {
+        String[] temp = new String[Globals.NUM_LEVELS - 2];
+        for (int i = 2; i < Globals.NUM_LEVELS; i++){
+            temp[i - 2] = String.valueOf(i);
+        }
+        RandomUtils.shuffle(temp);
+
+        String levelOrderCSV = "0,1";
+        for (int i = 0; i < temp.length; i++) {
+            levelOrderCSV += "," + temp[i];
+        }
+        DAO.getInstance().putString(DAO.LEVEL_ORDER_KEY, levelOrderCSV);
     }
 }

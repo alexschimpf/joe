@@ -50,7 +50,7 @@ public class RedSpinningThingy extends RenderedEntity {
                     sprite.setColor(ON_COLOR);
                 }
             }
-        }, 0, 0.5f);
+        }, 0, 0.25f);
     }
 
     @Override

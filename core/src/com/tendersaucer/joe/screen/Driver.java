@@ -65,13 +65,13 @@ public final class Driver implements Screen {
             dao.putLong(DAO.ITERATION_ID_KEY, 0);
             dao.putLong(DAO.LEVEL_ID_KEY, Globals.START_LEVEL);
         }
+        if (dao.getBoolean(DAO.IS_NEW_KEY, true)) {
+            Globals.setRandomLevelOrder();
+            eventManager.notify(new NewUserEvent());
+        }
         long iterationId = dao.getLong(DAO.ITERATION_ID_KEY, 0);
         int levelId = (int)dao.getLong(DAO.LEVEL_ID_KEY, 0);
         Level.getInstance().load(iterationId, levelId);
-
-        if (dao.getBoolean(DAO.IS_NEW_KEY, true)) {
-            eventManager.notify(new NewUserEvent());
-        }
     }
 
     @Override

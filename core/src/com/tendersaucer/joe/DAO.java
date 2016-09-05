@@ -18,11 +18,12 @@ public final class DAO {
     public static final String LEVEL_ID_KEY = "level_id";
     public static final String RUN_ID_KEY = "run_id";
     public static final String TOTAL_TIME_KEY = "total_time";
+    public static final String LEVEL_ORDER_KEY = "level_order";
     private static final String PREFERENCES_NAME = "joe";
     private static final DAO instance = new DAO();
 
     private Map<String, ?> preferencesCache;
-    private Preferences preferences;
+    private final Preferences preferences;
 
     private DAO() {
         preferences = Gdx.app.getPreferences(PREFERENCES_NAME);
