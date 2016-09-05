@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tendersaucer.joe.AssetManager;
+import com.tendersaucer.joe.ColorScheme;
 import com.tendersaucer.joe.DAO;
 import com.tendersaucer.joe.GameState;
 import com.tendersaucer.joe.Globals;
@@ -77,6 +78,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     private Label levelSummaryLabel;
     private TextButton nextButton;
     private Label progressLabel;
+    private Label infoLabel;
     private Button moveButton;
     private Button jumpButton;
     private Integer movePointer;
@@ -94,6 +96,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         createFlashImage();
         createProgressLabel();
+        createInfoLabel();
         createLevelCompleteUI();
         hideLevelComplete();
 
@@ -132,24 +135,38 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
         Level level = Level.getInstance();
         boolean isTutorial = DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true);
-        if (isTutorial) {
-            progressLabel.setText("TUTORIAL");
-        } else {
+        if (!isTutorial) {
             long iterationId = level.getIterationId();
             int levelId = level.getId();
             long runId = DAO.getInstance().getLong(DAO.RUN_ID_KEY, 0);
             progressLabel.setText(iterationId + "." + levelId + "." + runId);
         }
 
-        float labelHeight = progressLabel.getPrefHeight();
+        infoLabel.setColor(ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.SHARED));
+        if (isTutorial) {
+            infoLabel.setText("TUTORIAL");
+            infoLabel.setVisible(true);
+        } else if (Globals.getGameState() == GameState.WAIT_FOR_INPUT) {
+            infoLabel.setText("(WAITING FOR INPUT)");
+            infoLabel.setVisible(true);
+        } else {
+            infoLabel.setVisible(false);
+        }
+
+        float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
         float margin = screenHeight / 50;
+        float labelHeight = progressLabel.getPrefHeight();
         progressLabel.setPosition(margin, screenHeight - (labelHeight / 2) - margin);
+
+        float labelWidth = infoLabel.getPrefWidth();
+        labelHeight = infoLabel.getPrefHeight();
+        infoLabel.setPosition((screenWidth - labelWidth) / 2, screenHeight - (labelHeight / 2) - margin);
+
         levelSummaryLabel.setPosition(margin, margin + (labelHeight / 2));
 
         if (tutorialLabel != null) {
-            float labelWidth = tutorialLabel.getWidth();
-            int screenWidth = Gdx.graphics.getWidth();
+            labelWidth = tutorialLabel.getWidth();
             tutorialLabel.setPosition((screenWidth - labelWidth) / 2, 0.6f * screenHeight);
 
             if (Globals.isMobile()) {
@@ -235,36 +252,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         }
     }
 
-    private void hideLevelComplete() {
-        levelCompleteBackground.setVisible(false);
-        nextButton.setVisible(false);
-        levelSummaryLabel.setText("");
-        levelSummaryLabel.setVisible(false);
-
-        if (!Globals.isDesktop() && moveButton != null && jumpButton != null) {
-            moveButton.setDisabled(false);
-            moveButton.setVisible(true);
-            jumpButton.setDisabled(false);
-            jumpButton.setVisible(true);
-        }
-    }
-
-    private void showLevelComplete() {
-        levelCompleteBackground.setVisible(true);
-        nextButton.setVisible(true);
-
-        long duration = DAO.getInstance().getLong(DAO.TOTAL_TIME_KEY, 0);
-        levelSummaryLabel.setText(String.format("TIME TAKEN: " + getTimeTakenDisplay(duration)));
-        levelSummaryLabel.setVisible(true);
-
-        if (!Globals.isDesktop() && moveButton != null && jumpButton != null) {
-            moveButton.setDisabled(true);
-            moveButton.setVisible(false);
-            jumpButton.setDisabled(true);
-            jumpButton.setVisible(false);
-        }
-    }
-
     private void createFlashImage() {
         TextureRegion tr = AssetManager.getInstance().getTextureRegion("default");
         flashImage = new Image(tr);
@@ -288,6 +275,25 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
         stage.addActor(progressLabel);
     }
+
+    private void createInfoLabel() {
+        infoLabel = new Label("", skin);
+
+        FreeTypeFontParameter fontParameter = new FreeTypeFontParameter();
+        fontParameter.size = Gdx.graphics.getWidth() / 30;
+        LabelStyle style = new LabelStyle();
+        style.font = fontGenerator.generateFont(fontParameter);
+        style.fontColor = Color.WHITE;
+        infoLabel.setStyle(style);
+
+        stage.addActor(infoLabel);
+    }
+
+    /**
+     * ********************************************************************************************
+     * Level Complete
+     * ********************************************************************************************
+     */
 
     private void createLevelCompleteUI() {
         if (Level.getInstance().getPlayer() != null){
@@ -340,6 +346,161 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         levelSummaryLabel.setStyle(style);
         stage.addActor(levelSummaryLabel);
     }
+
+    private String getTimeTakenDisplay(long durationMs) {
+        long durationSeconds = durationMs / 1000;
+        String unitDisplay = null;
+        if (durationSeconds < 60) {
+            unitDisplay = durationSeconds + " SECONDS";
+        } else if (durationSeconds >= 60) {
+            long minutes = durationSeconds / 60;
+            long seconds = durationSeconds - (minutes * 60);
+            String minutesDisplay = minutes > 1 ? "MINUTES" : "MINUTE";
+            String secondsDisplay = seconds > 1 ? "SECONDS" : "SECOND";
+            unitDisplay = minutes + " " + minutesDisplay;
+            if (seconds > 0) {
+                unitDisplay += " " + seconds + " " + secondsDisplay;
+            }
+        }
+
+        return unitDisplay;
+    }
+
+    private void hideLevelComplete() {
+        levelCompleteBackground.setVisible(false);
+        nextButton.setVisible(false);
+        levelSummaryLabel.setText("");
+        levelSummaryLabel.setVisible(false);
+
+        if (!Globals.isDesktop() && moveButton != null && jumpButton != null) {
+            moveButton.setDisabled(false);
+            moveButton.setVisible(true);
+            jumpButton.setDisabled(false);
+            jumpButton.setVisible(true);
+        }
+    }
+
+    private void showLevelComplete() {
+        levelCompleteBackground.setVisible(true);
+        nextButton.setVisible(true);
+
+        long duration = DAO.getInstance().getLong(DAO.TOTAL_TIME_KEY, 0);
+        levelSummaryLabel.setText("TIME TAKEN: " + getTimeTakenDisplay(duration));
+        levelSummaryLabel.setVisible(true);
+
+        if (!Globals.isDesktop() && moveButton != null && jumpButton != null) {
+            moveButton.setDisabled(true);
+            moveButton.setVisible(false);
+            jumpButton.setDisabled(true);
+            jumpButton.setVisible(false);
+        }
+    }
+
+    /**
+     * ********************************************************************************************
+     * Tutorial
+     * ********************************************************************************************
+     */
+
+    private void createTutorialUI() {
+        final int screenWidth = Gdx.graphics.getWidth();
+        final int screenHeight = Gdx.graphics.getHeight();
+
+        tutorialLabel = new Label("", skin);
+        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+        parameter.size = screenWidth / 40;
+        parameter.size = screenWidth / 40;
+        BitmapFont font = fontGenerator.generateFont(parameter);
+        LabelStyle labelStyle = new LabelStyle(font, Color.WHITE);
+        tutorialLabel.setStyle(labelStyle);
+        tutorialLabel.setAlignment(Align.center);
+        tutorialLabel.setWrap(true);
+        tutorialLabel.setSize(screenWidth / 2, screenHeight / 5);
+        tutorialLabel.setVisible(false);
+        stage.addActor(tutorialLabel);
+
+        final float padding = screenHeight * 0.01f;
+        float size = screenWidth * 0.1f;
+        TextureRegion tr = AssetManager.getInstance().getTextureRegion("arrow");
+        tr.flip(false, true);
+        tutorialHelperArrow = new Image(tr);
+        tutorialHelperArrow.setSize(size, size);
+        tutorialHelperArrow.setOrigin(Align.center);
+        tutorialHelperArrow.setVisible(false);
+        tutorialHelperArrow.setColor(Color.WHITE);
+        tutorialNextButton = new Image(tr);
+        tutorialNextButton.setSize(size * 2, size * 2);
+        tutorialNextButton.setOrigin(Align.center);
+        tutorialNextButton.setPosition(screenWidth - (size * 2.1f), screenHeight - (size * 1.55f));
+        tutorialNextButton.setVisible(true);
+        tutorialNextButton.setRotation(90);
+        tutorialNextButton.setColor(Color.WHITE);
+        tutorialNextButton.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (tutorialLabel.isVisible()) {
+                    isTutorialNextButtonPressed = true;
+                    Color color = tutorialNextButton.getColor();
+                    tutorialNextButton.setColor(color.r, color.g, color.b, 1);
+                    tutorialNextButton.setColor(new Color(0.8f, 0.8f, 0.8f, 1));
+                    return true;
+                }
+
+                return false;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                setFlash(true);
+
+                isTutorialNextButtonPressed = false;
+                int lastPos = Globals.isMobile() ? MOBILE_TUTORIAL_MESSAGES.length - 1 :
+                        DESKTOP_TUTORIAL_MESSAGES.length - 1;
+                tutorialNextButton.setColor(Color.WHITE);
+                if (tutorialPosition == lastPos) {
+                    tutorialLabel.setVisible(false);
+                    tutorialHelperArrow.setVisible(false);
+                    tutorialNextButton.setVisible(false);
+                    stage.addListener(inputListener);
+                    DAO.getInstance().putBoolean(DAO.IS_NEW_KEY, false);
+                    tutorialFlashTimer.clear();
+                } else {
+                    tutorialPosition++;
+                    if (Globals.isMobile()) {
+                        float size = tutorialHelperArrow.getWidth();
+                        if (tutorialPosition == 2) {
+                            float moveButtonCenterX = moveButton.getX() + (moveButton.getWidth() / 2);
+                            tutorialHelperArrow.setPosition(moveButtonCenterX - (size / 2), moveButton.getTop() + padding);
+                            tutorialHelperArrow.setVisible(true);
+                        } else if (tutorialPosition == 3) {
+                            float jumpButtonCenterX = jumpButton.getX() + (jumpButton.getWidth() / 2);
+                            tutorialHelperArrow.setPosition(jumpButtonCenterX - (size / 2), jumpButton.getTop() + padding);
+                        } else if (tutorialPosition == 5) {
+                            tutorialHelperArrow.setVisible(false);
+                        }
+                    }
+                }
+            }
+        });
+        stage.addActor(tutorialNextButton);
+        stage.addActor(tutorialHelperArrow);
+
+        tutorialFlashTimer = new Timer();
+        tutorialFlashTimer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                Color curr = tutorialNextButton.getColor();
+                tutorialNextButton.setColor(curr.r, curr.g, curr.b,
+                        curr.a == 0 || isTutorialNextButtonPressed ? 1 : 0);
+            }
+        }, 0, 0.25f);
+    }
+
+    /**
+     * ********************************************************************************************
+     * Mobile
+     * ********************************************************************************************
+     */
 
     private void createMobileButtons() {
         createMobileMoveButton();
@@ -409,100 +570,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         stage.addActor(jumpButton);
     }
 
-    private void createTutorialUI() {
-        final int screenWidth = Gdx.graphics.getWidth();
-        final int screenHeight = Gdx.graphics.getHeight();
-
-        tutorialLabel = new Label("", skin);
-        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-        parameter.size = screenWidth / 40;
-        parameter.size = screenWidth / 40;
-        BitmapFont font = fontGenerator.generateFont(parameter);
-        LabelStyle labelStyle = new LabelStyle(font, Color.WHITE);
-        tutorialLabel.setStyle(labelStyle);
-        tutorialLabel.setAlignment(Align.center);
-        tutorialLabel.setWrap(true);
-        tutorialLabel.setSize(screenWidth / 2, screenHeight / 5);
-        tutorialLabel.setVisible(false);
-        stage.addActor(tutorialLabel);
-
-        final float padding = screenHeight * 0.01f;
-        float size = screenWidth * 0.1f;
-        TextureRegion tr = AssetManager.getInstance().getTextureRegion("arrow");
-        tr.flip(false, true);
-        tutorialHelperArrow = new Image(tr);
-        tutorialHelperArrow.setSize(size, size);
-        tutorialHelperArrow.setOrigin(Align.center);
-        tutorialHelperArrow.setVisible(false);
-        tutorialHelperArrow.setColor(Color.WHITE);
-        tutorialNextButton = new Image(tr);
-        tutorialNextButton.setSize(size * 2, size * 2);
-        tutorialNextButton.setOrigin(Align.center);
-        tutorialNextButton.setPosition(screenWidth - (size * 2.1f), screenHeight - (size * 1.55f));
-        tutorialNextButton.setVisible(true);
-        tutorialNextButton.setRotation(90);
-        tutorialNextButton.setColor(Color.WHITE);
-        tutorialNextButton.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-               if (tutorialLabel.isVisible()) {
-                   isTutorialNextButtonPressed = true;
-                   Color color = tutorialNextButton.getColor();
-                   tutorialNextButton.setColor(color.r, color.g, color.b, 1);
-                   tutorialNextButton.setColor(new Color(0.8f, 0.8f, 0.8f, 1));
-                   return true;
-               }
-
-               return false;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                setFlash(true);
-
-                isTutorialNextButtonPressed = false;
-                int lastPos = Globals.isMobile() ? MOBILE_TUTORIAL_MESSAGES.length - 1 :
-                        DESKTOP_TUTORIAL_MESSAGES.length - 1;
-                tutorialNextButton.setColor(Color.WHITE);
-                if (tutorialPosition == lastPos) {
-                    tutorialLabel.setVisible(false);
-                    tutorialHelperArrow.setVisible(false);
-                    tutorialNextButton.setVisible(false);
-                    stage.addListener(inputListener);
-                    DAO.getInstance().putBoolean(DAO.IS_NEW_KEY, false);
-                    tutorialFlashTimer.clear();
-                } else {
-                    tutorialPosition++;
-                    if (Globals.isMobile()) {
-                        float size = tutorialHelperArrow.getWidth();
-                        if (tutorialPosition == 2) {
-                            float moveButtonCenterX = moveButton.getX() + (moveButton.getWidth() / 2);
-                            tutorialHelperArrow.setPosition(moveButtonCenterX - (size / 2), moveButton.getTop() + padding);
-                            tutorialHelperArrow.setVisible(true);
-                        } else if (tutorialPosition == 3) {
-                            float jumpButtonCenterX = jumpButton.getX() + (jumpButton.getWidth() / 2);
-                            tutorialHelperArrow.setPosition(jumpButtonCenterX - (size / 2), jumpButton.getTop() + padding);
-                        } else if (tutorialPosition == 5) {
-                            tutorialHelperArrow.setVisible(false);
-                        }
-                    }
-                }
-            }
-        });
-        stage.addActor(tutorialNextButton);
-        stage.addActor(tutorialHelperArrow);
-
-        tutorialFlashTimer = new Timer();
-        tutorialFlashTimer.scheduleTask(new Timer.Task() {
-            @Override
-            public void run() {
-                Color curr = tutorialNextButton.getColor();
-                tutorialNextButton.setColor(curr.r, curr.g, curr.b,
-                        curr.a == 0 || isTutorialNextButtonPressed ? 1 : 0);
-            }
-        }, 0, 0.25f);
-    }
-
     private void checkMobileButtons() {
         if(movePointer == null || Globals.getGameState() != GameState.RUNNING) {
             return;
@@ -530,24 +597,5 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         } else {
             player.stopHorizontalMove();
         }
-    }
-
-    private String getTimeTakenDisplay(long durationMs) {
-        long durationSeconds = durationMs / 1000;
-        String unitDisplay = null;
-        if (durationSeconds < 60) {
-            unitDisplay = durationSeconds + " SECONDS";
-        } else if (durationSeconds >= 60) {
-            long minutes = durationSeconds / 60;
-            long seconds = durationSeconds - (minutes * 60);
-            String minutesDisplay = minutes > 1 ? "MINUTES" : "MINUTE";
-            String secondsDisplay = seconds > 1 ? "SECONDS" : "SECOND";
-            unitDisplay = minutes + " " + minutesDisplay;
-            if (seconds > 0) {
-                unitDisplay += " " + seconds + " " + secondsDisplay;
-            }
-        }
-
-        return unitDisplay;
     }
 }

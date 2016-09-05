@@ -30,6 +30,10 @@ public class DesktopLauncher {
             config.height = 720;
         }
 
+        if (Globals.PACK_TEXTURES) {
+            TexturePacker.main(null);
+        }
+
         switch (RUN_MODE) {
             case GAME:
                 new LwjglApplication(new Game(), config);
