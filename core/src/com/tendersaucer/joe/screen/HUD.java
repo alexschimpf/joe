@@ -146,11 +146,14 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         if (isTutorial) {
             infoLabel.setText("TUTORIAL");
             infoLabel.setVisible(true);
+            infoBackground.setVisible(true);
         } else if (Globals.getGameState() == GameState.WAIT_FOR_INPUT) {
-            infoLabel.setText("(WAITING FOR INPUT)");
+            infoLabel.setText("WAITING FOR INPUT");
             infoLabel.setVisible(true);
+            infoBackground.setVisible(true);
         } else {
             infoLabel.setVisible(false);
+            infoBackground.setVisible(false);
         }
 
         float screenWidth = Gdx.graphics.getWidth();
@@ -161,7 +164,10 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
         float labelWidth = infoLabel.getPrefWidth();
         labelHeight = infoLabel.getPrefHeight();
-        infoLabel.setPosition((screenWidth - labelWidth) / 2, screenHeight - (labelHeight / 2) - margin);
+        infoBackground.setSize(Gdx.graphics.getWidth(), infoLabel.getPrefHeight() + (margin * 2));
+        infoLabel.setSize(Gdx.graphics.getWidth(), labelHeight);
+        infoLabel.setPosition((screenWidth - labelWidth) / 2, screenHeight - labelHeight - margin);
+        infoBackground.setPosition(0, infoLabel.getY() - margin);
 
         levelSummaryLabel.setPosition(margin, margin + (labelHeight / 2));
 
@@ -276,16 +282,22 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         stage.addActor(progressLabel);
     }
 
+    private Image infoBackground;
     private void createInfoLabel() {
-        infoLabel = new Label("", skin);
+        infoBackground = new Image();
+        TextureRegionDrawable image = new TextureRegionDrawable(AssetManager.getInstance().getTextureRegion("default"));
+        infoBackground.setDrawable(image.tint(new Color(0, 0, 0, 0.3f)));
+        infoBackground.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getWidth() / 20);
+        stage.addActor(infoBackground);
 
+        infoLabel = new Label("", skin);
         FreeTypeFontParameter fontParameter = new FreeTypeFontParameter();
         fontParameter.size = Gdx.graphics.getWidth() / 30;
         LabelStyle style = new LabelStyle();
         style.font = fontGenerator.generateFont(fontParameter);
         style.fontColor = Color.WHITE;
         infoLabel.setStyle(style);
-
+        infoLabel.setWidth(Gdx.graphics.getWidth());
         stage.addActor(infoLabel);
     }
 

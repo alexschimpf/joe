@@ -14,6 +14,23 @@ public final class ColorScheme {
     private static final float MIN_SHADE_BRIGHTNESS = 0.98f;
     private static final float MAX_SHADE_BRIGHTNESS = 1.02f;
 
+    private static final Color BLUE = Color.valueOf("69B4FF FF");
+    private static final Color GREEN = Color.valueOf("B4FF69 FF");
+    private static final Color ORANGE = Color.valueOf("FFB469 FF");
+    private static final Color TEAL = Color.valueOf("69FFB4 FF");
+    private static final Color PURPLE = Color.valueOf("B469FF FF");
+    private static final Color PINK = Color.valueOf("FF69B4 FF");
+    private static final Color[][] colorBank = new Color[][] {
+            new Color[] { BLUE, ORANGE },
+            new Color[] { BLUE, PINK },
+            new Color[] { GREEN, PURPLE },
+            new Color[] { GREEN, ORANGE },
+            new Color[] { GREEN, PINK },
+            new Color[] { TEAL, PURPLE },
+            new Color[] { TEAL, ORANGE },
+            new Color[] { TEAL, PINK },
+    };
+
     public enum ColorType {
         PRIMARY, SECONDARY
     }
@@ -22,14 +39,6 @@ public final class ColorScheme {
         SHARED, NEW
     }
 
-    private Color[] colorBank = new Color[] {
-        Color.valueOf("69B4FFFF"), // blue
-        Color.valueOf("B4FF69FF"), // green
-        Color.valueOf("FFB469FF"), // orange
-        Color.valueOf("69FFB4FF"), // teal
-        Color.valueOf("B469FFFF"), // purple
-        Color.valueOf("FFFF69FF")  // yellow
-    };
     private Color primaryColor;
     private Color secondaryColor;
     private Color backgroundColor;
@@ -43,8 +52,10 @@ public final class ColorScheme {
 
     public void reset() {
         RandomUtils.shuffle(colorBank);
-        primaryColor = new Color(colorBank[0]);
-        secondaryColor = new Color(colorBank[1]);
+        Color[] scheme = RandomUtils.pickFrom(colorBank);
+        RandomUtils.shuffle(scheme);
+        primaryColor = new Color(scheme[0]);
+        secondaryColor = new Color(scheme[1]);
         backgroundColor = new Color(0.2f, 0.2f, 0.2f, 1);
 
         // TODO: This is just for convenience. Remove later.
