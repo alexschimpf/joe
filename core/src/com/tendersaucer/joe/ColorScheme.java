@@ -14,12 +14,12 @@ public final class ColorScheme {
     private static final float MIN_SHADE_BRIGHTNESS = 0.98f;
     private static final float MAX_SHADE_BRIGHTNESS = 1.02f;
 
-    private static final Color BLUE = Color.valueOf("69B4FF FF");
-    private static final Color GREEN = Color.valueOf("B4FF69 FF");
-    private static final Color ORANGE = Color.valueOf("FFB469 FF");
-    private static final Color TEAL = Color.valueOf("69FFB4 FF");
-    private static final Color PURPLE = Color.valueOf("B469FF FF");
-    private static final Color PINK = Color.valueOf("FF69B4 FF");
+    private static final Color BLUE = Color.valueOf("69B4FFFF");
+    private static final Color GREEN = Color.valueOf("B4FF69FF");
+    private static final Color ORANGE = Color.valueOf("FFB469FF");
+    private static final Color TEAL = Color.valueOf("69FFB4FF");
+    private static final Color PURPLE = Color.valueOf("B469FFFF");
+    private static final Color PINK = Color.valueOf("FF69B4FF");
     private static final Color[][] colorBank = new Color[][] {
             new Color[] { BLUE, ORANGE },
             new Color[] { BLUE, PINK },
