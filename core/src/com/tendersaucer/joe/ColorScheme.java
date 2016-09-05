@@ -20,7 +20,7 @@ public final class ColorScheme {
     private static final Color TEAL = Color.valueOf("69FFB4FF");
     private static final Color PURPLE = Color.valueOf("B469FFFF");
     private static final Color PINK = Color.valueOf("FF69B4FF");
-    private static final Color[][] colorBank = new Color[][] {
+    private static final Color[][] COLOR_SCHEMES = new Color[][] {
             new Color[] { BLUE, ORANGE },
             new Color[] { BLUE, PINK },
             new Color[] { GREEN, PURPLE },
@@ -51,8 +51,8 @@ public final class ColorScheme {
     }
 
     public void reset() {
-        RandomUtils.shuffle(colorBank);
-        Color[] scheme = RandomUtils.pickFrom(colorBank);
+        RandomUtils.shuffle(COLOR_SCHEMES);
+        Color[] scheme = RandomUtils.pickFrom(COLOR_SCHEMES);
         RandomUtils.shuffle(scheme);
         primaryColor = new Color(scheme[0]);
         secondaryColor = new Color(scheme[1]);
