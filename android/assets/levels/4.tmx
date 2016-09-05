@@ -12,16 +12,10 @@
     <property name="layer" type="int" value="6"/>
    </properties>
   </object>
-  <object id="306" type="red_spinning_thingy" gid="24" x="1119.33" y="924.667" width="64" height="64"/>
-  <object id="329" type="deadly_platform" gid="24" x="320" y="1408" width="64" height="64"/>
-  <object id="348" type="deadly_platform" gid="24" x="448" y="1536" width="128" height="64">
-   <properties>
-    <property name="duration" type="float" value="250"/>
-   </properties>
-  </object>
-  <object id="355" type="deadly_platform" gid="24" x="704" y="1408" width="64" height="64"/>
-  <object id="357" type="deadly_platform" gid="24" x="896" y="1408" width="64" height="64"/>
-  <object id="359" type="deadly_platform" gid="24" x="1088" y="1344" width="128" height="64">
+  <object id="306" type="red_spinning_thingy" gid="24" x="1280" y="1024" width="64" height="64"/>
+  <object id="355" type="deadly_platform" gid="24" x="320" y="1408" width="64" height="64"/>
+  <object id="357" type="deadly_platform" gid="24" x="512" y="1408" width="64" height="64"/>
+  <object id="359" type="deadly_platform" gid="24" x="704" y="1344" width="128" height="64">
    <properties>
     <property name="duration" type="float" value="250"/>
    </properties>
@@ -29,14 +23,14 @@
   <object id="363" x="0" y="1536" width="256" height="64"/>
   <object id="364" x="0" y="1280" width="64" height="256"/>
   <object id="365" x="64" y="1280" width="128" height="128"/>
-  <object id="371" type="deadly_platform" gid="24" x="768" y="1536" width="128" height="64">
+  <object id="371" type="deadly_platform" gid="24" x="384" y="1536" width="128" height="64">
    <properties>
     <property name="duration" type="float" value="250"/>
    </properties>
   </object>
-  <object id="372" type="deadly_platform" gid="24" x="1088" y="1152" width="128" height="64"/>
-  <object id="373" type="deadly_platform" gid="24" x="1344" y="960" width="128" height="64"/>
-  <object id="374" type="deadly_platform" gid="24" x="1344" y="1152" width="128" height="64">
+  <object id="372" type="deadly_platform" gid="24" x="704" y="1152" width="128" height="64"/>
+  <object id="373" type="deadly_platform" gid="24" x="960" y="1024" width="128" height="64"/>
+  <object id="374" type="deadly_platform" gid="24" x="960" y="1216" width="128" height="64">
    <properties>
     <property name="duration" type="float" value="250"/>
    </properties>

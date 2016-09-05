@@ -1,13 +1,6 @@
 package com.tendersaucer.joe;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.PixmapIO;
-import com.badlogic.gdx.utils.BufferUtils;
-import com.badlogic.gdx.utils.ScreenUtils;
-import com.tendersaucer.joe.screen.MainMenu;
-
-import java.util.UUID;
+import com.tendersaucer.joe.screen.Driver;
 
 /**
  * Game entry point
@@ -21,7 +14,7 @@ public final class Game extends com.badlogic.gdx.Game {
     @Override
     public void create() {
         instance = this;
-        setScreen(new MainMenu(this));
+        setScreen(new Driver(this));
     }
 
 }
