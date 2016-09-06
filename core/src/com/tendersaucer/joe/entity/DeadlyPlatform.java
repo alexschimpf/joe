@@ -1,9 +1,11 @@
 package com.tendersaucer.joe.entity;
 
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.tendersaucer.joe.ColorScheme;
+import com.tendersaucer.joe.animation.AnimatedSprite;
 import com.tendersaucer.joe.level.Level;
 
 /**
@@ -22,7 +24,9 @@ public final class DeadlyPlatform extends RenderedEntity {
         isPlayerTouching = false;
 
         if (duration == 0) {
-            sprite.setColor(new Color(Color.RED));
+            sprite.setColor(ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.SHARED));
+        } else {
+            sprite.setColor(ColorScheme.getInstance().getPrimaryColor(ColorScheme.ReturnType.SHARED));
         }
     }
 
@@ -31,17 +35,18 @@ public final class DeadlyPlatform extends RenderedEntity {
         super.tick();
 
         if (isPlayerTouching) {
-            float x = 1;
+            float age = 1;
             if (duration != 0) {
                 float timeSinceOnStart = TimeUtils.millis() - touchStartTime;
-                x = MathUtils.clamp(timeSinceOnStart / duration, 0, 1);
-                sprite.setColor(1, 1 - x, 1 - x, 1);
+                age = MathUtils.clamp(timeSinceOnStart / duration, 0, 1);
             }
 
-            if (x >= 1) {
+            if (age >= 1) {
                 Level.getInstance().replay();
             }
         }
+
+        ((AnimatedSprite)sprite).update();
     }
 
     @Override
@@ -49,6 +54,7 @@ public final class DeadlyPlatform extends RenderedEntity {
         if(Entity.isPlayer(entity)) {
             isPlayerTouching = true;
             touchStartTime = TimeUtils.millis();
+            ((AnimatedSprite)sprite).play();
         }
     }
 
@@ -56,7 +62,24 @@ public final class DeadlyPlatform extends RenderedEntity {
     public void onEndContact(Contact contact, Entity entity) {
         if(duration != 0 && Entity.isPlayer(entity)) {
             isPlayerTouching = false;
-            sprite.setColor(1, 1, 1, 1);
+            ((AnimatedSprite)sprite).stop(true);
         }
+    }
+
+    @Override
+    protected Sprite createSprite(EntityDefinition definition) {
+        float duration = definition.getFloatProperty("duration");
+
+        AnimatedSprite sprite;
+        if (duration == 0) {
+            String textureName = definition.getStringProperty("texture");
+            sprite = new AnimatedSprite(textureName, 200, null, AnimatedSprite.State.PLAYING);
+        } else {
+            sprite = new AnimatedSprite("deadly-1x1", duration);
+        }
+
+        sprite.setSize(getWidth(), getHeight());
+
+        return sprite;
     }
 }

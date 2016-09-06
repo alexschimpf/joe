@@ -242,10 +242,10 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
 
             // TODO: GET THIS WORKING!!!
             TextureRegion textureRegion = object.getTextureRegion();
-            if (TiledUtils.propertyExists(object, "texture")) {
-                String textureId = TiledUtils.getStringProperty(object, "texture");
-                textureRegion = AssetManager.getInstance().getTextureRegion(textureId);
-            }
+//            if (TiledUtils.propertyExists(object, "texture")) {
+//                String textureId = TiledUtils.getStringProperty(object, "texture");
+//                textureRegion = AssetManager.getInstance().getTextureRegion(textureId);
+//            }
 
             int layerPosition = getLayerPosition(layer, object);
             BodyDef bodyDef = getBodyDef(layer, object);

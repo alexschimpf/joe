@@ -1,12 +1,13 @@
 package com.tendersaucer.joe.entity;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.utils.Timer;
 import com.tendersaucer.joe.ColorScheme;
 import com.tendersaucer.joe.GameState;
 import com.tendersaucer.joe.Globals;
+import com.tendersaucer.joe.animation.AnimatedSprite;
 import com.tendersaucer.joe.gen.ParticleConstants;
 import com.tendersaucer.joe.particle.ParticleEffect;
 import com.tendersaucer.joe.particle.ParticleEffectManager;
@@ -23,7 +24,6 @@ public class RedSpinningThingy extends RenderedEntity {
     public static final Color OFF_COLOR = new Color(0.7f, 0, 0, 0.8f);
 
     private boolean obtained;
-    private Timer timer;
 
     private RedSpinningThingy(EntityDefinition def) {
         super(def);
@@ -37,27 +37,10 @@ public class RedSpinningThingy extends RenderedEntity {
     }
 
     @Override
-    public void init() {
-        super.init();
+    public void tick() {
+        super.tick();
 
-        timer = new Timer();
-        timer.scheduleTask(new Timer.Task() {
-            @Override
-            public void run() {
-                if (sprite.getColor().equals(ON_COLOR)) {
-                    sprite.setColor(OFF_COLOR);
-                } else  {
-                    sprite.setColor(ON_COLOR);
-                }
-            }
-        }, 0, 0.25f);
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-
-        timer.clear();
+        ((AnimatedSprite)sprite).update();
     }
 
     @Override
@@ -68,6 +51,14 @@ public class RedSpinningThingy extends RenderedEntity {
             beginParticleEffect();
             Globals.setGameState(GameState.LEVEL_COMPLETE);
         }
+    }
+
+    @Override
+    protected Sprite createSprite(EntityDefinition definition) {
+        AnimatedSprite sprite = new AnimatedSprite("red_spinning_thingy", 500f, null, AnimatedSprite.State.PLAYING);
+        sprite.setSize(getWidth(), getHeight());
+
+        return sprite;
     }
 
     private void beginParticleEffect() {

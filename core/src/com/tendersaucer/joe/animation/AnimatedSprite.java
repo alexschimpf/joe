@@ -41,6 +41,8 @@ public class AnimatedSprite extends Sprite implements IUpdate, IRender {
         }
 
         this.state = state;
+
+        setRegion(getCurrentFrame());
     }
 
     public AnimatedSprite(String key, float totalDuration, Integer numLoops) {
@@ -74,7 +76,7 @@ public class AnimatedSprite extends Sprite implements IUpdate, IRender {
             setFinished();
         }
 
-        if (numLoops > 1 && rawAnimation.isAnimationFinished(stateTime)) {
+        if (numLoops != null && numLoops > 1 && rawAnimation.isAnimationFinished(stateTime)) {
             stateTime = 0;
             if (++currNumLoops == numLoops) {
                 setFinished();
@@ -113,9 +115,13 @@ public class AnimatedSprite extends Sprite implements IUpdate, IRender {
         }
     }
 
-    public void stop() {
+    public void stop(boolean resetFrame) {
         state = State.STOPPED;
         stateTime = 0;
+
+        if (resetFrame) {
+            setRegion(getCurrentFrame());
+        }
     }
 
     public void setFlipHorizontally(boolean flip) {

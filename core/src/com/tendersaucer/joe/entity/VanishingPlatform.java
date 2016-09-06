@@ -1,10 +1,12 @@
 package com.tendersaucer.joe.entity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
+import com.tendersaucer.joe.animation.AnimatedSprite;
 import com.tendersaucer.joe.level.Level;
 import com.tendersaucer.joe.screen.Canvas;
 
@@ -36,7 +38,7 @@ public class VanishingPlatform extends RenderedEntity {
 
         if(isVanishing) {
             float timeSinceDisappearStart = TimeUtils.millis() - vanishStartTime;
-            sprite.setAlpha(1 - (timeSinceDisappearStart / vanishDuration));
+            //sprite.setAlpha(1 - (timeSinceDisappearStart / vanishDuration));
 
             if(timeSinceDisappearStart > vanishDuration) {
                 isVanishing = false;
@@ -49,6 +51,8 @@ public class VanishingPlatform extends RenderedEntity {
         if(isReappearWait && player != null && !player.overlaps(this)) {
             setReappearWait(false);
         }
+
+        ((AnimatedSprite)sprite).update();
     }
 
     @Override
@@ -64,6 +68,14 @@ public class VanishingPlatform extends RenderedEntity {
         Fixture fixture = body.getFixtureList().get(0);
         fixture.setSensor(isReappearWait);
         sprite.setAlpha(isReappearWait ? 0 : 1);
+    }
+
+    @Override
+    protected Sprite createSprite(EntityDefinition definition) {
+        AnimatedSprite sprite = new AnimatedSprite("vanishing-1x1", definition.getFloatProperty("vanish_duration"));
+        sprite.setSize(getWidth(), getHeight());
+
+        return sprite;
     }
 
     private void scheduleReappear() {
@@ -93,5 +105,6 @@ public class VanishingPlatform extends RenderedEntity {
     public void vanish() {
         isVanishing = true;
         vanishStartTime = TimeUtils.millis();
+        ((AnimatedSprite)sprite).play();
     }
 }

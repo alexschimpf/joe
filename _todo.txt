@@ -1,3 +1,14 @@
+Maybe only shuffles the levels within a "world"
+- So world 0 will have levels 0-9, world 1 will have 10-19, etc.
+- World 0 will have a different set of textures than the others
+- That way you don't have to draw a new version of the entity for each world!
+- In other words, an entity must only exist in one world
+
+- make HUD info fade in and out
+- given "WAITING FOR INPUT" ellipsis animation
+
+- Use stateTime instead of lastTime, to keep consistency among all processors
+
 - Before production, all levels should be shuffled (except maybe first 1 or 2)
 - When will the background change?
 - What to do about textures in Tiled?
@@ -23,4 +34,3 @@
 - Back button goes to Main Menu (with dialog making sure)
 - Fix input handling during tutorial (on desktop, at least)
 - Make sure everything (that needs it) is disposed of
-

@@ -56,7 +56,8 @@
                             "class": "DeadlyPlatform",
                             "properties": {
                                 "optional": [
-                                    { "name": "duration", "default": "0" }
+                                    { "name": "duration", "default": "0" },
+                                    { "name": "texture", "default": "deadliest-1x1" }
                                 ]
                             }
                         },

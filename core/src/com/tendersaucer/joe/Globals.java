@@ -21,7 +21,7 @@ public final class Globals {
     public static boolean DEBUG_PHYSICS = false;
     public static boolean PRINT_DEBUG_INFO = false;
     public static boolean CUSTOM_CAMERA_MODE = false;
-    public static boolean CLEAR_PREFERENCES = false;
+    public static boolean CLEAR_PREFERENCES = true;
     public static boolean PACK_TEXTURES = true;
     public static final int LOG_LEVEL = Application.LOG_DEBUG;
 
@@ -66,7 +66,10 @@ public final class Globals {
         for (int i = 2; i < Globals.NUM_LEVELS; i++){
             temp[i - 2] = String.valueOf(i);
         }
-        RandomUtils.shuffle(temp);
+
+        if (START_LEVEL == null) {
+            RandomUtils.shuffle(temp);
+        }
 
         String levelOrderCSV = "0,1";
         for (int i = 0; i < temp.length; i++) {

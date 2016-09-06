@@ -69,7 +69,7 @@ public final class AnimatedSpriteSystem extends AnimatedSprite {
                 pause();
                 break;
             case STOPPED:
-                stop();
+                stop(false);
                 break;
             case FINISHED:
                 setFinished();
