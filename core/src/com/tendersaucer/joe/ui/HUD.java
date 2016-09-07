@@ -91,27 +91,32 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         "GUIDE ME TO THE RED SPINNING THINGIES!"
     };
 
+    private Image infoBackground;
+    private Label infoLabel;
+    private Label progressLabel;
+    private Image flashImage;
+    private Stage stage;
+    private InputListener inputListener;
+    private FreeTypeFontGenerator fontGenerator;
+    private Skin skin;
+
+    // Tutorial
     private int tutorialPosition;
     private boolean isTutorialNextButtonPressed;
     private Label tutorialLabel;
     private Image tutorialHelperArrow;
     private Image tutorialNextButton;
     private Timer tutorialFlashTimer;
-    private Stage stage;
-    private InputListener inputListener;
+
+    // Level Complete
     private Image levelCompleteBackground;
     private Label levelSummaryLabel;
     private TextButton nextButton;
-    private Label progressLabel;
-    private Image infoBackground;
-    private Label infoLabel;
+
+    // Mobile
     private Button moveButton;
     private Button jumpButton;
     private Integer movePointer;
-    private FreeTypeFontGenerator fontGenerator;
-    private Image flashImage;
-    private Long flashStartTime;
-    private Skin skin;
 
     private HUD() {
         stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
@@ -153,10 +158,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             inputListener.update();
         } else {
             checkMobileButtons();
-        }
-
-        if (flashImage.isVisible() && flashStartTime != null) {
-            updateFlash();
         }
 
         Level level = Level.getInstance();
@@ -225,7 +226,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         }
 
         if (oldEvent == Game.State.RUNNING && newEvent == Game.State.WAIT_FOR_INPUT) {
-            setFlash(true);
+            doFlash();
         }
 
         if (oldEvent == Game.State.WAIT_FOR_INPUT) {
@@ -279,27 +280,11 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         return skin;
     }
 
-    public void setFlash(boolean flash) {
-        if (flashImage.isVisible() != flash) {
-            flashImage.setVisible(flash);
-            flashStartTime = flash ? TimeUtils.millis() : null;
-        }
-    }
-
-    private void updateFlash() {
-        Color c = flashImage.getColor();
-        float age = TimeUtils.timeSinceMillis(flashStartTime);
-        if (age < 200) {
-            c.a = age / 200;
-            flashImage.setColor(c);
-        } else if (age < 400){
-            age -= 200;
-            c.a = 1 - (age / 200);
-            flashImage.setColor(c);
-        } else {
-            setFlash(false);
-            flashStartTime = null;
-        }
+    public void doFlash() {
+        flashImage.clearActions();
+        flashImage.getColor().a = 0;
+        flashImage.setVisible(true);
+        flashImage.addAction(Actions.sequence(Actions.alpha(1, 0.25f), Actions.alpha(0, 0.25f), Actions.visible(false)));
     }
 
     private void createFlashImage() {
@@ -508,7 +493,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                setFlash(true);
+                doFlash();
 
                 isTutorialNextButtonPressed = false;
                 int lastPos = Globals.isMobile() ? MOBILE_TUTORIAL_MESSAGES.length - 1 :
