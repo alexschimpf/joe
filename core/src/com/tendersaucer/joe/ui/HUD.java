@@ -20,8 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.TimeUtils;
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tendersaucer.joe.AssetManager;
 import com.tendersaucer.joe.ColorScheme;
@@ -102,11 +100,9 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
     // Tutorial
     private int tutorialPosition;
-    private boolean isTutorialNextButtonPressed;
     private Label tutorialLabel;
     private Image tutorialHelperArrow;
     private Image tutorialNextButton;
-    private Timer tutorialFlashTimer;
 
     // Level Complete
     private Image levelCompleteBackground;
@@ -139,8 +135,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             tutorialPosition = 0;
             createTutorialUI();
         }
-
-        isTutorialNextButtonPressed = false;
     }
 
     public static HUD getInstance() {
@@ -477,35 +471,20 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         tutorialNextButton.setVisible(true);
         tutorialNextButton.setRotation(90);
         tutorialNextButton.setColor(Color.WHITE);
+        tutorialNextButton.addAction(Actions.forever(Actions.sequence(Actions.fadeOut(0.25f), Actions.fadeIn(0.25f))));
         tutorialNextButton.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (tutorialLabel.isVisible()) {
-                    isTutorialNextButtonPressed = true;
-                    Color color = tutorialNextButton.getColor();
-                    tutorialNextButton.setColor(color.r, color.g, color.b, 1);
-                    tutorialNextButton.setColor(new Color(0.8f, 0.8f, 0.8f, 1));
-                    return true;
-                }
-
-                return false;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 doFlash();
 
-                isTutorialNextButtonPressed = false;
                 int lastPos = Globals.isMobile() ? MOBILE_TUTORIAL_MESSAGES.length - 1 :
                         DESKTOP_TUTORIAL_MESSAGES.length - 1;
-                tutorialNextButton.setColor(Color.WHITE);
                 if (tutorialPosition == lastPos) {
                     tutorialLabel.setVisible(false);
                     tutorialHelperArrow.setVisible(false);
                     tutorialNextButton.setVisible(false);
                     stage.addListener(inputListener);
                     DAO.getInstance().putBoolean(DAO.IS_NEW_KEY, false);
-                    tutorialFlashTimer.clear();
                 } else {
                     tutorialPosition++;
                     if (Globals.isMobile()) {
@@ -522,20 +501,12 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                         }
                     }
                 }
+
+                return true;
             }
         });
         stage.addActor(tutorialNextButton);
         stage.addActor(tutorialHelperArrow);
-
-        tutorialFlashTimer = new Timer();
-        tutorialFlashTimer.scheduleTask(new Timer.Task() {
-            @Override
-            public void run() {
-                Color curr = tutorialNextButton.getColor();
-                tutorialNextButton.setColor(curr.r, curr.g, curr.b,
-                        curr.a == 0 || isTutorialNextButtonPressed ? 1 : 0);
-            }
-        }, 0, 0.25f);
     }
 
     /**
