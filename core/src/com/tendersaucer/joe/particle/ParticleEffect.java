@@ -12,11 +12,11 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.tendersaucer.joe.AssetManager;
 import com.tendersaucer.joe.IUpdate;
 import com.tendersaucer.joe.particle.modifiers.ParticleModifier;
-import com.tendersaucer.joe.screen.Canvas;
-import com.tendersaucer.joe.screen.IRender;
+import com.tendersaucer.joe.Canvas;
+import com.tendersaucer.joe.IRender;
 import com.tendersaucer.joe.util.ConversionUtils;
 import com.tendersaucer.joe.util.RandomUtils;
-import com.tendersaucer.joe.util.Vector2Pool;
+import com.tendersaucer.joe.util.pool.Vector2Pool;
 
 import java.util.Iterator;
 

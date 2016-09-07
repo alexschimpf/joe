@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.tendersaucer.joe.IUpdate;
-import com.tendersaucer.joe.event.ILevelLoadBeginListener;
+import com.tendersaucer.joe.event.listeners.ILevelLoadBeginListener;
 import com.tendersaucer.joe.particle.modifiers.ParticleModifier;
 import com.tendersaucer.joe.level.ILevelLoadable;
 

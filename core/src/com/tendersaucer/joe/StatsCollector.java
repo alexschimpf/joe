@@ -1,7 +1,7 @@
 package com.tendersaucer.joe;
 
 import com.badlogic.gdx.utils.TimeUtils;
-import com.tendersaucer.joe.event.IGameStateChangeListener;
+import com.tendersaucer.joe.event.listeners.IGameStateChangeListener;
 
 /**
  * Created by Alex on 7/27/2016.

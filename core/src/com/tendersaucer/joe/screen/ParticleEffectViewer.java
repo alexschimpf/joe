@@ -18,12 +18,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.tendersaucer.joe.AssetManager;
-import com.tendersaucer.joe.Globals;
-import com.tendersaucer.joe.MainCamera;
+import com.tendersaucer.joe.*;
 import com.tendersaucer.joe.particle.ParticleEffectManager;
 import com.tendersaucer.joe.util.ConversionUtils;
-import com.tendersaucer.joe.util.Vector2Pool;
+import com.tendersaucer.joe.util.pool.Vector2Pool;
 
 /**
  * Created by Alex on 4/30/2016.
@@ -108,7 +106,7 @@ public class ParticleEffectViewer implements Screen {
 
         spriteBatch.begin();
         {
-            Canvas.getInstance().render(spriteBatch);
+            com.tendersaucer.joe.Canvas.getInstance().render(spriteBatch);
         }
         spriteBatch.end();
 

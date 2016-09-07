@@ -1,11 +1,11 @@
 package com.tendersaucer.joe.event;
 
-import com.tendersaucer.joe.entity.Entity;
+import com.tendersaucer.joe.level.entity.Entity;
 
 /**
  * Created by Alex on 5/5/2016.
  */
-public final class EntityDoneEvent extends Event<IEntityDoneListener> {
+public final class EntityDoneEvent extends Event<com.tendersaucer.joe.event.listeners.IEntityDoneListener> {
 
     private Entity entity;
 
@@ -14,7 +14,7 @@ public final class EntityDoneEvent extends Event<IEntityDoneListener> {
     }
 
     @Override
-    public void notify(IEntityDoneListener listener) {
+    public void notify(com.tendersaucer.joe.event.listeners.IEntityDoneListener listener) {
         listener.onEntityDone(entity);
     }
 }

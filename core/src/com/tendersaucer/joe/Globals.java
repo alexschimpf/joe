@@ -22,7 +22,7 @@ public final class Globals {
     public static boolean PRINT_DEBUG_INFO = false;
     public static boolean CUSTOM_CAMERA_MODE = false;
     public static boolean CLEAR_PREFERENCES = true;
-    public static boolean PACK_TEXTURES = true;
+    public static boolean PACK_TEXTURES = false;
     public static final int LOG_LEVEL = Application.LOG_DEBUG;
 
     private Globals() {

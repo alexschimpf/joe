@@ -9,22 +9,33 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.tendersaucer.joe.AssetManager;
-import com.tendersaucer.joe.ColorScheme;
-import com.tendersaucer.joe.DAO;
-import com.tendersaucer.joe.GameState;
-import com.tendersaucer.joe.Globals;
-import com.tendersaucer.joe.MainCamera;
-import com.tendersaucer.joe.StatsCollector;
+import com.tendersaucer.joe.*;
 import com.tendersaucer.joe.event.EventManager;
 import com.tendersaucer.joe.event.GameStateChangeEvent;
 import com.tendersaucer.joe.event.LevelLoadBeginEvent;
 import com.tendersaucer.joe.event.NewUserEvent;
 import com.tendersaucer.joe.level.Level;
 import com.tendersaucer.joe.particle.ParticleEffectManager;
-import com.tendersaucer.joe.util.Vector2Pool;
+import com.tendersaucer.joe.util.pool.Vector2Pool;
 
 /**
+ * REMOVE /gen - should go in /particle and /entity
+ *
+ * - Level
+ *     - Entity
+ *         - Definition
+ *         - Configuration
+ *     - Script
+ *         - Definition
+ *         - Configuration
+ * - Particle
+ * - Animation
+ * - Background
+ * - Event
+ * -
+ *
+ *
+ *
  * Main update and render logic
  * <p/>
  * Created by Alex on 4/8/2016.
@@ -53,12 +64,12 @@ public final class Driver implements Screen {
         ParticleEffectManager.getInstance().loadDefinitions();
 
         EventManager eventManager = EventManager.getInstance();
-        eventManager.listen(LevelLoadBeginEvent.class, Canvas.getInstance());
+        eventManager.listen(LevelLoadBeginEvent.class, com.tendersaucer.joe.Canvas.getInstance());
         eventManager.listen(LevelLoadBeginEvent.class, ParticleEffectManager.getInstance());
-        eventManager.listen(GameStateChangeEvent.class, HUD.getInstance());
+        eventManager.listen(GameStateChangeEvent.class, com.tendersaucer.joe.ui.HUD.getInstance());
         eventManager.listen(GameStateChangeEvent.class, StatsCollector.getInstance());
         eventManager.listen(GameStateChangeEvent.class, MainCamera.getInstance());
-        eventManager.listen(NewUserEvent.class, HUD.getInstance());
+        eventManager.listen(NewUserEvent.class, com.tendersaucer.joe.ui.HUD.getInstance());
 
         DAO dao = DAO.getInstance();
         if (Globals.START_LEVEL != null) {
@@ -90,7 +101,7 @@ public final class Driver implements Screen {
     @Override
     public void resize(int width, int height) {
         MainCamera.getInstance().resizeViewport(width, height);
-        HUD.getInstance().resize(width, height);
+        com.tendersaucer.joe.ui.HUD.getInstance().resize(width, height);
     }
 
     @Override
@@ -120,7 +131,7 @@ public final class Driver implements Screen {
 
     private void update() {
         MainCamera.getInstance().update();
-        HUD.getInstance().update();
+        com.tendersaucer.joe.ui.HUD.getInstance().update();
         Level.getInstance().update();
         ParticleEffectManager.getInstance().update();
     }
@@ -141,7 +152,7 @@ public final class Driver implements Screen {
         spriteBatch.setProjectionMatrix(camera.combined);
 
         spriteBatch.begin(); {
-            Canvas.getInstance().render(spriteBatch);
+            com.tendersaucer.joe.Canvas.getInstance().render(spriteBatch);
         }
         spriteBatch.end();
 
@@ -150,6 +161,6 @@ public final class Driver implements Screen {
             debugRenderer.render(Level.getInstance().getPhysicsWorld(), debugMatrix);
         }
 
-        HUD.getInstance().render(spriteBatch);
+        com.tendersaucer.joe.ui.HUD.getInstance().render(spriteBatch);
     }
 }

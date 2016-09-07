@@ -1,7 +1,7 @@
 package com.tendersaucer.joe.level;
 
 import com.badlogic.gdx.physics.box2d.Contact;
-import com.tendersaucer.joe.entity.Entity;
+import com.tendersaucer.joe.level.entity.Entity;
 
 /**
  * Interface for colliding objects

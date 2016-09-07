@@ -6,8 +6,8 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.tendersaucer.joe.entity.Entity;
-import com.tendersaucer.joe.util.BodyData;
+import com.tendersaucer.joe.level.entity.Entity;
+import com.tendersaucer.joe.util.box2d.BodyData;
 
 /**
  * Game collision listener

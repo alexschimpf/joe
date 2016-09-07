@@ -2,11 +2,11 @@ package com.tendersaucer.joe.level;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.tendersaucer.joe.background.ParallaxBackground;
-import com.tendersaucer.joe.entity.EntityDefinition;
-import com.tendersaucer.joe.screen.IRender;
-import com.tendersaucer.joe.script.ScriptDefinition;
-import com.tendersaucer.joe.util.FixtureBodyDefinition;
+import com.tendersaucer.joe.parallax.ParallaxBackground;
+import com.tendersaucer.joe.level.entity.EntityDefinition;
+import com.tendersaucer.joe.IRender;
+import com.tendersaucer.joe.level.script.ScriptDefinition;
+import com.tendersaucer.joe.util.box2d.FixtureBodyDefinition;
 
 import java.util.Map;
 

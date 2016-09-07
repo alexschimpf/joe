@@ -9,10 +9,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.tendersaucer.joe.entity.Player;
-import com.tendersaucer.joe.event.IGameStateChangeListener;
+import com.tendersaucer.joe.level.entity.Player;
+import com.tendersaucer.joe.event.listeners.IGameStateChangeListener;
 import com.tendersaucer.joe.level.Level;
-import com.tendersaucer.joe.util.LinearPathHelper;
+import com.tendersaucer.joe.util.path.LinearPathHelper;
 
 import java.util.UUID;
 

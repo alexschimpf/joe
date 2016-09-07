@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.tendersaucer.joe.IUpdate;
-import com.tendersaucer.joe.screen.IRender;
+import com.tendersaucer.joe.IRender;
 
 /**
  * Created by Alex on 4/30/2016.

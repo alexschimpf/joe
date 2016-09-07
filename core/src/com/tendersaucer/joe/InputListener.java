@@ -3,7 +3,7 @@ package com.tendersaucer.joe;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.tendersaucer.joe.entity.Player;
+import com.tendersaucer.joe.level.entity.Player;
 import com.tendersaucer.joe.level.Level;
 
 /**

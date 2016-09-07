@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.tendersaucer.joe.AssetManager;
 import com.tendersaucer.joe.IUpdate;
-import com.tendersaucer.joe.screen.IRender;
+import com.tendersaucer.joe.IRender;
 import com.tendersaucer.joe.util.ConversionUtils;
 
 /**

@@ -5,7 +5,7 @@ import com.tendersaucer.joe.GameState;
 /**
  * Created by Alex on 7/22/2016.
  */
-public class GameStateChangeEvent extends Event<IGameStateChangeListener> {
+public class GameStateChangeEvent extends Event<com.tendersaucer.joe.event.listeners.IGameStateChangeListener> {
 
     private GameState oldEvent;
     private GameState newEvent;
@@ -16,7 +16,7 @@ public class GameStateChangeEvent extends Event<IGameStateChangeListener> {
     }
 
     @Override
-    public void notify(IGameStateChangeListener listener) {
+    public void notify(com.tendersaucer.joe.event.listeners.IGameStateChangeListener listener) {
         listener.onGameStateChange(oldEvent, newEvent);
     }
 }

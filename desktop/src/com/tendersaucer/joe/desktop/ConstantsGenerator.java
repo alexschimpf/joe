@@ -19,7 +19,8 @@ import java.util.List;
  */
 public class ConstantsGenerator {
 
-    private static final String DESTINATION_DIR = "/Users/Alex/Desktop/libgdx/joe/core/src/com/tendersaucer/joe/gen";
+    private static final String ENTITY_DESTINATION_DIR = "/Users/Alex/Desktop/libgdx/joe/core/src/com/tendersaucer/joe/level/entity";
+    private static final String PARTICLE_DESTINATION_DIR = "/Users/Alex/Desktop/libgdx/joe/core/src/com/tendersaucer/joe/particle";
     private static final String ASSETS_DIR = "/Users/Alex/Desktop/libgdx/joe/android/assets";
     private static final String ENTITY_FILE = "entity.json";
     private static final String PARTICLE_FILE = "particle.json";
@@ -42,7 +43,7 @@ public class ConstantsGenerator {
             LinkedList<String> body = new LinkedList<String>();
             root = (JSONObject)root.get("entities");
             generateEntityConstants((JSONObject)root.get("entity"), "entity", body);
-            Path outputPath = Paths.get(DESTINATION_DIR, ENTITY_CONSTANTS_CLASS + ".java");
+            Path outputPath = Paths.get(ENTITY_DESTINATION_DIR, ENTITY_CONSTANTS_CLASS + ".java");
             writeFile(outputPath, ENTITY_CONSTANTS_CLASS, body);
         } catch (Exception e) {
             Gdx.app.log("constants_generator", e.toString());
@@ -74,7 +75,7 @@ public class ConstantsGenerator {
                 body.add("\t" + CONSTANT_PREFIX + name.toUpperCase() + " = \"" + name + "\";");
             }
 
-            Path outputPath = Paths.get(DESTINATION_DIR, PARTICLE_CONSTANTS_CLASS + ".java");
+            Path outputPath = Paths.get(PARTICLE_DESTINATION_DIR, PARTICLE_CONSTANTS_CLASS + ".java");
             writeFile(outputPath, PARTICLE_CONSTANTS_CLASS, body);
         } catch (Exception e) {
             Gdx.app.log("constants_generator", e.toString());

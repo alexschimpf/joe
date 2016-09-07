@@ -64,18 +64,18 @@ public final class ConversionUtils {
     }
 
     public static Vector2 toWorldCoords(float x, float y) {
-        Vector3 coords = Vector3Pool.getInstance().obtain(x, y, 0);
+        Vector3 coords = com.tendersaucer.joe.util.pool.Vector3Pool.getInstance().obtain(x, y, 0);
         MainCamera camera = MainCamera.getInstance();
         camera.getRawCamera().unproject(coords);
-        Vector3Pool.getInstance().free(coords);
+        com.tendersaucer.joe.util.pool.Vector3Pool.getInstance().free(coords);
         return new Vector2(coords.x, camera.getViewportHeight() - coords.y);
     }
 
     public static Vector2 toScreenCoords(float x, float y) {
-        Vector3 coords = Vector3Pool.getInstance().obtain(x, y, 0);
+        Vector3 coords = com.tendersaucer.joe.util.pool.Vector3Pool.getInstance().obtain(x, y, 0);
         MainCamera camera = MainCamera.getInstance();
         camera.getRawCamera().project(coords);
-        Vector3Pool.getInstance().free(coords);
+        com.tendersaucer.joe.util.pool.Vector3Pool.getInstance().free(coords);
         return new Vector2(coords.x, camera.getViewportHeight() - coords.y);
     }
 
