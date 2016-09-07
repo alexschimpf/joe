@@ -32,8 +32,6 @@ public class ParallaxBackground implements IRender {
         for (ParallaxLayer layer : layers) {
             adjustCamera(spriteBatch, layer.getParallaxRatio());
 
-            int correction = MainCamera.getInstance().isFlipped() ? 1 : 0;
-
             // Reposition camera based on layer's parallax ratio.
             // Determine start/end positions for layer rendering, since each layer repeats.
             MainCamera camera = MainCamera.getInstance();

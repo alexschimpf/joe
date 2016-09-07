@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -38,7 +39,31 @@ import com.tendersaucer.joe.level.Level;
 /**
  * Game heads up display
  *
- * NOTE: This code is... Horrible. Unforgivable. But it works.
+ *
+ /                \
+ / /          \ \   \
+ |                  |
+ /                  /
+ |      ___\ \| | / /
+ |      /          \
+ |      |           \
+ /       |      _    |
+ |       |       \   |
+ |       |       _\ /|    DO NOT LOOK AT THIS CLASS!
+ |      __\     <_o)\o-   THE IMPLEMENTATION IS __UNFORGIVABLE__.
+ |     |             \    IT IS CURRENTLY ONE HUGE HACK.
+ \    ||             \    MAYBE ONE DAY I'LL BE BRAVE ENOUGH TO REFACTOR.
+ |   |__          _  \    /
+ |   |           (*___)  /
+ |   |       _     |    /
+ |   |    //_______/
+ |  /       | UUUUU__
+ \|        \_nnnnnn_\-\
+ |       ____________/
+ |      /
+ |_____/
+ *
+ * http://www.chris.com/ascii/index.php?art=cartoons/beavis%20and%20Butt-head
  *
  * Created by Alex on 4/8/2016.
  */
@@ -78,6 +103,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     private Label levelSummaryLabel;
     private TextButton nextButton;
     private Label progressLabel;
+    private Image infoBackground;
     private Label infoLabel;
     private Button moveButton;
     private Button jumpButton;
@@ -145,15 +171,12 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         infoLabel.setColor(ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.SHARED));
         if (isTutorial) {
             infoLabel.setText("TUTORIAL");
-            infoLabel.setVisible(true);
-            infoBackground.setVisible(true);
-        } else if (Globals.getGameState() == GameState.WAIT_FOR_INPUT) {
-            infoLabel.setText("WAITING FOR INPUT");
-            infoLabel.setVisible(true);
-            infoBackground.setVisible(true);
         } else {
-            infoLabel.setVisible(false);
-            infoBackground.setVisible(false);
+            infoLabel.setText("WAITING FOR INPUT");
+            if (Globals.getGameState() != GameState.WAIT_FOR_INPUT && infoLabel.getActions().size == 0) {
+                infoLabel.setVisible(false);
+                infoBackground.setVisible(false);
+            }
         }
 
         float screenWidth = Gdx.graphics.getWidth();
@@ -205,9 +228,30 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             setFlash(true);
         }
 
+        if (oldEvent == GameState.WAIT_FOR_INPUT) {
+            infoLabel.clearActions();
+            infoBackground.clearActions();
+            infoLabel.getColor().a = 1;
+            infoBackground.getColor().a = 1;
+            infoLabel.setVisible(true);
+            infoBackground.setVisible(true);
+            infoLabel.setText("WAITING FOR INPUT");
+            infoLabel.addAction(Actions.alpha(0, 0.6f));
+            infoBackground.addAction(Actions.alpha(0, 0.6f));
+        }
+
         if (newEvent == GameState.WAIT_FOR_INPUT) {
             nextButton.getStyle().fontColor = Color.WHITE;
             nextButton.getStyle().downFontColor = new Color(0.8f, 0.8f, 0.8f, 1);
+            infoLabel.clearActions();
+            infoBackground.clearActions();
+            infoLabel.getColor().a = 0;
+            infoBackground.getColor().a = 0;
+            infoLabel.setVisible(true);
+            infoBackground.setVisible(true);
+            infoLabel.setText("WAITING FOR INPUT");
+            infoLabel.addAction(Actions.alpha(1, 0.6f));
+            infoBackground.addAction(Actions.alpha(1, 0.6f));
         }
     }
 
@@ -282,7 +326,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         stage.addActor(progressLabel);
     }
 
-    private Image infoBackground;
     private void createInfoLabel() {
         infoBackground = new Image();
         TextureRegionDrawable image = new TextureRegionDrawable(AssetManager.getInstance().getTextureRegion("default"));
@@ -394,6 +437,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
     private void showLevelComplete() {
         levelCompleteBackground.setVisible(true);
+        nextButton.getColor().a = 0;
+        nextButton.addAction(Actions.alpha(1, 2f));
         nextButton.setVisible(true);
 
         long duration = DAO.getInstance().getLong(DAO.TOTAL_TIME_KEY, 0);

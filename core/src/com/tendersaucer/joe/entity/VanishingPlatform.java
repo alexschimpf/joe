@@ -38,8 +38,6 @@ public class VanishingPlatform extends RenderedEntity {
 
         if(isVanishing) {
             float timeSinceDisappearStart = TimeUtils.millis() - vanishStartTime;
-            //sprite.setAlpha(1 - (timeSinceDisappearStart / vanishDuration));
-
             if(timeSinceDisappearStart > vanishDuration) {
                 isVanishing = false;
                 scheduleReappear();
