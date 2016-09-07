@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.tendersaucer.joe.GameState;
+import com.tendersaucer.joe.Game;
 import com.tendersaucer.joe.event.EventManager;
 import com.tendersaucer.joe.event.GameStateChangeEvent;
 import com.tendersaucer.joe.event.listeners.IGameStateChangeListener;
@@ -70,10 +70,10 @@ public final class SetTimer extends Script implements IGameStateChangeListener {
     }
 
     @Override
-    public void onGameStateChange(GameState oldEvent, GameState newEvent) {
-        if (newEvent == GameState.RUNNING) {
+    public void onGameStateChange(Game.State oldEvent, Game.State newEvent) {
+        if (newEvent == Game.State.RUNNING) {
             setActive(true);
-        } else if (newEvent == GameState.LEVEL_COMPLETE) {
+        } else if (newEvent == Game.State.LEVEL_COMPLETE) {
             timerLabel.remove();
         }
     }

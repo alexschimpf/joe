@@ -106,7 +106,7 @@ public final class Driver implements Screen {
 
     @Override
     public void pause() {
-        Globals.setGameState(GameState.PAUSED);
+        Globals.setGameState(com.tendersaucer.joe.Game.State.PAUSED);
     }
 
     @Override
@@ -116,12 +116,12 @@ public final class Driver implements Screen {
 
     @Override
     public void hide() {
-        Globals.setGameState(GameState.PAUSED);
+        Globals.setGameState(com.tendersaucer.joe.Game.State.PAUSED);
     }
 
     @Override
     public void dispose() {
-        Globals.setGameState(GameState.SHUTDOWN);
+        Globals.setGameState(com.tendersaucer.joe.Game.State.SHUTDOWN);
         EventManager.getInstance().clearAll();
     }
 

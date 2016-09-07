@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.tendersaucer.joe.ColorScheme;
-import com.tendersaucer.joe.GameState;
+import com.tendersaucer.joe.Game;
 import com.tendersaucer.joe.Globals;
 import com.tendersaucer.joe.animation.AnimatedSprite;
 import com.tendersaucer.joe.particle.ParticleConstants;
@@ -49,7 +49,7 @@ public class RedSpinningThingy extends RenderedEntity {
             obtained = true;
             setDone();
             beginParticleEffect();
-            Globals.setGameState(GameState.LEVEL_COMPLETE);
+            Globals.setGameState(Game.State.LEVEL_COMPLETE);
         }
     }
 

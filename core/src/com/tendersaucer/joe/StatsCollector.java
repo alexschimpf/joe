@@ -22,7 +22,7 @@ public final class StatsCollector implements IGameStateChangeListener {
     }
 
     @Override
-    public void onGameStateChange(GameState oldEvent, GameState newEvent) {
+    public void onGameStateChange(Game.State oldEvent, Game.State newEvent) {
         if (isRunBegin(newEvent)) {
             runStartTime = TimeUtils.millis();
         }
@@ -50,20 +50,20 @@ public final class StatsCollector implements IGameStateChangeListener {
         }
     }
 
-    private boolean isRunBegin(GameState newEvent) {
-        return newEvent == GameState.RUNNING;
+    private boolean isRunBegin(Game.State newEvent) {
+        return newEvent == Game.State.RUNNING;
     }
 
-    private boolean isRunEnd(GameState oldEvent, GameState newEvent) {
-        return (oldEvent == GameState.RUNNING && newEvent == GameState.WAIT_FOR_INPUT) ||
+    private boolean isRunEnd(Game.State oldEvent, Game.State newEvent) {
+        return (oldEvent == Game.State.RUNNING && newEvent == Game.State.WAIT_FOR_INPUT) ||
                 isLevelEnd(newEvent);
     }
 
-    private boolean isLevelFirstRun(GameState oldEvent, GameState newEvent) {
-        return oldEvent == GameState.LEVEL_COMPLETE && newEvent == GameState.WAIT_FOR_INPUT;
+    private boolean isLevelFirstRun(Game.State oldEvent, Game.State newEvent) {
+        return oldEvent == Game.State.LEVEL_COMPLETE && newEvent == Game.State.WAIT_FOR_INPUT;
     }
 
-    private boolean isLevelEnd(GameState newEvent) {
-        return newEvent == GameState.LEVEL_COMPLETE;
+    private boolean isLevelEnd(Game.State newEvent) {
+        return newEvent == Game.State.LEVEL_COMPLETE;
     }
 }

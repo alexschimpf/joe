@@ -26,10 +26,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tendersaucer.joe.AssetManager;
 import com.tendersaucer.joe.ColorScheme;
 import com.tendersaucer.joe.DAO;
-import com.tendersaucer.joe.GameState;
+import com.tendersaucer.joe.Game;
 import com.tendersaucer.joe.Globals;
 import com.tendersaucer.joe.IUpdate;
-import com.tendersaucer.joe.InputListener;
 import com.tendersaucer.joe.MainCamera;
 import com.tendersaucer.joe.level.entity.Player;
 import com.tendersaucer.joe.event.listeners.IGameStateChangeListener;
@@ -174,7 +173,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             infoLabel.setText("TUTORIAL");
         } else {
             infoLabel.setText("WAITING FOR INPUT");
-            if (Globals.getGameState() != GameState.WAIT_FOR_INPUT && infoLabel.getActions().size == 0) {
+            if (Globals.getGameState() != Game.State.WAIT_FOR_INPUT && infoLabel.getActions().size == 0) {
                 infoLabel.setVisible(false);
                 infoBackground.setVisible(false);
             }
@@ -212,8 +211,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     }
 
     @Override
-    public void onGameStateChange(GameState oldEvent, GameState newEvent) {
-        if (newEvent == GameState.LEVEL_COMPLETE) {
+    public void onGameStateChange(Game.State oldEvent, Game.State newEvent) {
+        if (newEvent == Game.State.LEVEL_COMPLETE) {
             Gdx.app.debug("HUD", "Showing level completion dialog...");
 
             // TODO: Hacky way to ensure statistics have been updated first.
@@ -225,11 +224,11 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             });
         }
 
-        if (oldEvent == GameState.RUNNING && newEvent == GameState.WAIT_FOR_INPUT) {
+        if (oldEvent == Game.State.RUNNING && newEvent == Game.State.WAIT_FOR_INPUT) {
             setFlash(true);
         }
 
-        if (oldEvent == GameState.WAIT_FOR_INPUT) {
+        if (oldEvent == Game.State.WAIT_FOR_INPUT) {
             infoLabel.clearActions();
             infoBackground.clearActions();
             infoLabel.getColor().a = 1;
@@ -241,7 +240,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             infoBackground.addAction(Actions.alpha(0, 0.6f));
         }
 
-        if (newEvent == GameState.WAIT_FOR_INPUT) {
+        if (newEvent == Game.State.WAIT_FOR_INPUT) {
             nextButton.getStyle().fontColor = Color.WHITE;
             nextButton.getStyle().downFontColor = new Color(0.8f, 0.8f, 0.8f, 1);
             infoLabel.clearActions();
@@ -578,11 +577,11 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 boolean isTutorial = DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true);
-                if (!isTutorial && Globals.getGameState() == GameState.WAIT_FOR_INPUT) {
-                    Globals.setGameState(GameState.RUNNING);
+                if (!isTutorial && Globals.getGameState() == Game.State.WAIT_FOR_INPUT) {
+                    Globals.setGameState(Game.State.RUNNING);
                 }
 
-                if(Globals.getGameState() == GameState.RUNNING) {
+                if(Globals.getGameState() == Game.State.RUNNING) {
                     movePointer = pointer;
                 }
                 return true;
@@ -606,11 +605,11 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 boolean isTutorial = DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true);
-                if (!isTutorial && Globals.getGameState() == GameState.WAIT_FOR_INPUT) {
-                    Globals.setGameState(GameState.RUNNING);
+                if (!isTutorial && Globals.getGameState() == Game.State.WAIT_FOR_INPUT) {
+                    Globals.setGameState(Game.State.RUNNING);
                 }
 
-                if(Globals.getGameState() == GameState.RUNNING) {
+                if(Globals.getGameState() == Game.State.RUNNING) {
                     Level.getInstance().getPlayer().jump();
                 }
 
@@ -619,7 +618,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                if(Globals.getGameState() == GameState.RUNNING) {
+                if(Globals.getGameState() == Game.State.RUNNING) {
                     Level.getInstance().getPlayer().stopJump();
                 }
             }
@@ -629,7 +628,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     }
 
     private void checkMobileButtons() {
-        if(movePointer == null || Globals.getGameState() != GameState.RUNNING) {
+        if(movePointer == null || Globals.getGameState() != Game.State.RUNNING) {
             return;
         }
 

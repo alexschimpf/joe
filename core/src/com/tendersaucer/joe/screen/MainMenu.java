@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tendersaucer.joe.AssetManager;
 import com.tendersaucer.joe.ColorScheme;
-import com.tendersaucer.joe.InputListener;
+import com.tendersaucer.joe.ui.InputListener;
 
 /**
  * Created by Alex on 8/3/2016.

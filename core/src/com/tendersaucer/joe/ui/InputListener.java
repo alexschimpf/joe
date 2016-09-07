@@ -1,8 +1,13 @@
-package com.tendersaucer.joe;
+package com.tendersaucer.joe.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.tendersaucer.joe.DAO;
+import com.tendersaucer.joe.Game;
+import com.tendersaucer.joe.Globals;
+import com.tendersaucer.joe.IUpdate;
+import com.tendersaucer.joe.MainCamera;
 import com.tendersaucer.joe.level.entity.Player;
 import com.tendersaucer.joe.level.Level;
 
@@ -21,7 +26,7 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
 
     @Override
     public boolean update() {
-        if (Globals.getGameState() != GameState.RUNNING) {
+        if (Globals.getGameState() != Game.State.RUNNING) {
             return false;
         }
 
@@ -72,8 +77,8 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
 
     @Override
     public boolean keyDown(InputEvent event, int keyCode) {
-        GameState gameState = Globals.getGameState();
-        if (gameState == GameState.RUNNING || gameState == GameState.WAIT_FOR_INPUT) {
+        Game.State gameState = Globals.getGameState();
+        if (gameState == Game.State.RUNNING || gameState == Game.State.WAIT_FOR_INPUT) {
             if (keyCode == Keys.A) {
                 Player player = Level.getInstance().getPlayer();
                 if (player != null) {
@@ -112,8 +117,8 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
                 break;
             default:
                 if (Level.getInstance().getPlayer() != null &&
-                        Globals.getGameState() == GameState.WAIT_FOR_INPUT) {
-                    Globals.setGameState(GameState.RUNNING);
+                        Globals.getGameState() == Game.State.WAIT_FOR_INPUT) {
+                    Globals.setGameState(Game.State.RUNNING);
                 }
 
                 return false;
@@ -124,7 +129,7 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
 
     @Override
     public boolean keyUp(InputEvent event, int keyCode) {
-        if (Globals.getGameState() != GameState.RUNNING ) {
+        if (Globals.getGameState() != Game.State.RUNNING ) {
             return false;
         }
 

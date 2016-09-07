@@ -82,9 +82,9 @@ public final class MainCamera implements IUpdate, IGameStateChangeListener {
     }
 
     @Override
-    public void onGameStateChange(GameState oldEvent, GameState newEvent) {
-        preLoopStartTime = newEvent == GameState.LEVEL_COMPLETE ? TimeUtils.millis() : 0;
-        if (oldEvent != newEvent && newEvent == GameState.WAIT_FOR_INPUT) {
+    public void onGameStateChange(Game.State oldEvent, Game.State newEvent) {
+        preLoopStartTime = newEvent == Game.State.LEVEL_COMPLETE ? TimeUtils.millis() : 0;
+        if (oldEvent != newEvent && newEvent == Game.State.WAIT_FOR_INPUT) {
             pathStartTime = 0;
             setPath();
         }

@@ -14,7 +14,7 @@ import com.tendersaucer.joe.util.RandomUtils;
  */
 public final class Globals {
 
-    private static GameState gameState;
+    private static Game.State gameState;
     public static final int NUM_LEVELS = 5;
     public static final Integer START_LEVEL = null; // null = disabled
     public static boolean FULLSCREEN_MODE = true;
@@ -44,15 +44,15 @@ public final class Globals {
         return isAndroid() || isIOS();
     }
 
-    public static void  setGameState(GameState gameState) {
-        GameState oldGameState = Globals.gameState;
+    public static void  setGameState(Game.State gameState) {
+        Game.State oldGameState = Globals.gameState;
         Gdx.app.debug("Globals", "Game state changed from '" + oldGameState + "' to '" + gameState + "'");
 
         Globals.gameState = gameState;
         EventManager.getInstance().notify(new GameStateChangeEvent(oldGameState, gameState));
     }
 
-    public static GameState getGameState() {
+    public static Game.State getGameState() {
         return gameState;
     }
 

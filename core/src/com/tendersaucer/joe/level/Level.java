@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.tendersaucer.joe.ColorScheme;
-import com.tendersaucer.joe.GameState;
+import com.tendersaucer.joe.Game;
 import com.tendersaucer.joe.Globals;
 import com.tendersaucer.joe.IDisposable;
 import com.tendersaucer.joe.IUpdate;
@@ -146,7 +146,7 @@ public final class Level implements IUpdate, IDisposable {
         loadScripts(loadable);
 
         EventManager.getInstance().notify(new LevelLoadEndEvent());
-        Globals.setGameState(GameState.WAIT_FOR_INPUT);
+        Globals.setGameState(Game.State.WAIT_FOR_INPUT);
 
         boolean isCameraFlipped = MainCamera.getInstance().isFlipped();
         if ((iterationId % 2 == 0 && isCameraFlipped) ||
