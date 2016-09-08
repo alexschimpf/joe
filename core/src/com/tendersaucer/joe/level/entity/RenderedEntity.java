@@ -11,6 +11,7 @@ import com.tendersaucer.joe.IRender;
  */
 public abstract class RenderedEntity extends Entity implements IRender {
 
+    protected boolean isVisible;
     protected Sprite sprite; // subclasses can add more, if necessary
 
     protected RenderedEntity(EntityDefinition definition) {
@@ -18,6 +19,7 @@ public abstract class RenderedEntity extends Entity implements IRender {
 
         sprite = createSprite(definition);
         sprite.setColor(definition.getColorProperty("color"));
+        isVisible = definition.getBooleanProperty("is_visible");
     }
 
     @Override
@@ -44,7 +46,9 @@ public abstract class RenderedEntity extends Entity implements IRender {
     }
 
     public void render(SpriteBatch spriteBatch) {
-        sprite.draw(spriteBatch);
+        if (isVisible()) {
+            sprite.draw(spriteBatch);
+        }
     }
 
     public void addToCanvas() {
@@ -53,6 +57,14 @@ public abstract class RenderedEntity extends Entity implements IRender {
 
     public void removeFromCanvas() {
         Canvas.getInstance().remove(this);
+    }
+
+    public void setVisible(boolean isVisible) {
+        this.isVisible = isVisible;
+    }
+
+    public boolean isVisible() {
+        return isVisible && sprite.getColor().a > 0;
     }
 
     public Sprite getSprite() {

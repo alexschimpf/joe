@@ -126,7 +126,7 @@ public final class Player extends RenderedEntity {
     }
 
     public void jump() {
-        if (!isJumping()) {
+        if (!isJumping() && isActive() && isVisible()) {
             //AssetManager.getInstance().getSound("jump").play();
             body.applyLinearImpulse(0, JUMP_IMPULSE, getCenterX(),
                     getCenterY(), true);
@@ -163,6 +163,10 @@ public final class Player extends RenderedEntity {
     }
 
     private void move(Direction direction) {
+        if (!isActive() || !isVisible()) {
+            return;
+        }
+
         setDirection(direction);
 
         float vx = Gdx.graphics.getDeltaTime() * Player.MOVE_SPEED * (isFacingLeft() ? -1 : 1);

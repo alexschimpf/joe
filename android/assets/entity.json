@@ -12,7 +12,6 @@
                     { "name": "body_height", "default": "0" },
                     { "name": "fixed_rotation", "default": "true" },
                     { "name": "rotation", "default": "0" },
-                    { "name": "is_visible", "default": "true" },
                     { "name": "is_body_active", "default": "true" }
                 ]
             },
@@ -22,7 +21,8 @@
                     "properties": {
                         "required": [ "layer" ],
                         "optional": [
-                            { "name": "color", "default": "1,1,1,1" }
+                            { "name": "color", "default": "1,1,1,1" },
+                            { "name": "is_visible", "default": "true" }
                         ]
                     },
                     "children": {

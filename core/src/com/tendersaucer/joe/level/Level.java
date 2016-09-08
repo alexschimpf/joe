@@ -4,7 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.tendersaucer.joe.ColorScheme;
+import com.tendersaucer.joe.DAO;
 import com.tendersaucer.joe.Game;
 import com.tendersaucer.joe.Globals;
 import com.tendersaucer.joe.IDisposable;
@@ -145,14 +147,22 @@ public final class Level implements IUpdate, IDisposable {
         loadFreeBodies(loadable);
         loadScripts(loadable);
 
-        EventManager.getInstance().notify(new LevelLoadEndEvent());
-        Globals.setGameState(Game.State.WAIT_FOR_INPUT);
-
         boolean isCameraFlipped = MainCamera.getInstance().isFlipped();
         if ((iterationId % 2 == 0 && isCameraFlipped) ||
                 (iterationId % 2 == 1 && !isCameraFlipped)) {
             MainCamera.getInstance().flipHorizontally();
         }
+
+        EventManager.getInstance().notify(new LevelLoadEndEvent());
+        Globals.setGameState(Game.State.WAIT_FOR_INPUT);
+
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                getPlayer().setActive(true);
+                getPlayer().setVisible(true);
+            }
+        }, DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true) ? 0 : 0.2f);
     }
 
     public void loadNext() {
@@ -266,6 +276,8 @@ public final class Level implements IUpdate, IDisposable {
             Entity entity = Entity.build(entityDefinition);
             if (Entity.isPlayer(entity)) {
                 player = (Player)entity;
+                player.setActive(false);
+                player.setVisible(false);
             }
             if (entity instanceof RenderedEntity) {
                 ((RenderedEntity)entity).addToCanvas();

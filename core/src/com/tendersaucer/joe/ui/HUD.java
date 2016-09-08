@@ -284,7 +284,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         flashImage.clearActions();
         flashImage.getColor().a = 0;
         flashImage.setVisible(true);
-        flashImage.addAction(Actions.sequence(Actions.alpha(1, 0.25f), Actions.alpha(0, 0.25f), Actions.visible(false)));
+        flashImage.addAction(Actions.sequence(Actions.alpha(1, 0.4f), Actions.alpha(0, 0.4f), Actions.visible(false)));
     }
 
     private void createFlashImage() {
