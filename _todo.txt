@@ -1,4 +1,10 @@
-1. Make icon more interesting (was that even cool??)
+- Start using Github issues?
+    - Remove this file and use _scratch.txt
+
+- Create tweeners to be used on IRender objects
+    - Basically mimicking Actor-Action functionality to work with current implementation
+
+1. Revert icon
 2. Changing background - MULTIPLE LAYERS NOT WORKING??? WTFFF?? SHOULD THE EDGES BE MORE ROUNDED???
 
 Maybe only shuffles the levels within a "world"
@@ -6,9 +12,6 @@ Maybe only shuffles the levels within a "world"
 - World 0 will have a different set of textures than the others
 - That way you don't have to draw a new version of the entity for each world!
 - In other words, an entity must only exist in one world
-
-- make HUD info fade in and out
-- given "WAITING FOR INPUT" ellipsis animation
 
 - Use stateTime instead of lastTime, to keep consistency among all processors
 

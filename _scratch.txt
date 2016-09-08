@@ -1,3 +1,18 @@
+- IRender objects wants to be animated
+    - Create a tweener object with the IRender object as its target
+    - Each IRender object has a list of these that get "updated" at the beginning of each render()
+    - Basically the tweener objects encapsulate all the tweening
+        - The entities shouldn't have to duplicate the code to fade in/out
+    - Each tweener can be paused/resumed/stopped/removed
+    - Model after the Scene2D API
+        - Need sequence, parallel, forever
+
+- Each "world" has 10 levels
+- Each entity can exist in only one world
+- Only thing different between worlds is available entity types and the background
+- The levels are random shuffled per world
+
+- You can have the option to reset the ordering of everything (from main menu)
 - ICON: Platform below player is breaking into a bunch of smaller pieces (maybe they get lighter, too)
 - Maybe some entities could be swapped out with others at run-time for more randomization?
 - What if you get 5 "lives" per level and once you use them all up, you get

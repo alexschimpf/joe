@@ -2,6 +2,7 @@ package com.tendersaucer.joe.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.sun.org.apache.bcel.internal.Constants;
 import com.tendersaucer.joe.Game;
 import com.tendersaucer.joe.Globals;
 import com.tendersaucer.joe.ParticleEffectViewer;
@@ -32,6 +33,9 @@ public class DesktopLauncher {
 
         if (Globals.PACK_TEXTURES) {
             TexturePacker.main(null);
+        }
+        if (Globals.GENERATE_CONSTANTS) {
+            ConstantsGenerator.main(null);
         }
 
         switch (RUN_MODE) {
