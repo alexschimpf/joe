@@ -1,3 +1,5 @@
+- ICON: Platform below player is breaking into a bunch of smaller pieces (maybe they get lighter, too)
+- Maybe some entities could be swapped out with others at run-time for more randomization?
 - What if you get 5 "lives" per level and once you use them all up, you get
 moved to a new incomplete level?
     - If there is only one level left, it would ignore this
@@ -20,3 +22,4 @@ moved to a new incomplete level?
     - More for effect
 - Platforms that disappear and reappear
     - Few little "tricks"
+

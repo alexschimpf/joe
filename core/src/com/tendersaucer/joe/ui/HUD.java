@@ -202,6 +202,12 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 
+        // Hack to keep infoLabel from flashing during tutorial.
+        if (isTutorial) {
+            infoLabel.getStyle().fontColor.a = 1;
+            infoLabel.getColor().a = 1;
+        }
+
         return false;
     }
 
@@ -245,7 +251,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             infoLabel.setVisible(true);
             infoBackground.setVisible(true);
             infoLabel.setText("WAITING FOR INPUT");
-            infoLabel.addAction(Actions.alpha(1, 0.6f));
+            infoLabel.addAction(Actions.forever(Actions.sequence(Actions.alpha(1, 0.6f), Actions.alpha(0, 0.6f))));
             infoBackground.addAction(Actions.alpha(1, 0.6f));
         }
     }

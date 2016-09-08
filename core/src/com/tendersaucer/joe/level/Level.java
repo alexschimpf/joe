@@ -156,6 +156,10 @@ public final class Level implements IUpdate, IDisposable {
     }
 
     public void loadNext() {
+        if (Globals.REPEAT_START_LEVEL) {
+            replay();
+        }
+
         if (id >= Globals.NUM_LEVELS - 1) {
             id = 0;
             iterationId++;

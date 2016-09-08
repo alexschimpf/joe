@@ -1,3 +1,7 @@
+1. Get rid of weird offset player flicker between level loads
+2. Make icon more interesting (was that even cool??)
+3. Changing background - MULTIPLE LAYERS NOT WORKING??? WTFFF?? SHOULD THE EDGES BE MORE ROUNDED???
+
 Maybe only shuffles the levels within a "world"
 - So world 0 will have levels 0-9, world 1 will have 10-19, etc.
 - World 0 will have a different set of textures than the others
