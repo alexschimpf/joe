@@ -1,6 +1,7 @@
+- How to convert IRender to abstract class???
+
 - Start using Github issues?
     - Remove this file and use _scratch.txt
-
 - Create tweeners to be used on IRender objects
     - Basically mimicking Actor-Action functionality to work with current implementation
 
