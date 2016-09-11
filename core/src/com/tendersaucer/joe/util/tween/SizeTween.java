@@ -1,7 +1,5 @@
 package com.tendersaucer.joe.util.tween;
 
-import com.badlogic.gdx.math.MathUtils;
-
 /**
  * Created by Alex on 9/9/2016.
  */
@@ -24,8 +22,8 @@ public class SizeTween extends Tween {
 
     @Override
     public void tick() {
-        float width = Tween.lerp(startWidth, endWidth, elapsed / interval);
-        float height = Tween.lerp(startHeight, endHeight, elapsed / interval);
+        float width = lerp(startWidth, endWidth, elapsed / interval);
+        float height = lerp(startHeight, endHeight, elapsed / interval);
         target.getSprite().setSize(width, height);
     }
 }
