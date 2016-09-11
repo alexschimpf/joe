@@ -130,11 +130,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         if (Globals.isMobile()) {
             createMobileButtons();
         }
-
-        if (DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true)) {
-            tutorialPosition = 0;
-            createTutorialUI();
-        }
     }
 
     public static HUD getInstance() {
@@ -251,13 +246,16 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             infoLabel.setVisible(true);
             infoBackground.setVisible(true);
             infoLabel.setText("WAITING FOR INPUT");
-            infoLabel.addAction(Actions.forever(Actions.sequence(Actions.alpha(1, 0.6f), Actions.alpha(0, 0.6f))));
+            infoLabel.addAction(Actions.forever(Actions.sequence(Actions.alpha(0, 0.25f), Actions.alpha(1, 0.25f))));
             infoBackground.addAction(Actions.alpha(1, 0.6f));
         }
     }
 
     @Override
     public void onNewUser() {
+        tutorialPosition = 0;
+        createTutorialUI();
+
         if (Globals.isMobile()) {
             tutorialLabel.setText(MOBILE_TUTORIAL_MESSAGES[0]);
         } else {

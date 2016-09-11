@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.tendersaucer.joe.IUpdate;
+import com.tendersaucer.joe.util.ConversionUtils;
 
 /**
  * Created by Alex on 9/9/2016.
@@ -75,7 +76,7 @@ public abstract class Tween implements IUpdate {
         }
 
         if (interval != null) {
-            elapsed += Gdx.graphics.getDeltaTime() * 1000;
+            elapsed += ConversionUtils.s2ms(Gdx.graphics.getDeltaTime());
             if (elapsed > interval) {
                 setState(State.DONE);
             }

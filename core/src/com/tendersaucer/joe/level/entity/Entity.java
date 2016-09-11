@@ -87,7 +87,7 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
     }
 
     public static boolean isPlayer(Entity entity) {
-        return entity != null && entity.getType().equals(Player.TYPE);
+        return entity != null && entity.getType().equals("player");
     }
 
     /**

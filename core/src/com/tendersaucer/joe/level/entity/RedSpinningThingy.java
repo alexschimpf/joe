@@ -44,8 +44,10 @@ public class RedSpinningThingy extends RenderedEntity {
     public void onBeginContact(Contact contact, Entity entity) {
         if (!obtained && Entity.isPlayer(entity)) {
             obtained = true;
+
             setDone();
             beginParticleEffect();
+
             Globals.setGameState(Game.State.LEVEL_COMPLETE);
         }
     }

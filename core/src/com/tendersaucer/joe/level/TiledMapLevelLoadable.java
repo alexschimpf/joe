@@ -22,7 +22,6 @@ import com.tendersaucer.joe.IRender;
 import com.tendersaucer.joe.MainCamera;
 import com.tendersaucer.joe.level.entity.EntityDefinition;
 import com.tendersaucer.joe.level.entity.EntityPropertyConfiguration;
-import com.tendersaucer.joe.level.entity.Player;
 import com.tendersaucer.joe.level.entity.TiledEntityDefinition;
 import com.tendersaucer.joe.level.script.ScriptDefinition;
 import com.tendersaucer.joe.level.script.ScriptPropertyConfiguration;
@@ -253,7 +252,7 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
                     layerPosition, bodyDef, bodySkeleton, object.getProperties(), textureRegion);
             entityDefinitions.add(entityDefinition);
 
-            if (type != null && type.equals(Player.TYPE)) {
+            if (type != null && type.equals("player")) {
                 respawnPosition.set(entityDefinition.getCenter());
             }
         }
@@ -277,7 +276,7 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
 
     private void setBackground() {
         if (!tiledMap.getProperties().containsKey("background")) {
-            tiledMap.getProperties().put("background", "background2,0.8,background3,0.4");
+            tiledMap.getProperties().put("background", "background3,0.4,background2,0.8");
         }
 
         // Format: "texture1,0.8,texture2,0.3, ..."

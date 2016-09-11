@@ -86,7 +86,7 @@ public final class Level implements IUpdate, IDisposable {
             String id = entityIdIter.next();
             Entity entity = entityMap.get(id);
             if (entity != null && entity.update()) {
-                if (id.equals(Player.TYPE)) {
+                if (Entity.isPlayer(entity)) {
                     player = null;
                 }
 
@@ -210,7 +210,7 @@ public final class Level implements IUpdate, IDisposable {
         String id = entity.getId();
         entityMap.put(id, entity);
 
-        if (id.equals(Player.TYPE)) {
+        if (Entity.isPlayer(entity)) {
             player = (Player)entity;
         }
     }
