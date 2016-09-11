@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.tendersaucer.joe.Canvas;
 import com.tendersaucer.joe.IRender;
+import com.tendersaucer.joe.util.tween.ITweenable;
 import com.tendersaucer.joe.util.tween.Tween;
 
 import java.util.Iterator;
@@ -13,7 +14,7 @@ import java.util.Iterator;
 /**
  * Created by Alex on 5/9/2016.
  */
-public abstract class RenderedEntity extends Entity implements IRender {
+public abstract class RenderedEntity extends Entity implements IRender, ITweenable {
 
     protected boolean isVisible;
     protected Sprite sprite; // subclasses can add more, if necessary
@@ -92,6 +93,7 @@ public abstract class RenderedEntity extends Entity implements IRender {
         return isVisible && sprite.getColor().a > 0;
     }
 
+    @Override
     public Sprite getSprite() {
         return sprite;
     }

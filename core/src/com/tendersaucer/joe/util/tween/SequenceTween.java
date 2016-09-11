@@ -1,7 +1,6 @@
 package com.tendersaucer.joe.util.tween;
 
 import com.badlogic.gdx.utils.Array;
-import com.tendersaucer.joe.level.entity.RenderedEntity;
 
 /**
  * Created by Alex on 9/9/2016.
@@ -35,7 +34,7 @@ public class SequenceTween extends Tween {
     }
 
     @Override
-    public void setTarget(RenderedEntity target) {
+    public void setTarget(ITweenable target) {
         super.setTarget(target);
 
         for (Tween tween : tweens) {

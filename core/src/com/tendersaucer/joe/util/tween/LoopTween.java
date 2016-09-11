@@ -1,7 +1,5 @@
 package com.tendersaucer.joe.util.tween;
 
-import com.tendersaucer.joe.level.entity.RenderedEntity;
-
 /**
  * Created by Alex on 9/10/2016.
  */
@@ -44,7 +42,7 @@ public class LoopTween extends Tween {
     }
 
     @Override
-    public void setTarget(RenderedEntity target) {
+    public void setTarget(ITweenable target) {
         super.setTarget(target);
 
         tween.setTarget(target);

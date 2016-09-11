@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.tendersaucer.joe.IUpdate;
-import com.tendersaucer.joe.level.entity.RenderedEntity;
 
 /**
  * Created by Alex on 9/9/2016.
@@ -18,7 +17,7 @@ public abstract class Tween implements IUpdate {
     protected float elapsed;
     protected State state;
     protected Float interval;
-    protected RenderedEntity target;
+    protected ITweenable target;
 
     public Tween() {
         this.interval = null;
@@ -91,7 +90,7 @@ public abstract class Tween implements IUpdate {
      * This should be called in renderedEntity.addTween
      * @param target
      */
-    public void setTarget(RenderedEntity target) {
+    public void setTarget(ITweenable target) {
         this.target = target;
     }
 
