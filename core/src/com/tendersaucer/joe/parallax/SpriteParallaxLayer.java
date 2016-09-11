@@ -46,4 +46,12 @@ public class SpriteParallaxLayer extends ParallaxLayer {
     public void setColor(Color color) {
         sprite.setColor(color);
     }
+
+    public void setAlpha(float alpha) {
+        sprite.setAlpha(alpha);
+    }
+
+    public Sprite getSprite() {
+        return sprite;
+    }
 }

@@ -403,42 +403,35 @@ player_move
   orig: 64, 64
   offset: 0, 0
   index: 4
-red_spinning_thingy
+vanishing-1x1
   rotate: false
   xy: 529, 299
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 0
-red_spinning_thingy
+  index: 1
+vanishing-1x1
   rotate: false
   xy: 659, 365
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 1
-red_spinning_thingy
+  index: 2
+vanishing-1x1
   rotate: false
   xy: 725, 431
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 2
-red_spinning_thingy
-  rotate: false
-  xy: 331, 35
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
   index: 3
-red_spinning_thingy
+vanishing-1x1
   rotate: false
   xy: 331, 35
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 4
-red_spinning_thingy
+vanishing-1x1
   rotate: false
   xy: 397, 101
   size: 64, 64
@@ -451,101 +444,66 @@ vanishing-1x1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 1
+  index: 6
 vanishing-1x1
   rotate: false
   xy: 529, 233
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 2
+  index: 7
 vanishing-1x1
   rotate: false
   xy: 595, 299
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 3
+  index: 8
 vanishing-1x1
   rotate: false
   xy: 725, 365
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 4
+  index: 9
 vanishing-1x1
   rotate: false
   xy: 791, 431
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 5
+  index: 10
 vanishing-1x1
   rotate: false
   xy: 397, 35
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 6
+  index: 11
 vanishing-1x1
   rotate: false
   xy: 463, 101
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 7
+  index: 12
 vanishing-1x1
   rotate: false
   xy: 529, 167
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 8
+  index: 13
 vanishing-1x1
   rotate: false
   xy: 595, 233
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 9
-vanishing-1x1
-  rotate: false
-  xy: 661, 299
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 10
-vanishing-1x1
-  rotate: false
-  xy: 791, 365
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 11
-vanishing-1x1
-  rotate: false
-  xy: 857, 431
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 12
-vanishing-1x1
-  rotate: false
-  xy: 463, 35
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 13
-vanishing-1x1
-  rotate: false
-  xy: 529, 101
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
   index: 14
 vanishing-1x1
   rotate: false
-  xy: 595, 167
+  xy: 661, 299
   size: 64, 64
   orig: 64, 64
   offset: 0, 0

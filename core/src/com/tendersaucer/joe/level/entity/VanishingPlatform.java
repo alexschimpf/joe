@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
-import com.tendersaucer.joe.animation.AnimatedSprite;
+import com.tendersaucer.joe.anim.AnimatedSprite;
 import com.tendersaucer.joe.level.Level;
 import com.tendersaucer.joe.Canvas;
 

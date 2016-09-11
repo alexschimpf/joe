@@ -232,8 +232,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             infoLabel.setVisible(true);
             infoBackground.setVisible(true);
             infoLabel.setText("WAITING FOR INPUT");
-            infoLabel.addAction(Actions.alpha(0, 0.6f));
-            infoBackground.addAction(Actions.alpha(0, 0.6f));
+            infoLabel.addAction(Actions.alpha(0, 0.3f));
+            infoBackground.addAction(Actions.alpha(0, 0.3f));
         }
 
         if (newEvent == Game.State.WAIT_FOR_INPUT) {
@@ -312,7 +312,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     private void createInfoLabel() {
         infoBackground = new Image();
         TextureRegionDrawable image = new TextureRegionDrawable(AssetManager.getInstance().getTextureRegion("default"));
-        infoBackground.setDrawable(image.tint(new Color(0, 0, 0, 0.3f)));
+        infoBackground.setDrawable(image.tint(new Color(0, 0, 0, 0.6f)));
         infoBackground.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getWidth() / 20);
         stage.addActor(infoBackground);
 
@@ -343,7 +343,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         levelCompleteBackground = new Image(AssetManager.getInstance().getTextureRegion("default"));
         levelCompleteBackground.setPosition(0, 0);
         levelCompleteBackground.setSize(screenWidth, screenHeight);
-        levelCompleteBackground.setColor(0, 0, 0, 0.3f);
+        levelCompleteBackground.setColor(0, 0, 0, 0.5f);
         stage.addActor(levelCompleteBackground);
 
         int nextButtonHeight = (int)(Gdx.graphics.getWidth() * 0.2f);
@@ -421,7 +421,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     private void showLevelComplete() {
         levelCompleteBackground.setVisible(true);
         nextButton.getColor().a = 0;
-        nextButton.addAction(Actions.alpha(1, 2f));
+        nextButton.addAction(Actions.alpha(1, 1.5f));
         nextButton.setVisible(true);
 
         long duration = DAO.getInstance().getLong(DAO.TOTAL_TIME_KEY, 0);
@@ -460,7 +460,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         stage.addActor(tutorialLabel);
 
         final float padding = screenHeight * 0.01f;
-        float size = screenWidth * 0.1f;
+        float size = Gdx.graphics.getWidth() / 20;
         TextureRegion tr = AssetManager.getInstance().getTextureRegion("arrow");
         tr.flip(false, true);
         tutorialHelperArrow = new Image(tr);

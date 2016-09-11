@@ -19,4 +19,10 @@ public final class ColorUtils {
         color.mul(amount).clamp();
         color.a = a;
     }
+
+    public static Color getShade(Color color, float amount) {
+        Color copy = new Color(color);
+        shade(copy, amount);
+        return copy;
+    }
 }

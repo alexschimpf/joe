@@ -1,17 +1,16 @@
 package com.tendersaucer.joe.level.entity;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.tendersaucer.joe.Canvas;
 import com.tendersaucer.joe.ColorScheme;
 import com.tendersaucer.joe.Game;
 import com.tendersaucer.joe.Globals;
-import com.tendersaucer.joe.animation.AnimatedSprite;
 import com.tendersaucer.joe.particle.ParticleEffect;
 import com.tendersaucer.joe.particle.ParticleEffectManager;
 import com.tendersaucer.joe.util.pool.Vector2Pool;
+import com.tendersaucer.joe.util.tween.Tween;
 
 /**
  * Created by Alex on 5/31/2016.
@@ -34,11 +33,32 @@ public class RedSpinningThingy extends RenderedEntity {
     }
 
     @Override
-    protected void tick() {
-        super.tick();
+    public void init() {
+        super.init();
 
-        ((AnimatedSprite)sprite).update();
+        Color toColor = Color.WHITE;
+        float toWidth = getWidth() * 1.15f;
+        float toHeight = getHeight() * 1.15f;
+        addTween(Tween.loop(
+                Tween.parallel(
+                        Tween.sequence(
+                                Tween.color(Color.RED, toColor, 500f),
+                                Tween.color(toColor, Color.RED, 500f)
+                        ),
+                        Tween.sequence(
+                                Tween.size(getWidth(), getHeight(), toWidth, toHeight, 500f),
+                                Tween.size(toWidth, toHeight, getWidth(), getHeight(), 500f)
+                        )
+                )
+        ).setState(Tween.State.ACTIVE));
     }
+
+//    @Override
+//    protected void tick() {
+//        super.tick();
+//
+//        ((AnimatedSprite)sprite).update();
+//    }
 
     @Override
     public void onBeginContact(Contact contact, Entity entity) {
@@ -52,13 +72,13 @@ public class RedSpinningThingy extends RenderedEntity {
         }
     }
 
-    @Override
-    protected Sprite createSprite(EntityDefinition definition) {
-        AnimatedSprite sprite = new AnimatedSprite("red_spinning_thingy", 500f, null, AnimatedSprite.State.PLAYING);
-        sprite.setSize(getWidth(), getHeight());
-
-        return sprite;
-    }
+//    @Override
+//    protected Sprite createSprite(EntityDefinition definition) {
+//        AnimatedSprite sprite = new AnimatedSprite("red_spinning_thingy", 500f, null, AnimatedSprite.State.PLAYING);
+//        sprite.setSize(getWidth(), getHeight());
+//
+//        return sprite;
+//    }
 
     private void beginParticleEffect() {
         for (int layer = 1; layer < Canvas.NUM_LAYERS; layer += 2) {

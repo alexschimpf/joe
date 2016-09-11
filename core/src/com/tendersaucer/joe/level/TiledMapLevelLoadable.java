@@ -276,7 +276,7 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
 
     private void setBackground() {
         if (!tiledMap.getProperties().containsKey("background")) {
-            tiledMap.getProperties().put("background", "background3,0.4,background2,0.8");
+            tiledMap.getProperties().put("background", "background,0.4,background2,0.8");
         }
 
         // Format: "texture1,0.8,texture2,0.3, ..."

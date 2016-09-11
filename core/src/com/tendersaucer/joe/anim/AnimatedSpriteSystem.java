@@ -1,4 +1,4 @@
-package com.tendersaucer.joe.animation;
+package com.tendersaucer.joe.anim;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tendersaucer.joe.AssetManager;

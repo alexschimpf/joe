@@ -127,8 +127,8 @@ public final class Level implements IUpdate, IDisposable {
         id = loadable.getId();
         respawnPosition.set(loadable.getRespawnPosition());
 
-        Canvas.getInstance().addToLayer(0, loadable.getBackground());
         background = loadable.getBackground();
+        Canvas.getInstance().addToLayer(0, background);
 
         // Add non-entity/background canvas objects.
         Map<IRender, Integer> canvasMap = loadable.getCanvasMap();

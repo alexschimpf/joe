@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.tendersaucer.joe.ColorScheme;
-import com.tendersaucer.joe.animation.AnimatedSprite;
+import com.tendersaucer.joe.anim.AnimatedSprite;
 import com.tendersaucer.joe.level.Level;
 
 /**

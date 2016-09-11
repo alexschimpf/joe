@@ -52,8 +52,7 @@ public final class MapLayerWrapper implements IRender {
     private void correctCells(TiledMapTileLayer rawLayer) {
         Array<Array<TiledMapTileLayer.Cell>> objects = null;
         if (rawLayer.getObjects().getCount() == 0) {
-            TiledMapObjectDetector detector = new TiledMapObjectDetector(rawLayer);
-            objects = detector.findObjects();
+            objects = new TiledMapObjectDetector(rawLayer).findObjects();
         }
 
         if (objects != null) {

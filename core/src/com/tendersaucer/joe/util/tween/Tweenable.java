@@ -62,6 +62,14 @@ public abstract class Tweenable implements ITweenable, IRender {
         return this;
     }
 
+    public Tweenable removeTween(int i) {
+        if (tweens != null) {
+            tweens.removeIndex(i);
+        }
+
+        return this;
+    }
+
     public void clearTweens() {
         if (tweens != null) {
             tweens.clear();

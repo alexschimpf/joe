@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
-import com.tendersaucer.joe.animation.AnimatedSprite;
+import com.tendersaucer.joe.anim.AnimatedSprite;
 
 /**
  * Created by Alex on 5/5/2016.

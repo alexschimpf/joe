@@ -56,7 +56,7 @@ public final class ColorScheme {
         RandomUtils.shuffle(scheme);
         primaryColor = new Color(scheme[0]);
         secondaryColor = new Color(scheme[1]);
-        backgroundColor = new Color(0.2f, 0.2f, 0.2f, 1);
+        backgroundColor = new Color(0.1f, 0.1f, 0.1f, 1);
 
         // TODO: This is just for convenience. Remove later.
         ColorUtils.shade(primaryColor, 1);
