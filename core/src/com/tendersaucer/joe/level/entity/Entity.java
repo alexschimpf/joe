@@ -12,8 +12,8 @@ import com.tendersaucer.joe.IDisposable;
 import com.tendersaucer.joe.IUpdate;
 import com.tendersaucer.joe.level.ICollide;
 import com.tendersaucer.joe.level.Level;
-import com.tendersaucer.joe.util.box2d.BodyData;
 import com.tendersaucer.joe.util.StringUtils;
+import com.tendersaucer.joe.util.box2d.BodyData;
 import com.tendersaucer.joe.util.pool.Vector2Pool;
 
 import java.lang.reflect.Constructor;
@@ -73,7 +73,7 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
             String entityType = entityDef.getType();
             String className = CLASS_PATH + EntityPropertyConfiguration.getInstance().getClassName(entityType);
             Class<?> c = Class.forName(className);
-            Constructor<?> constructor = c.getDeclaredConstructor(com.tendersaucer.joe.level.entity.EntityDefinition.class);
+            Constructor<?> constructor = c.getDeclaredConstructor(EntityDefinition.class);
             constructor.setAccessible(true);
             entity = (Entity)constructor.newInstance(entityDef);
             entity.init();
@@ -87,7 +87,7 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
     }
 
     public static boolean isPlayer(Entity entity) {
-        return entity != null && entity.getType().equals(EntityConstants.PLAYER);
+        return entity != null && entity.getType().equals(Player.TYPE);
     }
 
     /**

@@ -41,7 +41,7 @@ public class MovingPlatform extends RenderedEntity {
     }
 
     @Override
-    public void tick() {
+    protected void tick() {
         super.tick();
 
         if (startTime == null) {

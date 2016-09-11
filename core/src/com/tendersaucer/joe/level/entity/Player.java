@@ -22,6 +22,8 @@ import com.tendersaucer.joe.level.Level;
  */
 public final class Player extends RenderedEntity {
 
+    public static final String TYPE = "player";
+
     public enum Direction {
         LEFT, RIGHT
     }

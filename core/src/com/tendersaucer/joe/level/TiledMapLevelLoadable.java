@@ -16,26 +16,26 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Array;
 import com.tendersaucer.joe.AssetManager;
+import com.tendersaucer.joe.Canvas;
 import com.tendersaucer.joe.Globals;
+import com.tendersaucer.joe.IRender;
 import com.tendersaucer.joe.MainCamera;
-import com.tendersaucer.joe.parallax.ParallaxBackground;
-import com.tendersaucer.joe.parallax.SpriteParallaxLayer;
 import com.tendersaucer.joe.level.entity.EntityDefinition;
 import com.tendersaucer.joe.level.entity.EntityPropertyConfiguration;
+import com.tendersaucer.joe.level.entity.Player;
 import com.tendersaucer.joe.level.entity.TiledEntityDefinition;
-import com.tendersaucer.joe.level.entity.EntityConstants;
-import com.tendersaucer.joe.Canvas;
-import com.tendersaucer.joe.screen.Driver;
-import com.tendersaucer.joe.IRender;
 import com.tendersaucer.joe.level.script.ScriptDefinition;
 import com.tendersaucer.joe.level.script.ScriptPropertyConfiguration;
 import com.tendersaucer.joe.level.script.TiledScriptDefinition;
-import com.tendersaucer.joe.util.tiled.ColoredOrthogonalTiledMapRenderer;
+import com.tendersaucer.joe.parallax.ParallaxBackground;
+import com.tendersaucer.joe.parallax.SpriteParallaxLayer;
+import com.tendersaucer.joe.screen.Driver;
+import com.tendersaucer.joe.util.StringUtils;
 import com.tendersaucer.joe.util.box2d.FixtureBodyDefinition;
 import com.tendersaucer.joe.util.exception.InvalidConfigException;
+import com.tendersaucer.joe.util.tiled.ColoredOrthogonalTiledMapRenderer;
 import com.tendersaucer.joe.util.tiled.MapLayerWrapper;
 import com.tendersaucer.joe.util.tiled.PropertyValidator;
-import com.tendersaucer.joe.util.StringUtils;
 import com.tendersaucer.joe.util.tiled.TiledUtils;
 
 import java.util.HashMap;
@@ -253,7 +253,7 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
                     layerPosition, bodyDef, bodySkeleton, object.getProperties(), textureRegion);
             entityDefinitions.add(entityDefinition);
 
-            if (type != null && type.equals(EntityConstants.PLAYER)) {
+            if (type != null && type.equals(Player.TYPE)) {
                 respawnPosition.set(entityDefinition.getCenter());
             }
         }

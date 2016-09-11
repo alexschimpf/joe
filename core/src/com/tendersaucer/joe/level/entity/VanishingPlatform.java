@@ -33,7 +33,7 @@ public class VanishingPlatform extends RenderedEntity {
     }
 
     @Override
-    public void tick() {
+    protected void tick() {
         super.tick();
 
         if(isVanishing) {

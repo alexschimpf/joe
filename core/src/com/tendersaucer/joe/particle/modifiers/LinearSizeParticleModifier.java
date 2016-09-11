@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.JsonValue;
 import com.tendersaucer.joe.particle.Particle;
 import com.tendersaucer.joe.util.ConversionUtils;
+import com.tendersaucer.joe.util.tween.Tween;
 
 /**
  * Created by Alex on 4/30/2016.
@@ -19,8 +20,8 @@ public class LinearSizeParticleModifier extends ParticleModifier {
     @Override
     public void modify(Particle particle) {
         float ageToLifeRatio = particle.getAgeToLifeRatio();
-        float scaleX = interpolate(1, scale.x, ageToLifeRatio);
-        float scaleY = interpolate(1, scale.y, ageToLifeRatio);
+        float scaleX = Tween.lerp(1, scale.x, ageToLifeRatio);
+        float scaleY = Tween.lerp(1, scale.y, ageToLifeRatio);
         particle.setScale(scaleX, scaleY);
     }
 

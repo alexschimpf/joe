@@ -8,28 +8,49 @@ import com.tendersaucer.joe.level.entity.RenderedEntity;
  */
 public class SequenceTween extends Tween {
 
+    protected int index;
     protected Array<Tween> tweens;
 
     protected SequenceTween(Tween... tweens) {
         super();
 
+        index = 0;
         this.tweens = new Array<Tween>(tweens);
-    }
-
-    protected SequenceTween(RenderedEntity target, Float interval) {
-        super(interval);
+        for (Tween tween : tweens) {
+            tween.setState(State.ACTIVE);
+        }
     }
 
     @Override
-    public boolean update() {
-        if (tweens.size > 0) {
-            Tween tween = tweens.first();
+    public void tick() {
+        if (index >= tweens.size) {
+            state = State.DONE;
+        } else {
+            Tween tween = tweens.get(index);
             if (tween.update()) {
                 tween.onDone();
-                tweens.removeIndex(0);
+                index++;
             }
         }
+    }
 
-        return super.update();
+    @Override
+    public void setTarget(RenderedEntity target) {
+        super.setTarget(target);
+
+        for (Tween tween : tweens) {
+            tween.setTarget(target);
+        }
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+
+        index = 0;
+        for (Tween tween : tweens) {
+            tween.reset();
+            tween.setState(State.ACTIVE);
+        }
     }
 }

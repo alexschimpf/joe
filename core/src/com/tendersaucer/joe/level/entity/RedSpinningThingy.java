@@ -4,14 +4,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
+import com.tendersaucer.joe.Canvas;
 import com.tendersaucer.joe.ColorScheme;
 import com.tendersaucer.joe.Game;
 import com.tendersaucer.joe.Globals;
 import com.tendersaucer.joe.animation.AnimatedSprite;
-import com.tendersaucer.joe.particle.ParticleConstants;
 import com.tendersaucer.joe.particle.ParticleEffect;
 import com.tendersaucer.joe.particle.ParticleEffectManager;
-import com.tendersaucer.joe.Canvas;
 import com.tendersaucer.joe.util.pool.Vector2Pool;
 
 /**
@@ -20,8 +19,6 @@ import com.tendersaucer.joe.util.pool.Vector2Pool;
 public class RedSpinningThingy extends RenderedEntity {
 
     public static final String ID = "red_spinning_thingy";
-    public static final Color ON_COLOR = new Color(1, 0, 0, 0.8f);
-    public static final Color OFF_COLOR = new Color(0.7f, 0, 0, 0.8f);
 
     private boolean obtained;
 
@@ -31,13 +28,13 @@ public class RedSpinningThingy extends RenderedEntity {
         id = ID;
         obtained = false;
         body.setAngularVelocity(1.5f);
-        sprite.setColor(ON_COLOR);
+        sprite.setColor(new Color(1, 0, 0, 0.8f));
 
         body.getFixtureList().get(0).setSensor(true);
     }
 
     @Override
-    public void tick() {
+    protected void tick() {
         super.tick();
 
         ((AnimatedSprite)sprite).update();
@@ -67,7 +64,7 @@ public class RedSpinningThingy extends RenderedEntity {
             Vector2 sizeRange = vector2Pool.obtain(-getWidth() * 2, getWidth() * 2);
             Vector2 position = vector2Pool.obtain(getLeft(), getBottom() - (sizeRange.y / 2));
             ParticleEffect effect =
-                    ParticleEffectManager.getInstance().buildParticleEffect(ParticleConstants.LEVEL_COMPLETE);
+                    ParticleEffectManager.getInstance().buildParticleEffect("level_complete");
             Color color = ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.NEW);
             effect.setRedRange(color.r, color.r);
             effect.setGreenRange(color.g, color.g);

@@ -3,8 +3,12 @@ package com.tendersaucer.joe.level.entity;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
 import com.tendersaucer.joe.Canvas;
 import com.tendersaucer.joe.IRender;
+import com.tendersaucer.joe.util.tween.Tween;
+
+import java.util.Iterator;
 
 /**
  * Created by Alex on 5/9/2016.
@@ -13,6 +17,7 @@ public abstract class RenderedEntity extends Entity implements IRender {
 
     protected boolean isVisible;
     protected Sprite sprite; // subclasses can add more, if necessary
+    protected Array<Tween> tweens;
 
     protected RenderedEntity(EntityDefinition definition) {
         super(definition);
@@ -29,25 +34,45 @@ public abstract class RenderedEntity extends Entity implements IRender {
         removeFromCanvas();
     }
 
-    @Override
-    protected void tick() {
-        super.tick();
+    public RenderedEntity addTween(Tween tween) {
+        if (tweens == null) {
+            tweens = new Array<Tween>();
+        }
 
-        sprite.setPosition(getLeft(), getTop());
-        sprite.setOrigin(getWidth() / 2, getHeight() / 2);
-        sprite.setRotation(MathUtils.radiansToDegrees * body.getAngle());
+        tween.setTarget(this);
+        tweens.add(tween);
+
+        return this;
     }
 
-    protected Sprite createSprite(EntityDefinition definition) {
-        Sprite sprite = new Sprite(definition.getTextureRegion());
-        sprite.setSize(getWidth(), getHeight());
+    public RenderedEntity removeTween(Tween tween) {
+        if (tweens != null) {
+            tweens.removeValue(tween, true);
+        }
 
-        return sprite;
+        return this;
+    }
+
+    public void clearTweens() {
+        if (tweens != null) {
+            tweens.clear();
+        }
     }
 
     public void render(SpriteBatch spriteBatch) {
         if (isVisible()) {
             sprite.draw(spriteBatch);
+        }
+
+        if (tweens != null) {
+            Iterator<Tween> tweensIter = tweens.iterator();
+            while (tweensIter.hasNext()) {
+                Tween tween = tweensIter.next();
+                if (tween.update()) {
+                    tweensIter.remove();
+                    tween.onDone();
+                }
+            }
         }
     }
 
@@ -68,6 +93,22 @@ public abstract class RenderedEntity extends Entity implements IRender {
     }
 
     public Sprite getSprite() {
+        return sprite;
+    }
+
+    @Override
+    protected void tick() {
+        super.tick();
+
+        sprite.setPosition(getLeft(), getTop());
+        sprite.setOrigin(getWidth() / 2, getHeight() / 2);
+        sprite.setRotation(MathUtils.radiansToDegrees * body.getAngle());
+    }
+
+    protected Sprite createSprite(EntityDefinition definition) {
+        Sprite sprite = new Sprite(definition.getTextureRegion());
+        sprite.setSize(getWidth(), getHeight());
+
         return sprite;
     }
 }

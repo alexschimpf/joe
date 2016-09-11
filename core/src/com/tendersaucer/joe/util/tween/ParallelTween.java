@@ -1,36 +1,57 @@
 package com.tendersaucer.joe.util.tween;
 
 import com.badlogic.gdx.utils.Array;
-
-import java.util.Iterator;
+import com.tendersaucer.joe.level.entity.RenderedEntity;
 
 /**
  * Created by Alex on 9/9/2016.
  */
 public class ParallelTween extends Tween {
 
+    protected int numDone;
     protected Array<Tween> tweens;
 
     protected ParallelTween(Tween... tweens) {
         super();
 
+        numDone = 0;
         this.tweens = new Array<Tween>(tweens);
-    }
-
-    protected ParallelTween(Float interval) {
-        super(interval);
+        for (Tween tween : tweens) {
+            tween.setState(State.ACTIVE);
+        }
     }
 
     @Override
-    public boolean update() {
-        Iterator<Tween> tweensIter = tweens.iterator();
-        while (tweensIter.hasNext()) {
-            Tween tween = tweensIter.next();
-            if (tween.update()) {
+    public void tick() {
+        for (Tween tween : tweens) {
+            if (tween.getState() == State.ACTIVE && tween.update()) {
                 tween.onDone();
+                numDone++;
             }
         }
 
-        return super.update();
+        if (numDone >= tweens.size) {
+            state = State.DONE;
+        }
+    }
+
+    @Override
+    public void setTarget(RenderedEntity target) {
+        super.setTarget(target);
+
+        for (Tween tween : tweens) {
+            tween.setTarget(target);
+        }
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+
+        numDone = 0;
+        for (Tween tween : tweens) {
+            tween.reset();
+            tween.setState(State.ACTIVE);
+        }
     }
 }

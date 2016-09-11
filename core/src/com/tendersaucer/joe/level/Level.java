@@ -20,7 +20,6 @@ import com.tendersaucer.joe.level.entity.RenderedEntity;
 import com.tendersaucer.joe.event.EventManager;
 import com.tendersaucer.joe.event.LevelLoadBeginEvent;
 import com.tendersaucer.joe.event.LevelLoadEndEvent;
-import com.tendersaucer.joe.level.entity.EntityConstants;
 import com.tendersaucer.joe.Canvas;
 import com.tendersaucer.joe.IRender;
 import com.tendersaucer.joe.level.script.Script;
@@ -87,7 +86,7 @@ public final class Level implements IUpdate, IDisposable {
             String id = entityIdIter.next();
             Entity entity = entityMap.get(id);
             if (entity != null && entity.update()) {
-                if (id.equals(EntityConstants.PLAYER)) {
+                if (id.equals(Player.TYPE)) {
                     player = null;
                 }
 
@@ -211,7 +210,7 @@ public final class Level implements IUpdate, IDisposable {
         String id = entity.getId();
         entityMap.put(id, entity);
 
-        if (id.equals(EntityConstants.PLAYER)) {
+        if (id.equals(Player.TYPE)) {
             player = (Player)entity;
         }
     }

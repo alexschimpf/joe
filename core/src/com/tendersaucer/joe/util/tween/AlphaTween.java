@@ -5,14 +5,18 @@ package com.tendersaucer.joe.util.tween;
  */
 public class AlphaTween extends Tween {
 
+    protected float startAlpha;
+    protected float endAlpha;
+
     protected AlphaTween(float startAlpha, float endAlpha, float interval) {
-        super();
+        super(interval);
+
+        this.startAlpha = startAlpha;
+        this.endAlpha = endAlpha;
     }
 
     @Override
-    public boolean update() {
-        // TODO
-
-        return super.update();
+    public void tick() {
+        target.getSprite().setAlpha(lerp(startAlpha, endAlpha, elapsed / interval));
     }
 }

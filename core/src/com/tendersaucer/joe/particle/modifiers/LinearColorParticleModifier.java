@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.JsonValue;
 import com.tendersaucer.joe.particle.Particle;
 import com.tendersaucer.joe.util.ConversionUtils;
+import com.tendersaucer.joe.util.tween.Tween;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,10 +32,10 @@ public class LinearColorParticleModifier extends ParticleModifier {
         startColor = particleStartColorMap.get(particle);
 
         float ageToLifeRatio = particle.getAgeToLifeRatio();
-        float r = interpolate(startColor.r, endColor.r, ageToLifeRatio);
-        float g = interpolate(startColor.g, endColor.g, ageToLifeRatio);
-        float b = interpolate(startColor.b, endColor.b, ageToLifeRatio);
-        float a = interpolate(startColor.a, endColor.a, ageToLifeRatio);
+        float r = Tween.lerp(startColor.r, endColor.r, ageToLifeRatio);
+        float g = Tween.lerp(startColor.g, endColor.g, ageToLifeRatio);
+        float b = Tween.lerp(startColor.b, endColor.b, ageToLifeRatio);
+        float a = Tween.lerp(startColor.a, endColor.a, ageToLifeRatio);
         particle.setColor(r, g, b, a);
     }
 
