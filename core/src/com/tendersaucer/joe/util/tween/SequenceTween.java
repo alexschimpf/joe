@@ -1,23 +1,23 @@
 package com.tendersaucer.joe.util.tween;
 
 import com.badlogic.gdx.utils.Array;
-import com.tendersaucer.joe.IRender;
+import com.tendersaucer.joe.level.entity.RenderedEntity;
 
 /**
  * Created by Alex on 9/9/2016.
  */
-public class Sequence extends Tween {
+public class SequenceTween extends Tween {
 
     protected Array<Tween> tweens;
 
-    public Sequence(IRender target, Tween... tweens) {
-        super(target);
+    protected SequenceTween(Tween... tweens) {
+        super();
 
         this.tweens = new Array<Tween>(tweens);
     }
 
-    private Sequence(IRender target, Float interval) {
-        super(target, interval);
+    protected SequenceTween(RenderedEntity target, Float interval) {
+        super(interval);
     }
 
     @Override

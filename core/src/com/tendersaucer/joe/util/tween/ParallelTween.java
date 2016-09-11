@@ -1,25 +1,24 @@
 package com.tendersaucer.joe.util.tween;
 
 import com.badlogic.gdx.utils.Array;
-import com.tendersaucer.joe.IRender;
 
 import java.util.Iterator;
 
 /**
  * Created by Alex on 9/9/2016.
  */
-public class Parallel extends Tween {
+public class ParallelTween extends Tween {
 
     protected Array<Tween> tweens;
 
-    public Parallel(IRender target, Tween... tweens) {
-        super(target);
+    protected ParallelTween(Tween... tweens) {
+        super();
 
         this.tweens = new Array<Tween>(tweens);
     }
 
-    private Parallel(IRender target, Float interval) {
-        super(target, interval);
+    protected ParallelTween(Float interval) {
+        super(interval);
     }
 
     @Override
