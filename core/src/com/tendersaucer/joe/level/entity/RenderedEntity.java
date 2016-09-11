@@ -70,8 +70,8 @@ public abstract class RenderedEntity extends Entity implements IRender, ITweenab
             while (tweensIter.hasNext()) {
                 Tween tween = tweensIter.next();
                 if (tween.update()) {
-                    tweensIter.remove();
                     tween.onDone();
+                    tweensIter.remove();
                 }
             }
         }
