@@ -10,18 +10,19 @@ import com.tendersaucer.joe.Globals;
 import com.tendersaucer.joe.particle.ParticleEffect;
 import com.tendersaucer.joe.particle.ParticleEffectManager;
 import com.tendersaucer.joe.util.pool.Vector2Pool;
+import com.tendersaucer.joe.util.tween.SequenceTween;
 import com.tendersaucer.joe.util.tween.Tween;
 
 /**
  * Created by Alex on 5/31/2016.
  */
-public class RedSpinningThingy extends RenderedEntity {
+public class GroovySpinningThingy extends RenderedEntity {
 
-    public static final String ID = "red_spinning_thingy";
+    public static final String ID = "groovy_spinning_thingy";
 
     private boolean obtained;
 
-    private RedSpinningThingy(EntityDefinition def) {
+    private GroovySpinningThingy(EntityDefinition def) {
         super(def);
 
         id = ID;
@@ -36,14 +37,20 @@ public class RedSpinningThingy extends RenderedEntity {
     public void init() {
         super.init();
 
+        Color[] colors = ColorScheme.getInstance().getColors();
+        Tween[] colorTweens = new Tween[colors.length];
+        for (int i = 0; i < colorTweens.length - 1; i++) {
+            colorTweens[i] = Tween.color(colors[i], colors[i + 1], 1200f / colorTweens.length);
+        }
+        colorTweens[colorTweens.length - 1] = Tween.color(colors[colors.length - 1], colors[0],
+                1200f / colorTweens.length);
+        SequenceTween colorSequence = Tween.sequence(colorTweens);
+
         float fromWidth = getWidth() * 0.9f, toWidth = getWidth() * 1.1f;
         float fromHeight = getHeight() * 0.9f, toHeight = getHeight() * 1.1f;
         addTween(Tween.loop(
                 Tween.parallel(
-                        Tween.sequence(
-                                Tween.color(Color.RED, Color.WHITE, 600f),
-                                Tween.color(Color.WHITE, Color.RED, 600f)
-                        ),
+                        colorSequence,
                         Tween.sequence(
                                 Tween.size(fromWidth, fromHeight, toWidth, toHeight, 600f),
                                 Tween.size(toWidth, toHeight, fromWidth, fromHeight, 600f)

@@ -12,7 +12,7 @@
     <property name="layer" type="int" value="6"/>
    </properties>
   </object>
-  <object id="303" type="red_spinning_thingy" gid="24" x="1344" y="192" width="64" height="64"/>
+  <object id="303" type="groovy_spinning_thingy" gid="24" x="1344" y="192" width="64" height="64"/>
   <object id="319" type="vanishing_platform" gid="24" x="1344" y="896" width="64" height="64"/>
   <object id="321" type="vanishing_platform" gid="24" x="960" y="1024" width="128" height="64">
    <properties>

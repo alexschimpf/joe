@@ -15,7 +15,7 @@
   <object id="299" x="128" y="512" width="64" height="64"/>
   <object id="301" x="128" y="704" width="64" height="64"/>
   <object id="302" x="128" y="896" width="64" height="64"/>
-  <object id="303" type="red_spinning_thingy" gid="24" x="960" y="320" width="64" height="64"/>
+  <object id="303" type="groovy_spinning_thingy" gid="24" x="960" y="320" width="64" height="64"/>
   <object id="307" x="704" y="512" width="448" height="64"/>
   <object id="308" x="704" y="576" width="256" height="64"/>
   <object id="309" x="768" y="640" width="128" height="64"/>

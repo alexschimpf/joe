@@ -94,7 +94,7 @@ public final class Player extends RenderedEntity {
     public void onBeginContact(Contact contact, com.tendersaucer.joe.level.entity.Entity entity) {
         handleFootContact(contact, true);
 
-        if (entity instanceof com.tendersaucer.joe.level.entity.RedSpinningThingy) {
+        if (entity instanceof GroovySpinningThingy) {
             setDone();
         }
     }

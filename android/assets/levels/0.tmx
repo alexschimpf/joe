@@ -22,7 +22,7 @@
   <object id="303" x="1216" y="512" width="512" height="64"/>
   <object id="304" x="1536" y="384" width="192" height="64"/>
   <object id="305" x="128" y="896" width="256" height="64"/>
-  <object id="306" type="red_spinning_thingy" gid="24" x="2752" y="64" width="64" height="64"/>
+  <object id="306" type="groovy_spinning_thingy" gid="24" x="2752" y="64" width="64" height="64"/>
   <object id="307" x="576" y="640" width="192" height="128"/>
   <object id="310" x="1536" y="384" width="192" height="128"/>
  </objectgroup>

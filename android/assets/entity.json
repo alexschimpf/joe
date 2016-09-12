@@ -34,8 +34,8 @@
                                 ]
                             }
                         },
-                        "red_spinning_thingy": {
-                            "class": "RedSpinningThingy",
+                        "groovy_spinning_thingy": {
+                            "class": "GroovySpinningThingy",
                             "properties": {
                                 "optional": [
                                     { "name": "body_type", "default": "kinematic" },

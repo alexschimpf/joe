@@ -64,6 +64,10 @@ public final class ColorScheme {
         ColorUtils.shade(backgroundColor, 1);
     }
 
+    public Color[] getColors() {
+        return new Color[] { BLUE, ORANGE, GREEN, PURPLE, TEAL, PINK };
+    }
+
     public Color getPrimaryColor(ReturnType returnType) {
         if (returnType == ReturnType.SHARED) {
             return primaryColor;
