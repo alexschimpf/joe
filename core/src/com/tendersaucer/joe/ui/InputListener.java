@@ -113,7 +113,11 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
                 MainCamera.getInstance().takeScreenshot();
                 break;
             case Keys.ENTER:
+                if (Globals.getGameState() == Game.State.LEVEL_COMPLETE) {
+                    HUD.getInstance().hideLevelComplete();
+                }
                 Level.getInstance().loadNext();
+
                 break;
             default:
                 if (Level.getInstance().getPlayer() != null &&

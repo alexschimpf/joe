@@ -8,14 +8,14 @@
     "effects": {
         "level_complete": {
             "textures": ["default_rounded"],
-            "loop_delay": "2000",
+            "loop_delay": "500",
             "ranges": {
-                "duration": [4000, 8000],
-                "num_particles": [38, 42],
+                "duration": [2000, 3000],
+                "num_particles": [6, 10],
                 "position_offset": [[-1.5, -1.5], [1.5, 1.5]],
                 "angular_velocity": [0, 60],
                 "velocity": {
-                    "range": [[-12, -12], [12, 12]],
+                    "range": [[-14, -14], [14, 14]],
                     "splits": [0, 0]
                 }
             },

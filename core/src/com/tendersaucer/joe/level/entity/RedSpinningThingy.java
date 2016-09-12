@@ -67,14 +67,14 @@ public class RedSpinningThingy extends RenderedEntity {
     private void beginParticleEffect() {
         for (int layer = 1; layer < Canvas.NUM_LAYERS; layer += 2) {
             Vector2Pool vector2Pool = Vector2Pool.getInstance();
-            Vector2 sizeRange = vector2Pool.obtain(-getWidth() * 2, getWidth() * 2);
+            Vector2 sizeRange = vector2Pool.obtain(getWidth() * 0.75f, getWidth() * 3);
             Vector2 position = vector2Pool.obtain(getLeft(), getBottom() - (sizeRange.y / 2));
             ParticleEffect effect =
                     ParticleEffectManager.getInstance().buildParticleEffect("level_complete");
             Color color = ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.NEW);
-            effect.setRedRange(color.r, color.r);
-            effect.setGreenRange(color.g, color.g);
-            effect.setBlueRange(color.b, color.b);
+            effect.setRedRange(color.r, 1);
+            effect.setGreenRange(color.g, 1);
+            effect.setBlueRange(color.b, 1);
             effect.setAlphaRange(color.a, color.a);
 
             ParticleEffectManager.getInstance().beginParticleEffect(effect, position, sizeRange, layer);

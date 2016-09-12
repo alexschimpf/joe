@@ -404,7 +404,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         return unitDisplay;
     }
 
-    private void hideLevelComplete() {
+    public void hideLevelComplete() {
         levelCompleteBackground.setVisible(false);
         nextButton.setVisible(false);
         levelSummaryLabel.setText("");
