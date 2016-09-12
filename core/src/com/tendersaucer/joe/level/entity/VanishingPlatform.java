@@ -6,9 +6,9 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
+import com.tendersaucer.joe.Canvas;
 import com.tendersaucer.joe.anim.AnimatedSprite;
 import com.tendersaucer.joe.level.Level;
-import com.tendersaucer.joe.Canvas;
 
 import java.util.UUID;
 
@@ -70,7 +70,8 @@ public class VanishingPlatform extends RenderedEntity {
 
     @Override
     protected Sprite createSprite(EntityDefinition definition) {
-        AnimatedSprite sprite = new AnimatedSprite("vanishing-1x1", definition.getFloatProperty("vanish_duration"));
+        AnimatedSprite sprite = new AnimatedSprite(definition.getStringProperty("texture"),
+                definition.getFloatProperty("vanish_duration"));
         sprite.setSize(getWidth(), getHeight());
 
         return sprite;

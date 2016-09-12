@@ -48,7 +48,8 @@
                             "properties": {
                                 "optional": [
                                     { "name": "vanish_duration", "default": "750" },
-                                    { "name": "reappear_delay", "default": "750" }
+                                    { "name": "reappear_delay", "default": "750" },
+                                    { "name": "texture", "default": "vanishing-1x1" }
                                 ]
                             }
                         },

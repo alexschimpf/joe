@@ -1,6 +1,7 @@
 package com.tendersaucer.joe.anim;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,8 +9,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.tendersaucer.joe.AssetManager;
-import com.tendersaucer.joe.IUpdate;
 import com.tendersaucer.joe.IRender;
+import com.tendersaucer.joe.IUpdate;
 import com.tendersaucer.joe.util.ConversionUtils;
 
 /**
@@ -26,14 +27,14 @@ public class AnimatedSprite extends Sprite implements IUpdate, IRender {
     protected int currNumLoops;
     protected State state;
     protected Integer numLoops;
-    protected com.badlogic.gdx.graphics.g2d.Animation rawAnimation;
+    protected Animation rawAnimation;
 
     public AnimatedSprite(String key, float totalDuration, Integer numLoops, State state) {
         super();
 
         Array<AtlasRegion> frames = AssetManager.getInstance().getTextureRegions(key);
         float frameDuration = ConversionUtils.ms2s(totalDuration / frames.size);
-        rawAnimation = new com.badlogic.gdx.graphics.g2d.Animation(frameDuration, frames);
+        rawAnimation = new Animation(frameDuration, frames);
 
         this.numLoops = numLoops;
         if (numLoops == null || numLoops > 1) {
@@ -148,7 +149,7 @@ public class AnimatedSprite extends Sprite implements IUpdate, IRender {
         return state == State.FINISHED;
     }
 
-    public com.badlogic.gdx.graphics.g2d.Animation getRawAnimation() {
+    public Animation getRawAnimation() {
         return rawAnimation;
     }
 

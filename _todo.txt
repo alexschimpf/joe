@@ -1,3 +1,11 @@
+- libgdx-utils
+    - anim
+    - event
+    - util
+        - box2d, tween, ColorUtils, ConversionUtils, RandomUtils, StringUtils
+    - DAO
+
+
 - Start using Github issues?
     - Remove this file and use _scratch.txt
 

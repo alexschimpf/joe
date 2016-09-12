@@ -36,29 +36,21 @@ public class RedSpinningThingy extends RenderedEntity {
     public void init() {
         super.init();
 
-        Color toColor = Color.WHITE;
-        float toWidth = getWidth() * 1.15f;
-        float toHeight = getHeight() * 1.15f;
+        float fromWidth = getWidth() * 0.9f, toWidth = getWidth() * 1.1f;
+        float fromHeight = getHeight() * 0.9f, toHeight = getHeight() * 1.1f;
         addTween(Tween.loop(
                 Tween.parallel(
                         Tween.sequence(
-                                Tween.color(Color.RED, toColor, 500f),
-                                Tween.color(toColor, Color.RED, 500f)
+                                Tween.color(Color.RED, Color.WHITE, 600f),
+                                Tween.color(Color.WHITE, Color.RED, 600f)
                         ),
                         Tween.sequence(
-                                Tween.size(getWidth(), getHeight(), toWidth, toHeight, 500f),
-                                Tween.size(toWidth, toHeight, getWidth(), getHeight(), 500f)
+                                Tween.size(fromWidth, fromHeight, toWidth, toHeight, 600f),
+                                Tween.size(toWidth, toHeight, fromWidth, fromHeight, 600f)
                         )
                 )
         ).setState(Tween.State.ACTIVE));
     }
-
-//    @Override
-//    protected void tick() {
-//        super.tick();
-//
-//        ((AnimatedSprite)sprite).update();
-//    }
 
     @Override
     public void onBeginContact(Contact contact, Entity entity) {
@@ -71,14 +63,6 @@ public class RedSpinningThingy extends RenderedEntity {
             Globals.setGameState(Game.State.LEVEL_COMPLETE);
         }
     }
-
-//    @Override
-//    protected Sprite createSprite(EntityDefinition definition) {
-//        AnimatedSprite sprite = new AnimatedSprite("red_spinning_thingy", 500f, null, AnimatedSprite.State.PLAYING);
-//        sprite.setSize(getWidth(), getHeight());
-//
-//        return sprite;
-//    }
 
     private void beginParticleEffect() {
         for (int layer = 1; layer < Canvas.NUM_LAYERS; layer += 2) {

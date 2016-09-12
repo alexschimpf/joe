@@ -16,8 +16,8 @@ public final class Globals {
 
     private static Game.State gameState;
     public static final int NUM_LEVELS = 6;
-    public static final Integer START_LEVEL = null; // null = disabled
-    public static boolean REPEAT_START_LEVEL = false;
+    public static final Integer START_LEVEL = 4; // null = disabled
+    public static boolean REPEAT_START_LEVEL = true;
     public static boolean FULLSCREEN_MODE = true;
     public static boolean DEBUG_PHYSICS = false;
     public static boolean PRINT_DEBUG_INFO = false;
