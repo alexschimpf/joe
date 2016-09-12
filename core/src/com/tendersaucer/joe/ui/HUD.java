@@ -72,21 +72,21 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     private Color MOBILE_BUTTON_UP_COLOR = new Color(0.65f, 0.65f, 0.65f, 0.5f);
     private static final String[] MOBILE_TUTORIAL_MESSAGES = new String[] {
         "Hi, I'm Joe.",
-        "Now... mindlessly follow my commands.",
+        "Now, mindlessly follow my commands.",
         "To make me move left/right, slide your finger here.",
         "To make me jump, touch here.",
         "If you hold longer, I'll jump higher.",
         "Your mission?",
-        "GUIDE ME TO THE RED SPINNING THINGIES!"
+        "GUIDE ME TO THE GROOVT SPINNING THINGIES!"
     };
     private static final String[] DESKTOP_TUTORIAL_MESSAGES = new String[] {
         "Hi, I'm Joe.",
-        "Now... mindlessly follow my commands.",
+        "Now, mindlessly follow my commands.",
         "To make me move left/right, use the arrow keys.",
         "To make me jump, press A.",
         "If you hold longer, I'll jump higher.",
         "Your mission?",
-        "GUIDE ME TO THE RED SPINNING THINGIES!"
+        "GUIDE ME TO THE GROOVY SPINNING THINGIES!"
     };
 
     private Image infoBackground;
