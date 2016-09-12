@@ -56,6 +56,10 @@ public abstract class Tween implements IUpdate {
         return new SequenceTween(tweens);
     }
 
+    public static RunnableTween runnable(ITweenRunnable runnable, float interval) {
+        return new RunnableTween(runnable, interval);
+    }
+
     public static AlphaTween alpha(float startAlpha, float endAlpha, float interval) {
         return new AlphaTween(startAlpha, endAlpha, interval);
     }

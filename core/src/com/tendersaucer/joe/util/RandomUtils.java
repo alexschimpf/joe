@@ -1,5 +1,6 @@
 package com.tendersaucer.joe.util;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -12,6 +13,11 @@ import java.util.List;
  * Created by Alex on 4/28/2016.
  */
 public final class RandomUtils {
+
+    public static Color randomColor(boolean isOpaque) {
+        return new Color(MathUtils.random(), MathUtils.random(), MathUtils.random(),
+                isOpaque ? 1 : MathUtils.random());
+    }
 
     public static <T> T pick(T a, T b) {
         return MathUtils.random() < 0.5f ? a : b;
