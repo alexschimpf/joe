@@ -77,7 +77,10 @@ public final class AssetManager extends com.badlogic.gdx.assets.AssetManager {
     }
 
     private void loadTextureAtlas(String id) {
-        load(getFilePath(TEXTURE_ATLAS_DIR, id + TEXTURE_ATLAS_EXTENSION), TextureAtlas.class);
+        String fileName = getFilePath(TEXTURE_ATLAS_DIR, id + TEXTURE_ATLAS_EXTENSION);
+        if (!isLoaded(fileName)) {
+            load(fileName, TextureAtlas.class);
+        }
     }
 
     private void unloadTextureAtlas(String id) {
@@ -88,7 +91,10 @@ public final class AssetManager extends com.badlogic.gdx.assets.AssetManager {
     }
 
     private void loadSound(String id) {
-        load(getFilePath(SOUND_DIR, id + SOUND_EXTENSION), Sound.class);
+        String fileName = getFilePath(SOUND_DIR, id + SOUND_EXTENSION);
+        if (!isLoaded(fileName)) {
+            load(fileName, Sound.class);
+        }
     }
 
     private void unloadSound(String id) {

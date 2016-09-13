@@ -1,6 +1,8 @@
 package com.tendersaucer.joe.util.tween;
 
 /**
+ * Can be used as a MainThread-based alternative to the Timer
+ *
  * Created by Alex on 9/12/2016.
  */
 public class RunnableTween extends Tween {

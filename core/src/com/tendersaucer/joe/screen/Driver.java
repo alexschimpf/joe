@@ -123,6 +123,7 @@ public final class Driver implements Screen {
     public void dispose() {
         Globals.setGameState(com.tendersaucer.joe.Game.State.SHUTDOWN);
         EventManager.getInstance().clearAll();
+        AssetManager.getInstance().dispose();
     }
 
     public SpriteBatch getSpriteBatch() {
