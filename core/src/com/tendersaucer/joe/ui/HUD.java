@@ -68,6 +68,7 @@ import com.tendersaucer.joe.IRender;
 public final class HUD implements IUpdate, IRender, IGameStateChangeListener, INewUserEventListener {
 
     private static final HUD instance = new HUD();
+    public static final String WAITING_FOR_INPUT_MESSAGE = "- WAITING FOR INPUT -";
     private Color MOBILE_BUTTON_DOWN_COLOR = new Color(0.45f, 0.45f, 0.45f, 0.5f);
     private Color MOBILE_BUTTON_UP_COLOR = new Color(0.65f, 0.65f, 0.65f, 0.5f);
     private static final String[] MOBILE_TUTORIAL_MESSAGES = new String[] {
@@ -162,7 +163,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         if (isTutorial) {
             infoLabel.setText("TUTORIAL");
         } else {
-            infoLabel.setText("WAITING FOR INPUT");
+            infoLabel.setText(WAITING_FOR_INPUT_MESSAGE);
             if (Globals.getGameState() != Game.State.WAIT_FOR_INPUT && infoLabel.getActions().size == 0) {
                 infoLabel.setVisible(false);
                 infoBackground.setVisible(false);
@@ -231,7 +232,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             infoBackground.getColor().a = 1;
             infoLabel.setVisible(true);
             infoBackground.setVisible(true);
-            infoLabel.setText("WAITING FOR INPUT");
+            infoLabel.setText(WAITING_FOR_INPUT_MESSAGE);
             infoLabel.addAction(Actions.alpha(0, 0.3f));
             infoBackground.addAction(Actions.alpha(0, 0.3f));
         }
@@ -245,7 +246,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             infoBackground.getColor().a = 0;
             infoLabel.setVisible(true);
             infoBackground.setVisible(true);
-            infoLabel.setText("WAITING FOR INPUT");
+            infoLabel.setText(WAITING_FOR_INPUT_MESSAGE);
             infoLabel.addAction(Actions.forever(Actions.sequence(Actions.alpha(0, 0.25f), Actions.alpha(1, 0.25f))));
             infoBackground.addAction(Actions.alpha(1, 0.6f));
         }
