@@ -89,7 +89,7 @@ public class ParticleEffectViewer implements Screen {
     }
 
     private void render() {
-        if (Globals.PRINT_DEBUG_INFO) {
+        if (Globals.printDebugInfo) {
             Gdx.app.debug("debug", "FPS: " + Gdx.graphics.getFramesPerSecond());
             Gdx.app.debug("debug", "V2Pool #Free: " + Vector2Pool.getInstance().getFree());
             Gdx.app.debug("debug", "V3Pool #Free: " + Vector2Pool.getInstance().getFree());
@@ -194,7 +194,7 @@ public class ParticleEffectViewer implements Screen {
                     ParticleEffectManager.getInstance().clearLiveEffects();
                     break;
                 case Keys.D:
-                    Globals.PRINT_DEBUG_INFO = !Globals.PRINT_DEBUG_INFO;
+                    Globals.printDebugInfo = !Globals.printDebugInfo;
                     break;
             }
 

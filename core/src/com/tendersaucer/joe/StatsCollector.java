@@ -8,7 +8,7 @@ import com.tendersaucer.joe.event.listeners.IGameStateChangeListener;
  */
 public final class StatsCollector implements IGameStateChangeListener {
 
-    private static final StatsCollector instance = new StatsCollector();
+    private static final StatsCollector INSTANCE = new StatsCollector();
 
     private Long runStartTime;
     private DAO dao;
@@ -18,7 +18,7 @@ public final class StatsCollector implements IGameStateChangeListener {
     }
 
     public static StatsCollector getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     @Override

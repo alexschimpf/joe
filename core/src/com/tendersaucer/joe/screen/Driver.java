@@ -87,7 +87,7 @@ public final class Driver implements Screen {
 
     @Override
     public void render(float delta) {
-        if (Globals.PRINT_DEBUG_INFO) {
+        if (Globals.printDebugInfo) {
             Gdx.app.debug("debug", "FPS: " + Gdx.graphics.getFramesPerSecond());
             Gdx.app.debug("debug", "V2Pool #Free: " + Vector2Pool.getInstance().getFree());
             Gdx.app.debug("debug", "V3Pool #Free: " + Vector2Pool.getInstance().getFree());
@@ -138,7 +138,7 @@ public final class Driver implements Screen {
     }
 
     private void render() {
-        if (Globals.PRINT_DEBUG_INFO) {
+        if (Globals.printDebugInfo) {
             Gdx.app.debug("debug", "FPS: " + Gdx.graphics.getFramesPerSecond());
             Gdx.app.debug("debug", "V2Pool #Free: " + Vector2Pool.getInstance().getFree());
             Gdx.app.debug("debug", "V3Pool #Free: " + Vector2Pool.getInstance().getFree());
@@ -157,7 +157,7 @@ public final class Driver implements Screen {
         }
         spriteBatch.end();
 
-        if (Globals.DEBUG_PHYSICS) {
+        if (Globals.debugPhysics) {
             debugMatrix.set(camera.combined);
             debugRenderer.render(Level.getInstance().getPhysicsWorld(), debugMatrix);
         }

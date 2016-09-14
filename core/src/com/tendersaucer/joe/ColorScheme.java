@@ -10,7 +10,7 @@ import com.tendersaucer.joe.util.RandomUtils;
  */
 public final class ColorScheme {
 
-    private static final ColorScheme instance = new ColorScheme();
+    private static final ColorScheme INSTANCE = new ColorScheme();
     private static final float MIN_SHADE_BRIGHTNESS = 0.98f;
     private static final float MAX_SHADE_BRIGHTNESS = 1.02f;
 
@@ -47,7 +47,7 @@ public final class ColorScheme {
     }
 
     public static ColorScheme getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     public void reset() {

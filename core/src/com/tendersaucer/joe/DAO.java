@@ -20,7 +20,7 @@ public final class DAO {
     public static final String TOTAL_TIME_KEY = "total_time";
     public static final String LEVEL_ORDER_KEY = "level_order";
     private static final String PREFERENCES_NAME = "joe";
-    private static final DAO instance = new DAO();
+    private static final DAO INSTANCE = new DAO();
 
     private Map<String, ?> preferencesCache;
     private final Preferences preferences;
@@ -35,7 +35,7 @@ public final class DAO {
     }
 
     public static DAO getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     public boolean containsKey(String key) {

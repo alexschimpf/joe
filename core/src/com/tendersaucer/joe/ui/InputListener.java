@@ -36,7 +36,7 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
             boolean isCameraFlipped = camera.isFlipped();
             float multiplier = isCameraFlipped ? -1 : 1;
             if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-                if (Globals.CUSTOM_CAMERA_MODE && Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
+                if (Globals.customCameraInfo && Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
                     camera.move(camera.getTileSize() / 2 * multiplier, 0);
                     camera.setPlayerFocus(false);
                 } else if (isCameraFlipped){
@@ -45,7 +45,7 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
                     player.moveRight();
                 }
             } else if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-                if (Globals.CUSTOM_CAMERA_MODE && Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
+                if (Globals.customCameraInfo && Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
                     camera.move(-camera.getTileSize() / 2 * multiplier, 0);
                     camera.setPlayerFocus(false);
                 } else if (isCameraFlipped){
@@ -53,7 +53,7 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
                 } else {
                     player.moveLeft();
                 }
-            } else if (Globals.CUSTOM_CAMERA_MODE && Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
+            } else if (Globals.customCameraInfo && Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
                 if (Gdx.input.isKeyPressed(Keys.UP)) {
                     camera.move(0, -camera.getTileSize() / 2 * multiplier);
                     camera.setPlayerFocus(false);
@@ -97,16 +97,16 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
                 Gdx.app.exit();
                 break;
             case Keys.D:
-                Globals.DEBUG_PHYSICS = !Globals.DEBUG_PHYSICS;
+                Globals.debugPhysics = !Globals.debugPhysics;
                 break;
             case Keys.C:
                 DAO.getInstance().clear();
                 break;
             case Keys.P:
-                Globals.PRINT_DEBUG_INFO = !Globals.PRINT_DEBUG_INFO;
+                Globals.printDebugInfo = !Globals.printDebugInfo;
                 break;
             case Keys.E:
-                Globals.CUSTOM_CAMERA_MODE = !Globals.CUSTOM_CAMERA_MODE;
+                Globals.customCameraInfo = !Globals.customCameraInfo;
                 MainCamera.getInstance().setPlayerFocus(true);
                 break;
             case Keys.Q:

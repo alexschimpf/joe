@@ -23,7 +23,7 @@ import java.util.UUID;
 public final class MainCamera implements IUpdate, IGameStateChangeListener {
 
     private static final int TILES_PER_SCREEN_WIDTH = 18;
-    private static final MainCamera instance = new MainCamera();
+    private static final MainCamera INSTANCE = new MainCamera();
     private static final int TILE_SIZE_PIXELS = 64;
     private static final int BASE_VIEWPORT_WIDTH = 50; // 50m is small enough for Box2D to handle
     private static final int BASE_VIEWPORT_HEIGHT = 50;
@@ -48,7 +48,7 @@ public final class MainCamera implements IUpdate, IGameStateChangeListener {
     }
 
     public static MainCamera getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     @Override

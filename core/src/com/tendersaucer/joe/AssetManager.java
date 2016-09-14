@@ -15,7 +15,7 @@ import com.tendersaucer.joe.anim.AnimatedSprite;
  */
 public final class AssetManager extends com.badlogic.gdx.assets.AssetManager {
 
-    private static final AssetManager instance = new AssetManager();
+    private static final AssetManager INSTANCE = new AssetManager();
     private static final String TEXTURE_ATLAS_DIR = "texture_atlas";
     private static final String SOUND_DIR = "sound";
     private static final String TEXTURE_ATLAS_EXTENSION = ".atlas";
@@ -25,7 +25,7 @@ public final class AssetManager extends com.badlogic.gdx.assets.AssetManager {
     }
 
     public static AssetManager getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     public static String getFilePath(String first, String... more) {

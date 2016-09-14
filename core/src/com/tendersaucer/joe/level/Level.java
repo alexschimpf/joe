@@ -41,7 +41,7 @@ import java.util.concurrent.TimeUnit;
 public final class Level implements IUpdate, IDisposable {
 
     public static final float DEFAULT_GRAVITY = 50;
-    private static final Level instance = new Level();
+    private static final Level INSTANCE = new Level();
 
     private int id;
     private long iterationId;
@@ -64,7 +64,7 @@ public final class Level implements IUpdate, IDisposable {
     }
 
     public static Level getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     @Override

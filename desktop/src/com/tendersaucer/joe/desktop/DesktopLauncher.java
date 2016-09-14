@@ -17,12 +17,12 @@ public class DesktopLauncher {
     public static void main(String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.vSyncEnabled = true;
-        config.fullscreen = Globals.FULLSCREEN_MODE;
+        config.fullscreen = Globals.fullScreenMode;
         config.resizable = false;
         config.title = "joe";
 
         // TODO: How to get native resolution?
-        if (Globals.FULLSCREEN_MODE) {
+        if (Globals.fullScreenMode) {
             config.width = 3200;
             config.height = 1800;
         } else {

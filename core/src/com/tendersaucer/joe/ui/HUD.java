@@ -67,7 +67,7 @@ import com.tendersaucer.joe.IRender;
  */
 public final class HUD implements IUpdate, IRender, IGameStateChangeListener, INewUserEventListener {
 
-    private static final HUD instance = new HUD();
+    private static final HUD INSTANCE = new HUD();
     public static final String WAITING_FOR_INPUT_MESSAGE = "- WAITING FOR INPUT -";
     private Color MOBILE_BUTTON_DOWN_COLOR = new Color(0.45f, 0.45f, 0.45f, 0.5f);
     private Color MOBILE_BUTTON_UP_COLOR = new Color(0.65f, 0.65f, 0.65f, 0.5f);
@@ -134,7 +134,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     }
 
     public static HUD getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     @Override

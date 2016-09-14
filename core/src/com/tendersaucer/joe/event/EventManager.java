@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public final class EventManager {
 
-    private static final EventManager instance = new EventManager();
+    private static final EventManager INSTANCE = new EventManager();
 
     private final Map<Class<? extends Event>, ArrayList> eventListeners;
 
@@ -21,7 +21,7 @@ public final class EventManager {
     }
 
     public static EventManager getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     public <L> void listen(Class<? extends Event<L>> eventClass, L listener) {

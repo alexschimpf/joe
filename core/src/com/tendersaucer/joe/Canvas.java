@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class Canvas implements IRender, ILevelLoadBeginListener {
 
     public static final int NUM_LAYERS = 10;
-    private static final Canvas instance = new Canvas();
+    private static final Canvas INSTANCE = new Canvas();
 
     private final Map<IRender, Integer> objectLayerMap;
     private final Array<LinkedHashMap<IRender, Boolean>> layers; // 0 = Background, 10 = Foreground
@@ -32,7 +32,7 @@ public final class Canvas implements IRender, ILevelLoadBeginListener {
     }
 
     public static Canvas getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     @Override

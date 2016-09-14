@@ -7,13 +7,13 @@ import com.tendersaucer.joe.util.PropertyConfiguration;
  */
 public final class EntityPropertyConfiguration extends PropertyConfiguration {
 
-    private static final EntityPropertyConfiguration instance = new EntityPropertyConfiguration();
+    private static final EntityPropertyConfiguration INSTANCE = new EntityPropertyConfiguration();
 
     private EntityPropertyConfiguration() {
         super("entity.json", "entities", "entity");
     }
 
     public static EntityPropertyConfiguration getInstance() {
-        return instance;
+        return INSTANCE;
     }
 }

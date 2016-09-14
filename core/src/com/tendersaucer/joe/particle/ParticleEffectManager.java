@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ParticleEffectManager implements IUpdate, ILevelLoadBeginListener {
 
-    private static final ParticleEffectManager instance = new ParticleEffectManager();
+    private static final ParticleEffectManager INSTANCE = new ParticleEffectManager();
     private static final String CONFIG_FILENAME = "particle.json";
     private static final String MODIFIERS_CLASS_PATH = "com.tendersaucer.joe.particle.modifiers.";
 
@@ -36,7 +36,7 @@ public class ParticleEffectManager implements IUpdate, ILevelLoadBeginListener {
     }
 
     public static ParticleEffectManager getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     @Override

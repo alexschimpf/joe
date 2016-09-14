@@ -16,14 +16,14 @@ import com.tendersaucer.joe.util.box2d.BodyData;
  */
 public final class CollisionListener implements ContactListener {
 
-    private static final CollisionListener instance = new CollisionListener();
+    private static final CollisionListener INSTANCE = new CollisionListener();
 
     private CollisionListener() {
 
     }
 
     public static CollisionListener getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     @Override

@@ -7,13 +7,13 @@ import com.tendersaucer.joe.util.PropertyConfiguration;
  */
 public final class ScriptPropertyConfiguration extends PropertyConfiguration {
 
-    private static final ScriptPropertyConfiguration instance = new ScriptPropertyConfiguration();
+    private static final ScriptPropertyConfiguration INSTANCE = new ScriptPropertyConfiguration();
 
     private ScriptPropertyConfiguration() {
         super("script.json", "scripts", "script");
     }
 
     public static ScriptPropertyConfiguration getInstance() {
-        return instance;
+        return INSTANCE;
     }
 }

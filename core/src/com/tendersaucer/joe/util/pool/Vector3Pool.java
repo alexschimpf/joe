@@ -8,13 +8,13 @@ import com.badlogic.gdx.utils.Pool;
  */
 public class Vector3Pool extends Pool<Vector3> {
 
-    private static final Vector3Pool instance = new Vector3Pool();
+    private static final Vector3Pool INSTANCE = new Vector3Pool();
 
     private Vector3Pool() {
     }
 
     public static Vector3Pool getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     @Override
