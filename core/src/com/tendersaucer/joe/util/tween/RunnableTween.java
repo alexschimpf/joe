@@ -7,7 +7,7 @@ package com.tendersaucer.joe.util.tween;
  */
 public class RunnableTween extends Tween {
 
-    protected ITweenRunnable runnable;
+    protected final ITweenRunnable runnable;
 
     protected RunnableTween(ITweenRunnable runnable, float interval) {
         super(interval);

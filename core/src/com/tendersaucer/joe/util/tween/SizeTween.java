@@ -5,10 +5,10 @@ package com.tendersaucer.joe.util.tween;
  */
 public class SizeTween extends Tween {
 
-    protected float startWidth;
-    protected float startHeight;
-    protected float endWidth;
-    protected float endHeight;
+    protected final float startWidth;
+    protected final float startHeight;
+    protected final float endWidth;
+    protected final float endHeight;
 
     protected SizeTween(float startWidth, float startHeight, float endWidth, float endHeight,
                      float interval) {

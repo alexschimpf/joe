@@ -17,8 +17,8 @@ public abstract class Tween implements IUpdate {
 
     protected float elapsed;
     protected State state;
-    protected Float interval;
     protected ITweenable target;
+    protected final Float interval;
 
     public Tween() {
         this.interval = null;

@@ -38,7 +38,7 @@ import static com.badlogic.gdx.graphics.g2d.Batch.Y4;
  */
 public class ColoredOrthogonalTiledMapRenderer extends OrthogonalTiledMapRenderer {
 
-    private Map<TiledMapTileLayer.Cell, Color> cellColorMap;
+    private final Map<TiledMapTileLayer.Cell, Color> cellColorMap;
 
     public ColoredOrthogonalTiledMapRenderer(TiledMap map, float unitScale, Batch batch) {
         super(map, unitScale, batch);

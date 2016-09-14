@@ -13,11 +13,11 @@ import java.util.Map;
  */
 public final class AnimatedSpriteSystem extends AnimatedSprite {
 
-    private final Map<String, AnimatedSprite> animationMap;
     private boolean defaultOnFinished;
     private boolean usingDefault;
     private String currentAnimationId;
     private TextureRegion defaultTexture;
+    private final Map<String, AnimatedSprite> animationMap;
 
     public AnimatedSpriteSystem(String defaultTextureName) {
         super();

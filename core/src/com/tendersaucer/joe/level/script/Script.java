@@ -22,9 +22,9 @@ public abstract class Script implements IUpdate, IDisposable {
     }
 
     protected State state;
-    protected String type;
-    protected String id;
-    protected ScriptDefinition definition;
+    protected final String type;
+    protected final String id;
+    protected final ScriptDefinition definition;
 
     protected Script(ScriptDefinition definition) {
         this.definition = definition;

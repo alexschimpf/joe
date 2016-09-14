@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
 public class ParallelTween extends Tween {
 
     protected int numDone;
-    protected Array<Tween> tweens;
+    protected final Array<Tween> tweens;
 
     protected ParallelTween(Tween... tweens) {
         super();

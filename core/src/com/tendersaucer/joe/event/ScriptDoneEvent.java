@@ -7,7 +7,7 @@ import com.tendersaucer.joe.level.script.Script;
  */
 public final class ScriptDoneEvent extends Event<com.tendersaucer.joe.event.listeners.IScriptDoneListener> {
 
-    private Script script;
+    private final Script script;
 
     public ScriptDoneEvent(Script script) {
         this.script = script;

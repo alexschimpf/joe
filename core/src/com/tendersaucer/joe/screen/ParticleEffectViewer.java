@@ -28,11 +28,11 @@ import com.tendersaucer.joe.util.pool.Vector2Pool;
  */
 public class ParticleEffectViewer implements Screen {
 
+    private Stage stage;
+    private BitmapFont font;
     private final Skin skin;
     private final InputListener inputListener;
     private final SpriteBatch spriteBatch;
-    private Stage stage;
-    private BitmapFont font;
 
     public ParticleEffectViewer() {
         skin = new Skin(Gdx.files.internal("uiskin.json"));

@@ -7,8 +7,8 @@ import com.tendersaucer.joe.Game;
  */
 public class GameStateChangeEvent extends Event<com.tendersaucer.joe.event.listeners.IGameStateChangeListener> {
 
-    private Game.State oldEvent;
-    private Game.State newEvent;
+    private final Game.State oldEvent;
+    private final Game.State newEvent;
 
     public GameStateChangeEvent(Game.State oldEvent, Game.State newEvent) {
         this.oldEvent = oldEvent;

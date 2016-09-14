@@ -27,10 +27,10 @@ import com.tendersaucer.joe.ui.InputListener;
 public class MainMenu implements Screen {
 
     private Game game;
-    private FreeTypeFontGenerator fontGenerator;
-    private Skin skin;
-    private Stage stage;
     private Label loadingLabel;
+    private final Skin skin;
+    private final Stage stage;
+    private final FreeTypeFontGenerator fontGenerator;
 
     public MainMenu(Game game) {
         this.game = game;

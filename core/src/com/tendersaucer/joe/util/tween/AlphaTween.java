@@ -5,8 +5,8 @@ package com.tendersaucer.joe.util.tween;
  */
 public class AlphaTween extends Tween {
 
-    protected float startAlpha;
-    protected float endAlpha;
+    protected final float startAlpha;
+    protected final float endAlpha;
 
     protected AlphaTween(float startAlpha, float endAlpha, float interval) {
         super(interval);

@@ -18,7 +18,7 @@ import com.tendersaucer.joe.level.Level;
  */
 public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputListener implements IUpdate {
 
-    private boolean mainMenuOnBack;
+    private final boolean mainMenuOnBack;
 
     public InputListener(boolean mainMenuOnBack) {
         this.mainMenuOnBack = mainMenuOnBack;

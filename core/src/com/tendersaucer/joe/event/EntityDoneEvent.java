@@ -7,7 +7,7 @@ import com.tendersaucer.joe.level.entity.Entity;
  */
 public final class EntityDoneEvent extends Event<com.tendersaucer.joe.event.listeners.IEntityDoneListener> {
 
-    private Entity entity;
+    private final Entity entity;
 
     public EntityDoneEvent(Entity entity) {
         this.entity = entity;

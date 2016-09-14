@@ -90,15 +90,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         "GUIDE ME TO THE GROOVY SPINNING THINGIES!"
     };
 
-    private Image infoBackground;
-    private Label infoLabel;
-    private Label progressLabel;
-    private Image flashImage;
-    private Stage stage;
-    private InputListener inputListener;
-    private FreeTypeFontGenerator fontGenerator;
-    private Skin skin;
-
     // Tutorial
     private int tutorialPosition;
     private Label tutorialLabel;
@@ -114,6 +105,16 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     private Button moveButton;
     private Button jumpButton;
     private Integer movePointer;
+
+    // Main
+    private Image infoBackground;
+    private Label infoLabel;
+    private Label progressLabel;
+    private Image flashImage;
+    private final Stage stage;
+    private final InputListener inputListener;
+    private final FreeTypeFontGenerator fontGenerator;
+    private final Skin skin;
 
     private HUD() {
         stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));

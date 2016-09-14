@@ -32,11 +32,11 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
     }
     protected State state;
     protected Body body;
-    protected String type;
-    protected String id;
     protected Vector2 leftTop;
     protected Rectangle bounds;
-    protected com.tendersaucer.joe.level.entity.EntityDefinition definition; // in case it needs to be cloned
+    protected String id;
+    protected final String type;
+    protected final EntityDefinition definition; // in case it needs to be cloned
 
     protected Entity(com.tendersaucer.joe.level.entity.EntityDefinition definition) {
         this.definition = definition;

@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
 public class SequenceTween extends Tween {
 
     protected int index;
-    protected Array<Tween> tweens;
+    protected final Array<Tween> tweens;
 
     protected SequenceTween(Tween... tweens) {
         super();

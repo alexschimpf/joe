@@ -7,7 +7,7 @@ import com.tendersaucer.joe.level.ILevelLoadable;
  */
 public class LevelLoadBeginEvent extends Event<com.tendersaucer.joe.event.listeners.ILevelLoadBeginListener> {
 
-    private ILevelLoadable loadable;
+    private final ILevelLoadable loadable;
 
     public LevelLoadBeginEvent(ILevelLoadable loadable) {
         this.loadable = loadable;

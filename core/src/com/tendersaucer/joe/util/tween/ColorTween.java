@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.Color;
  */
 public class ColorTween extends Tween {
 
-    protected Color startColor;
-    protected Color endColor;
+    protected final Color startColor;
+    protected final Color endColor;
 
     protected ColorTween(Color startColor, Color endColor, float interval) {
         super(interval);

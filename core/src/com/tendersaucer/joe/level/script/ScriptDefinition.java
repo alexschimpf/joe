@@ -9,8 +9,8 @@ import com.tendersaucer.joe.util.Definition;
  */
 public abstract class ScriptDefinition extends Definition {
 
-    protected String id;
-    protected String type;
+    protected final String id;
+    protected final String type;
 
     public ScriptDefinition(String id, String type) {
         super();

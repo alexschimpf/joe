@@ -11,7 +11,7 @@ public final class StatsCollector implements IGameStateChangeListener {
     private static final StatsCollector INSTANCE = new StatsCollector();
 
     private Long runStartTime;
-    private DAO dao;
+    private final DAO dao;
 
     private StatsCollector() {
         dao = DAO.getInstance();
