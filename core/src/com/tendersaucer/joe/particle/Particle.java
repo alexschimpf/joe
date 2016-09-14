@@ -6,9 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.TimeUtils;
-import com.tendersaucer.joe.IUpdate;
 import com.tendersaucer.joe.IRender;
+import com.tendersaucer.joe.IUpdate;
 
 /**
  * Created by Alex on 4/30/2016.
@@ -17,7 +16,7 @@ public class Particle implements IUpdate, IRender, Pool.Poolable {
 
     protected final Vector2 velocity;
     protected float duration;
-    protected long startTime;
+    protected Float elapsed;
     protected float angularVelocity;
     protected Sprite sprite;
 
@@ -43,17 +42,22 @@ public class Particle implements IUpdate, IRender, Pool.Poolable {
 
     @Override
     public boolean update() {
+        if (elapsed == null) {
+            return false;
+        }
+
+        elapsed += Gdx.graphics.getDeltaTime() * 1000;
         float delta = Gdx.graphics.getDeltaTime();
         float dx = velocity.x * delta;
         float dy = velocity.y * delta;
         sprite.setPosition(sprite.getX() + dx, sprite.getY() + dy);
         sprite.rotate(angularVelocity * delta);
 
-        return getAge() > duration;
+        return getElapsed() > duration;
     }
 
-    public void setStarted() {
-        startTime = TimeUtils.millis();
+    public void setElapsed() {
+        elapsed = 0f;
     }
 
     public void setPosition(float x, float y) {
@@ -86,12 +90,12 @@ public class Particle implements IUpdate, IRender, Pool.Poolable {
         sprite.setColor(r, b, g, a);
     }
 
-    public float getAge() {
-        return TimeUtils.timeSinceMillis(startTime);
+    public float getElapsed() {
+        return elapsed;
     }
 
     public float getAgeToLifeRatio() {
-        return Math.min(1, getAge() / duration);
+        return Math.min(1, getElapsed() / duration);
     }
 
     public Sprite getSprite() {
@@ -117,10 +121,6 @@ public class Particle implements IUpdate, IRender, Pool.Poolable {
 
     public void setDuration(float duration) {
         this.duration = duration;
-    }
-
-    public long getStartTime() {
-        return startTime;
     }
 
     public float getX() {
@@ -173,6 +173,10 @@ public class Particle implements IUpdate, IRender, Pool.Poolable {
 
     public void setColor(Color color) {
         sprite.setColor(color);
+    }
+
+    public void setStarted() {
+        elapsed = 0f;
     }
 
     private void resetOrigin() {

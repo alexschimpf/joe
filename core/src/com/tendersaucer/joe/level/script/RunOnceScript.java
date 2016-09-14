@@ -1,6 +1,6 @@
 package com.tendersaucer.joe.level.script;
 
-import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.Gdx;
 
 /**
  * A script that only executes once
@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.TimeUtils;
  */
 public abstract class RunOnceScript extends Script {
 
-    private Long startTime;
+    private Float elapsed;
     private final float delay;
 
     protected RunOnceScript(ScriptDefinition definition) {
@@ -21,15 +21,16 @@ public abstract class RunOnceScript extends Script {
     @Override
     public boolean update() {
         if (delay > 0) {
-            if (startTime == null) {
-                startTime = TimeUtils.millis();
+            if (elapsed == null) {
+                elapsed = 0f;
                 return false;
-            } else if (TimeUtils.timeSinceMillis(startTime) > delay) {
+            } else if (elapsed > delay) {
                 tick();
             } else {
                 return false;
             }
         } else {
+            elapsed += Gdx.graphics.getDeltaTime() * 1000;
             tick();
         }
 

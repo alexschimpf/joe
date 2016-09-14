@@ -8,10 +8,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.TimeUtils;
-import com.tendersaucer.joe.level.entity.Player;
 import com.tendersaucer.joe.event.listeners.IGameStateChangeListener;
 import com.tendersaucer.joe.level.Level;
+import com.tendersaucer.joe.level.entity.Player;
 import com.tendersaucer.joe.util.path.LinearPathHelper;
 
 import java.util.UUID;
@@ -31,8 +30,8 @@ public final class MainCamera implements IUpdate, IGameStateChangeListener {
     private static final float PATH_DURATION = 20000;
 
     private boolean playerFocus;
-    private long preLoopStartTime;
-    private long pathStartTime;
+    private Float preLoopElapsed;
+    private Float pathElapsed;
     private float pathWidth;
     private final Array<Vector2> path;
     private final LinearPathHelper pathHelper;
@@ -55,19 +54,19 @@ public final class MainCamera implements IUpdate, IGameStateChangeListener {
     @Override
     public boolean update() {
         float deltaMs = Gdx.graphics.getDeltaTime() * 1000;
-        if (preLoopStartTime != 0) {
+        if (preLoopElapsed != null) {
+            preLoopElapsed += deltaMs;
             float preLoopDuration = PATH_DURATION / 8;
-            float pathAge = TimeUtils.timeSinceMillis(preLoopStartTime);
-            if (pathAge < preLoopDuration) {
+            if (preLoopElapsed < preLoopDuration) {
                 float speed = (pathWidth / 2) / preLoopDuration;
                 rawCamera.translate(0, -speed * deltaMs);
             } else {
-                preLoopStartTime = 0;
-                pathStartTime = TimeUtils.millis();
+                preLoopElapsed = 0f;
+                pathElapsed = 0f;
             }
-        } else if (pathStartTime != 0) {
-            float pathAge = TimeUtils.timeSinceMillis(pathStartTime);
-            Vector2 velocity = pathHelper.getVelocity(PATH_DURATION, pathAge);
+        } else if (pathElapsed != null) {
+            pathElapsed += deltaMs;
+            Vector2 velocity = pathHelper.getVelocity(PATH_DURATION, pathElapsed);
             rawCamera.translate(velocity.x * deltaMs, velocity.y * deltaMs);
         } else if (playerFocus) {
             Player player = Level.getInstance().getPlayer();
@@ -83,9 +82,9 @@ public final class MainCamera implements IUpdate, IGameStateChangeListener {
 
     @Override
     public void onGameStateChange(Game.State oldEvent, Game.State newEvent) {
-        preLoopStartTime = newEvent == Game.State.LEVEL_COMPLETE ? TimeUtils.millis() : 0;
+        preLoopElapsed = newEvent == Game.State.LEVEL_COMPLETE ? 0f : null;
         if (oldEvent != newEvent && newEvent == Game.State.WAIT_FOR_INPUT) {
-            pathStartTime = 0;
+            pathElapsed = null;
             setPath();
         }
     }

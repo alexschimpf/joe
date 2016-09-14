@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.tendersaucer.joe.Canvas;
 import com.tendersaucer.joe.anim.AnimatedSprite;
@@ -19,7 +18,7 @@ public class VanishingPlatform extends RenderedEntity {
 
     private boolean isReappearWait;
     private boolean isVanishing;
-    private long vanishStartTime;
+    private float vanishElapsed;
     private final float vanishDuration;
     private final float reappearDelay;
 
@@ -30,6 +29,7 @@ public class VanishingPlatform extends RenderedEntity {
         reappearDelay = def.getFloatProperty("reappear_delay");
         isVanishing = false;
         isReappearWait = false;
+        vanishElapsed = 0;
     }
 
     @Override
@@ -37,8 +37,8 @@ public class VanishingPlatform extends RenderedEntity {
         super.tick();
 
         if(isVanishing) {
-            float timeSinceDisappearStart = TimeUtils.millis() - vanishStartTime;
-            if(timeSinceDisappearStart > vanishDuration) {
+            vanishElapsed += Gdx.graphics.getDeltaTime() * 1000;
+            if(vanishElapsed > vanishDuration) {
                 isVanishing = false;
                 scheduleReappear();
                 setDone();
@@ -103,7 +103,6 @@ public class VanishingPlatform extends RenderedEntity {
 
     public void vanish() {
         isVanishing = true;
-        vanishStartTime = TimeUtils.millis();
         ((AnimatedSprite)sprite).play();
     }
 }

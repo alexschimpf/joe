@@ -20,7 +20,7 @@ public class LinearPathParticleModifier extends ParticleModifier {
 
     @Override
     public void modify(Particle particle) {
-        Vector2 velocity = pathHelper.getVelocity(particle.getDuration(), particle.getAge());
+        Vector2 velocity = pathHelper.getVelocity(particle.getDuration(), particle.getElapsed());
         particle.setVelocity(velocity.x, velocity.y);
     }
 

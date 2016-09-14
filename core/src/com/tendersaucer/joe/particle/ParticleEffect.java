@@ -1,5 +1,6 @@
 package com.tendersaucer.joe.particle;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,12 +9,11 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.tendersaucer.joe.AssetManager;
-import com.tendersaucer.joe.IUpdate;
-import com.tendersaucer.joe.particle.modifiers.ParticleModifier;
 import com.tendersaucer.joe.Canvas;
 import com.tendersaucer.joe.IRender;
+import com.tendersaucer.joe.IUpdate;
+import com.tendersaucer.joe.particle.modifiers.ParticleModifier;
 import com.tendersaucer.joe.util.ConversionUtils;
 import com.tendersaucer.joe.util.RandomUtils;
 import com.tendersaucer.joe.util.pool.Vector2Pool;
@@ -49,11 +49,11 @@ public class ParticleEffect implements IUpdate, IRender, Disposable {
     protected final Vector2 blueRange;
     protected final Vector2 greenRange;
     protected final Vector2 alphaRange;
-    protected long lastLoopTime;
+    protected float elapsed;
     protected Float loopDelay; // loops indefinitely if not null
 
     public ParticleEffect(JsonValue json) {
-        lastLoopTime = 0;
+        elapsed = 0;
 
         Vector2Pool vector2Pool = Vector2Pool.getInstance();
         position = vector2Pool.obtain(0, 0);
@@ -111,6 +111,8 @@ public class ParticleEffect implements IUpdate, IRender, Disposable {
 
     @Override
     public boolean update() {
+        elapsed += Gdx.graphics.getDeltaTime() * 1000;
+
         Iterator<Particle> particlesIter = particles.iterator();
         while (particlesIter.hasNext()) {
             Particle particle = particlesIter.next();
@@ -129,8 +131,8 @@ public class ParticleEffect implements IUpdate, IRender, Disposable {
             }
         }
 
-        if (loops() && TimeUtils.timeSinceMillis(lastLoopTime) > loopDelay) {
-            lastLoopTime = TimeUtils.millis();
+        if (loops() && elapsed > loopDelay) {
+            elapsed = 0;
             createParticles();
         }
 
@@ -144,7 +146,7 @@ public class ParticleEffect implements IUpdate, IRender, Disposable {
         createParticles();
 
         if (loops()) {
-            lastLoopTime = TimeUtils.millis();
+            elapsed = 0;
         }
 
         Canvas.getInstance().addToLayer(layer, this);
