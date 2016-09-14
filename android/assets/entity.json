@@ -7,6 +7,7 @@
                     "id", "x", "y", "width", "height", "type"
                 ],
                 "optional": [
+                    { "name": "texture", "default": "" },
                     { "name": "body_type", "default": "static" },
                     { "name": "body_width", "default": "0" },
                     { "name": "body_height", "default": "0" },

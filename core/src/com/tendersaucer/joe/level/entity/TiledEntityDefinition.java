@@ -5,6 +5,8 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.tendersaucer.joe.AssetManager;
+import com.tendersaucer.joe.util.StringUtils;
 import com.tendersaucer.joe.util.tiled.TiledUtils;
 
 /**
@@ -27,9 +29,15 @@ public final class TiledEntityDefinition extends EntityDefinition {
 
         this.layer = layer;
         this.properties = properties;
-        this.textureRegion = textureRegion;
         this.bodySkeleton = bodySkeleton;
         fixtureDef = TiledUtils.getFixtureDefFromBodySkeleton(bodySkeleton);
+
+        String textureKey = properties.get("texture").toString();
+        if (StringUtils.isEmpty(textureKey)) {
+            this.textureRegion = textureRegion;
+        } else {
+            this.textureRegion = AssetManager.getInstance().getTextureRegion(textureKey);
+        }
     }
 
     public TiledEntityDefinition(String name, TiledEntityDefinition other) {
