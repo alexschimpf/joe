@@ -1,5 +1,6 @@
 package com.tendersaucer.joe.level;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
@@ -106,60 +107,20 @@ public final class Level implements IUpdate, IDisposable {
         return false;
     }
 
-    // TODO: More color after each iteration
-    public void load(long iterationId, int levelId) {
-        try {
-            // Seems to be preventing concurrency issue.
-            TimeUnit.MILLISECONDS.sleep(5);
-        } catch (InterruptedException e) {
-            // TODO:
-        }
-
+    public void load(final long iterationId, final int levelId) {
         id = levelId;
         this.iterationId = iterationId;
 
         ColorScheme.getInstance().reset();
         Canvas.getInstance().clearLayers();
         ParticleEffectManager.getInstance().clearLiveEffects();
-        TiledMapLevelLoadable loadable = new TiledMapLevelLoadable(levelId);
 
-        id = loadable.getId();
-        respawnPosition.set(loadable.getRespawnPosition());
-
-        background = loadable.getBackground();
-        Canvas.getInstance().addToLayer(0, background);
-
-        // Add non-entity/background canvas objects.
-        Map<IRender, Integer> canvasMap = loadable.getCanvasMap();
-        for (IRender object : canvasMap.keySet()) {
-            int layer = canvasMap.get(object);
-            Canvas.getInstance().addToLayer(layer, object);
-        }
-
-        dispose();
-        clearPhysicsWorld();
-        entityMap.clear();
-        scriptMap.clear();
-
-        loadEntities(loadable);
-        loadFreeBodies(loadable);
-        loadScripts(loadable);
-
-        boolean isCameraFlipped = MainCamera.getInstance().isFlipped();
-        if ((iterationId % 2 == 0 && isCameraFlipped) ||
-                (iterationId % 2 == 1 && !isCameraFlipped)) {
-            MainCamera.getInstance().flipHorizontally();
-        }
-
-        Globals.setGameState(Game.State.WAIT_FOR_INPUT);
-
-        Timer.schedule(new Timer.Task() {
+        Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
-                getPlayer().setActive(true);
-                getPlayer().setVisible(true);
+                doLoad();
             }
-        }, DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true) ? 0 : 0.2f);
+        });
     }
 
     public void loadNext() {
@@ -257,6 +218,48 @@ public final class Level implements IUpdate, IDisposable {
 
     public Vector2 getRespawnPosition() {
         return respawnPosition;
+    }
+
+    private void doLoad() {
+        TiledMapLevelLoadable loadable = new TiledMapLevelLoadable(id);
+
+        id = loadable.getId();
+        respawnPosition.set(loadable.getRespawnPosition());
+
+        background = loadable.getBackground();
+        Canvas.getInstance().addToLayer(0, background);
+
+        // Add non-entity/background canvas objects.
+        Map<IRender, Integer> canvasMap = loadable.getCanvasMap();
+        for (IRender object : canvasMap.keySet()) {
+            int layer = canvasMap.get(object);
+            Canvas.getInstance().addToLayer(layer, object);
+        }
+
+        dispose();
+        clearPhysicsWorld();
+        entityMap.clear();
+        scriptMap.clear();
+
+        loadEntities(loadable);
+        loadFreeBodies(loadable);
+        loadScripts(loadable);
+
+        boolean isCameraFlipped = MainCamera.getInstance().isFlipped();
+        if ((iterationId % 2 == 0 && isCameraFlipped) ||
+                (iterationId % 2 == 1 && !isCameraFlipped)) {
+            MainCamera.getInstance().flipHorizontally();
+        }
+
+        Globals.setGameState(Game.State.WAIT_FOR_INPUT);
+
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                getPlayer().setActive(true);
+                getPlayer().setVisible(true);
+            }
+        }, DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true) ? 0 : 0.25f);
     }
 
     private void loadEntities(ILevelLoadable loadable) {
