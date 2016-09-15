@@ -20,7 +20,7 @@ public final class Globals {
     public static final boolean CLEAR_PREFERENCES = false;
     public static final boolean PACK_TEXTURES = true;
     public static final int LOG_LEVEL = Application.LOG_DEBUG;
-    
+
     private static Game.State gameState;
     public static boolean fullScreenMode = true;
     public static boolean debugPhysics = false;
@@ -46,7 +46,7 @@ public final class Globals {
         return isAndroid() || isIOS();
     }
 
-    public static void  setGameState(Game.State gameState) {
+    public static void setGameState(Game.State gameState) {
         Game.State oldGameState = Globals.gameState;
         Gdx.app.debug("Globals", "Game state changed from '" + oldGameState + "' to '" + gameState + "'");
 
@@ -65,7 +65,7 @@ public final class Globals {
 
     public static void setRandomLevelOrder() {
         String[] temp = new String[Globals.NUM_LEVELS - 2];
-        for (int i = 2; i < Globals.NUM_LEVELS; i++){
+        for (int i = 2; i < Globals.NUM_LEVELS; i++) {
             temp[i - 2] = String.valueOf(i);
         }
 

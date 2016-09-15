@@ -30,6 +30,7 @@ public final class TiledMapObjectDetector {
 
     /**
      * Runs connected components algorithm on raw tiled map layer
+     *
      * @return groups of connected (non-empty) cells
      */
     public Array<Array<TiledMapTileLayer.Cell>> findObjects() {

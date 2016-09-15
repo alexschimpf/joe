@@ -8,8 +8,8 @@ import com.tendersaucer.joe.Game;
 import com.tendersaucer.joe.Globals;
 import com.tendersaucer.joe.IUpdate;
 import com.tendersaucer.joe.MainCamera;
-import com.tendersaucer.joe.level.entity.Player;
 import com.tendersaucer.joe.level.Level;
+import com.tendersaucer.joe.level.entity.Player;
 
 /**
  * Game input listener
@@ -39,7 +39,7 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
                 if (Globals.customCameraInfo && Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
                     camera.move(camera.getTileSize() / 2 * multiplier, 0);
                     camera.setPlayerFocus(false);
-                } else if (isCameraFlipped){
+                } else if (isCameraFlipped) {
                     player.moveLeft();
                 } else {
                     player.moveRight();
@@ -48,7 +48,7 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
                 if (Globals.customCameraInfo && Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
                     camera.move(-camera.getTileSize() / 2 * multiplier, 0);
                     camera.setPlayerFocus(false);
-                } else if (isCameraFlipped){
+                } else if (isCameraFlipped) {
                     player.moveRight();
                 } else {
                     player.moveLeft();
@@ -58,7 +58,7 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
                     camera.move(0, -camera.getTileSize() / 2 * multiplier);
                     camera.setPlayerFocus(false);
                 } else if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-                    camera.move(0, camera.getTileSize() / 2  * multiplier);
+                    camera.move(0, camera.getTileSize() / 2 * multiplier);
                 }
             } else if (!Globals.isAndroid()) {
                 player.stopHorizontalMove();
@@ -133,7 +133,7 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
 
     @Override
     public boolean keyUp(InputEvent event, int keyCode) {
-        if (Globals.getGameState() != Game.State.RUNNING ) {
+        if (Globals.getGameState() != Game.State.RUNNING) {
             return false;
         }
 

@@ -9,7 +9,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.tendersaucer.joe.*;
+import com.tendersaucer.joe.AssetManager;
+import com.tendersaucer.joe.ColorScheme;
+import com.tendersaucer.joe.DAO;
+import com.tendersaucer.joe.Globals;
+import com.tendersaucer.joe.MainCamera;
+import com.tendersaucer.joe.StatsCollector;
 import com.tendersaucer.joe.event.EventManager;
 import com.tendersaucer.joe.event.GameStateChangeEvent;
 import com.tendersaucer.joe.event.NewUserEvent;
@@ -19,25 +24,8 @@ import com.tendersaucer.joe.ui.HUD;
 import com.tendersaucer.joe.util.pool.Vector2Pool;
 
 /**
- * REMOVE /gen - should go in /particle and /entity
- *
- * - Level
- *     - Entity
- *         - Definition
- *         - Configuration
- *     - Script
- *         - Definition
- *         - Configuration
- * - Particle
- * - Animation
- * - Background
- * - Event
- * -
- *
- *
- *
  * Main update and render logic
- * <p/>
+ * </p>
  * Created by Alex on 4/8/2016.
  */
 public final class Driver implements Screen {
@@ -150,7 +138,8 @@ public final class Driver implements Screen {
         OrthographicCamera camera = MainCamera.getInstance().getRawCamera();
         spriteBatch.setProjectionMatrix(camera.combined);
 
-        spriteBatch.begin(); {
+        spriteBatch.begin();
+        {
             com.tendersaucer.joe.Canvas.getInstance().render(spriteBatch);
         }
         spriteBatch.end();

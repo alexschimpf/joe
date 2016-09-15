@@ -30,6 +30,7 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
     public enum State {
         ACTIVE, INACTIVE, DONE
     }
+
     protected State state;
     protected Body body;
     protected Vector2 leftTop;

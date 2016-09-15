@@ -23,8 +23,9 @@ public abstract class PathHelper {
 
     /**
      * Returns the velocity at a point in time, given path and total trip duration
+     *
      * @param duration total path duration in ms
-     * @param age progress through path in ms
+     * @param age      progress through path in ms
      * @return velocity in distance/ms
      */
     public abstract Vector2 getVelocity(float duration, float age);

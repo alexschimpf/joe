@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Array;
 
 /**
  * Determines velocity at a point in time, given path and total trip duration
- *
+ * <p/>
  * Created by Alex on 5/5/2016.
  */
 public final class LinearPathHelper extends PathHelper {
@@ -66,6 +66,7 @@ public final class LinearPathHelper extends PathHelper {
 
     /**
      * NOTE: Each vector represents a "leg" (i.e. (dx, dy)) of the path.
+     *
      * @param legs
      */
     public void setPath(Array<Vector2> legs) {

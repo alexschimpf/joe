@@ -37,6 +37,7 @@ public final class RandomUtils {
 
     /**
      * Returns random number from range
+     *
      * @param range - x = inclusive, y = EXCLUSIVE
      * @return
      */

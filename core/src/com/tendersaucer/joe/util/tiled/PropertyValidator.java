@@ -1,8 +1,8 @@
 package com.tendersaucer.joe.util.tiled;
 
 import com.badlogic.gdx.maps.MapProperties;
-import com.tendersaucer.joe.util.exception.InvalidConfigException;
 import com.tendersaucer.joe.util.PropertyConfiguration;
+import com.tendersaucer.joe.util.exception.InvalidConfigException;
 
 import java.util.Iterator;
 

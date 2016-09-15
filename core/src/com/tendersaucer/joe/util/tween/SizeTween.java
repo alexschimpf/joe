@@ -11,7 +11,7 @@ public class SizeTween extends Tween {
     protected final float endHeight;
 
     protected SizeTween(float startWidth, float startHeight, float endWidth, float endHeight,
-                     float interval) {
+                        float interval) {
         super(interval);
 
         this.startWidth = startWidth;

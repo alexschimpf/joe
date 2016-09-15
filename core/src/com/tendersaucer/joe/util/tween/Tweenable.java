@@ -8,7 +8,7 @@ import java.util.Iterator;
 
 /**
  * Implements the tween management for ITweenable
- *
+ * <p/>
  * Created by Alex on 9/10/2016.
  */
 public abstract class Tweenable implements ITweenable, IRender {

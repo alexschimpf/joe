@@ -36,9 +36,9 @@ public class VanishingPlatform extends RenderedEntity {
     protected void tick() {
         super.tick();
 
-        if(isVanishing) {
+        if (isVanishing) {
             vanishElapsed += Gdx.graphics.getDeltaTime() * 1000;
-            if(vanishElapsed > vanishDuration) {
+            if (vanishElapsed > vanishDuration) {
                 isVanishing = false;
                 scheduleReappear();
                 setDone();
@@ -46,7 +46,7 @@ public class VanishingPlatform extends RenderedEntity {
         }
 
         Player player = Level.getInstance().getPlayer();
-        if(isReappearWait && player != null && !player.overlaps(this)) {
+        if (isReappearWait && player != null && !player.overlaps(this)) {
             setReappearWait(false);
         }
 
@@ -55,7 +55,7 @@ public class VanishingPlatform extends RenderedEntity {
 
     @Override
     public void onBeginContact(Contact contact, Entity entity) {
-        if(!isVanishing && !isReappearWait && Entity.isPlayer(entity)) {
+        if (!isVanishing && !isReappearWait && Entity.isPlayer(entity)) {
             vanish();
         }
     }

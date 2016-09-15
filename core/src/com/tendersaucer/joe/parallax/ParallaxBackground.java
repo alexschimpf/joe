@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.tendersaucer.joe.MainCamera;
 import com.tendersaucer.joe.IRender;
+import com.tendersaucer.joe.MainCamera;
 
 /**
  * Simple parallax background

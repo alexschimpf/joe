@@ -21,8 +21,8 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.tendersaucer.joe.MainCamera;
-import com.tendersaucer.joe.util.box2d.FixtureBodyDefinition;
 import com.tendersaucer.joe.util.StringUtils;
+import com.tendersaucer.joe.util.box2d.FixtureBodyDefinition;
 
 /**
  * Tiled utility functions

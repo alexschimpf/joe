@@ -33,7 +33,7 @@ public final class DeadlyPlatform extends RenderedEntity {
 
     @Override
     public void onBeginContact(Contact contact, Entity entity) {
-        if(Entity.isPlayer(entity)) {
+        if (Entity.isPlayer(entity)) {
             isPlayerTouching = true;
             ((AnimatedSprite)sprite).play();
         }

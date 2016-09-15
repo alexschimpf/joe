@@ -23,6 +23,7 @@ public class AnimatedSprite extends Sprite implements IUpdate, IRender {
     public enum State {
         PLAYING, PAUSED, STOPPED, FINISHED
     }
+
     protected float stateTime;
     protected int currNumLoops;
     protected State state;

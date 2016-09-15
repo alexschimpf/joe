@@ -26,43 +26,43 @@ import com.tendersaucer.joe.ColorScheme;
 import com.tendersaucer.joe.DAO;
 import com.tendersaucer.joe.Game;
 import com.tendersaucer.joe.Globals;
+import com.tendersaucer.joe.IRender;
 import com.tendersaucer.joe.IUpdate;
 import com.tendersaucer.joe.MainCamera;
-import com.tendersaucer.joe.level.entity.Player;
 import com.tendersaucer.joe.event.listeners.IGameStateChangeListener;
 import com.tendersaucer.joe.event.listeners.INewUserListener;
 import com.tendersaucer.joe.level.Level;
-import com.tendersaucer.joe.IRender;
+import com.tendersaucer.joe.level.entity.Player;
 
 /**
  * Game heads up display
- *
- *
- /                \
- / /          \ \   \
- |                  |
- /                  /
- |      ___\ \| | / /
- |      /          \
- |      |           \
- /       |      _    |
- |       |       \   |
- |       |       _\ /|    DO NOT LOOK AT THIS CLASS!
- |      __\     <_o)\o-   THE IMPLEMENTATION IS __UNFORGIVABLE__.
- |     |             \    IT IS CURRENTLY ONE HUGE HACK.
- \    ||             \    MAYBE ONE DAY I'LL BE BRAVE ENOUGH TO REFACTOR.
- |   |__          _  \    /
- |   |           (*___)  /
- |   |       _     |    /
- |   |    //_______/
- |  /       | UUUUU__
- \|        \_nnnnnn_\-\
- |       ____________/
- |      /
- |_____/
- *
+ * <p/>
+ * <p/>
+ * /                \
+ * / /          \ \   \
+ * |                  |
+ * /                  /
+ * |      ___\ \| | / /
+ * |      /          \
+ * |      |           \
+ * /       |      _    |
+ * |       |       \   |
+ * |       |       _\ /|    DO NOT LOOK AT THIS CLASS!
+ * |      __\     <_o)\o-   THE IMPLEMENTATION IS __UNFORGIVABLE__.
+ * |     |             \    IT IS CURRENTLY ONE HUGE HACK.
+ * \    ||             \    MAYBE ONE DAY I'LL BE BRAVE ENOUGH TO REFACTOR.
+ * |   |__          _  \    /
+ * |   |           (*___)  /
+ * |   |       _     |    /
+ * |   |    //_______/
+ * |  /       | UUUUU__
+ * \|        \_nnnnnn_\-\
+ * |       ____________/
+ * |      /
+ * |_____/
+ * <p/>
  * http://www.chris.com/ascii/index.php?art=cartoons/beavis%20and%20Butt-head
- *
+ * <p/>
  * Created by Alex on 4/8/2016.
  */
 public final class HUD implements IUpdate, IRender, IGameStateChangeListener, INewUserListener {
@@ -72,22 +72,22 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     private Color MOBILE_BUTTON_DOWN_COLOR = new Color(0.45f, 0.45f, 0.45f, 0.5f);
     private Color MOBILE_BUTTON_UP_COLOR = new Color(0.65f, 0.65f, 0.65f, 0.5f);
     private static final String[] MOBILE_TUTORIAL_MESSAGES = new String[] {
-        "Hi, I'm Joe.",
-        "Now, mindlessly follow my commands.",
-        "To make me move left/right, slide your finger here.",
-        "To make me jump, touch here.",
-        "If you hold longer, I'll jump higher.",
-        "Your mission?",
-        "GUIDE ME TO THE GROOVT SPINNING THINGIES!"
+            "Hi, I'm Joe.",
+            "Now, mindlessly follow my commands.",
+            "To make me move left/right, slide your finger here.",
+            "To make me jump, touch here.",
+            "If you hold longer, I'll jump higher.",
+            "Your mission?",
+            "GUIDE ME TO THE GROOVT SPINNING THINGIES!"
     };
     private static final String[] DESKTOP_TUTORIAL_MESSAGES = new String[] {
-        "Hi, I'm Joe.",
-        "Now, mindlessly follow my commands.",
-        "To make me move left/right, use the arrow keys.",
-        "To make me jump, press A.",
-        "If you hold longer, I'll jump higher.",
-        "Your mission?",
-        "GUIDE ME TO THE GROOVY SPINNING THINGIES!"
+            "Hi, I'm Joe.",
+            "Now, mindlessly follow my commands.",
+            "To make me move left/right, use the arrow keys.",
+            "To make me jump, press A.",
+            "If you hold longer, I'll jump higher.",
+            "Your mission?",
+            "GUIDE ME TO THE GROOVY SPINNING THINGIES!"
     };
 
     // Tutorial
@@ -336,7 +336,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
      */
 
     private void createLevelCompleteUI() {
-        if (Level.getInstance().getPlayer() != null){
+        if (Level.getInstance().getPlayer() != null) {
             Level.getInstance().getPlayer().setDone();
         }
 
@@ -543,7 +543,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                     Globals.setGameState(Game.State.RUNNING);
                 }
 
-                if(Globals.getGameState() == Game.State.RUNNING) {
+                if (Globals.getGameState() == Game.State.RUNNING) {
                     movePointer = pointer;
                 }
                 return true;
@@ -571,7 +571,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                     Globals.setGameState(Game.State.RUNNING);
                 }
 
-                if(Globals.getGameState() == Game.State.RUNNING) {
+                if (Globals.getGameState() == Game.State.RUNNING) {
                     Level.getInstance().getPlayer().jump();
                 }
 
@@ -580,7 +580,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                if(Globals.getGameState() == Game.State.RUNNING) {
+                if (Globals.getGameState() == Game.State.RUNNING) {
                     Level.getInstance().getPlayer().stopJump();
                 }
             }
@@ -590,7 +590,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     }
 
     private void checkMobileButtons() {
-        if(movePointer == null || Globals.getGameState() != Game.State.RUNNING) {
+        if (movePointer == null || Globals.getGameState() != Game.State.RUNNING) {
             return;
         }
 
@@ -598,9 +598,9 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         float x = Gdx.input.getX(movePointer);
         Player player = Level.getInstance().getPlayer();
         boolean isTutorial = DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true);
-        if(moveButton.isPressed() && !isTutorial) {
+        if (moveButton.isPressed() && !isTutorial) {
             MainCamera camera = MainCamera.getInstance();
-            if(x < moveCenterX) {
+            if (x < moveCenterX) {
                 if (camera.isFlipped()) {
                     player.moveRight();
                 } else {

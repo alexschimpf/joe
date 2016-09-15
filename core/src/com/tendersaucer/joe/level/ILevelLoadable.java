@@ -2,10 +2,10 @@ package com.tendersaucer.joe.level;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.tendersaucer.joe.parallax.ParallaxBackground;
-import com.tendersaucer.joe.level.entity.EntityDefinition;
 import com.tendersaucer.joe.IRender;
+import com.tendersaucer.joe.level.entity.EntityDefinition;
 import com.tendersaucer.joe.level.script.ScriptDefinition;
+import com.tendersaucer.joe.parallax.ParallaxBackground;
 import com.tendersaucer.joe.util.box2d.FixtureBodyDefinition;
 
 import java.util.Map;
@@ -20,12 +20,14 @@ public interface ILevelLoadable {
     /**
      * Returns the level's id. This increments by 1 for each level reached.
      * In other words, the next level = curr + 1.
+     *
      * @return level's id
      */
     int getId();
 
     /**
      * Returns the level's respawn position for the player.
+     *
      * @return respawn position
      */
     Vector2 getRespawnPosition();

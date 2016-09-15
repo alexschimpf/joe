@@ -289,7 +289,7 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
     }
 
     private int getLayerPosition(MapLayerWrapper layer, TextureMapObject object) {
-         if (TiledUtils.propertyExists(object, "layer")) {
+        if (TiledUtils.propertyExists(object, "layer")) {
             return TiledUtils.getIntProperty(object, "layer");
         } else if (TiledUtils.propertyExists(layer, "layer")) {
             return TiledUtils.getIntProperty(layer, "layer");
