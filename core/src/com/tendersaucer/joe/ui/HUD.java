@@ -30,7 +30,7 @@ import com.tendersaucer.joe.IUpdate;
 import com.tendersaucer.joe.MainCamera;
 import com.tendersaucer.joe.level.entity.Player;
 import com.tendersaucer.joe.event.listeners.IGameStateChangeListener;
-import com.tendersaucer.joe.event.listeners.INewUserEventListener;
+import com.tendersaucer.joe.event.listeners.INewUserListener;
 import com.tendersaucer.joe.level.Level;
 import com.tendersaucer.joe.IRender;
 
@@ -65,7 +65,7 @@ import com.tendersaucer.joe.IRender;
  *
  * Created by Alex on 4/8/2016.
  */
-public final class HUD implements IUpdate, IRender, IGameStateChangeListener, INewUserEventListener {
+public final class HUD implements IUpdate, IRender, IGameStateChangeListener, INewUserListener {
 
     private static final HUD INSTANCE = new HUD();
     public static final String WAITING_FOR_INPUT_MESSAGE = "- WAITING FOR INPUT -";

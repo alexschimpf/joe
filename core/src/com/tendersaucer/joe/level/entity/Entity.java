@@ -56,15 +56,10 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
         id = getOrCreateId();
         state = State.ACTIVE;
 
-        try {
-            body = createBody(definition);
-            body.setFixedRotation(definition.getBooleanProperty("fixed_rotation"));
-            body.setActive(definition.getBooleanProperty("is_body_active"));
-            setAngle(MathUtils.degreesToRadians * definition.getFloatProperty("rotation"));
-        } catch (Exception e) {
-            Gdx.app.log("entity", "Error creating body for entity with id=" + id);
-            Gdx.app.log("entity", e.toString());
-        }
+        body = createBody(definition);
+        body.setFixedRotation(definition.getBooleanProperty("fixed_rotation"));
+        body.setActive(definition.getBooleanProperty("is_body_active"));
+        setAngle(MathUtils.degreesToRadians * definition.getFloatProperty("rotation"));
     }
 
     public static Entity build(com.tendersaucer.joe.level.entity.EntityDefinition entityDef) {
@@ -80,7 +75,7 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
         } catch (Exception e) {
             String entityInfo = "type=" + entityDef.getType() + ", id=" + entityDef.getId();
             Gdx.app.log("entity", "Error building entity (" + entityInfo + ")");
-            Gdx.app.log("entity", e.toString());
+            e.printStackTrace();
         }
 
         return entity;

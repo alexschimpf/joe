@@ -1,5 +1,6 @@
 package com.tendersaucer.joe.desktop;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.tendersaucer.joe.Game;
@@ -31,7 +32,11 @@ public class DesktopLauncher {
         }
 
         if (Globals.PACK_TEXTURES) {
-            TexturePacker.main(null);
+            try {
+                TexturePacker.main(null);
+            } catch(Exception e) {
+                //e.printStackTrace();
+            }
         }
 
         switch (RUN_MODE) {

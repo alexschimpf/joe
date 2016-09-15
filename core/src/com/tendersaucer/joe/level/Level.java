@@ -209,10 +209,6 @@ public final class Level implements IUpdate, IDisposable {
     public void addEntity(Entity entity) {
         String id = entity.getId();
         entityMap.put(id, entity);
-
-        if (Entity.isPlayer(entity)) {
-            player = (Player)entity;
-        }
     }
 
     public void addScript(Script script) {

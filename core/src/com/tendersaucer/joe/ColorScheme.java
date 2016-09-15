@@ -14,6 +14,7 @@ public final class ColorScheme {
     private static final float MIN_SHADE_BRIGHTNESS = 0.98f;
     private static final float MAX_SHADE_BRIGHTNESS = 1.02f;
 
+    private static final Color BACKGROUND_COLOR = new Color(0.15f, 0.15f, 0.15f, 1);
     private static final Color BLUE = Color.valueOf("69B4FFFF");
     private static final Color GREEN = Color.valueOf("B4FF69FF");
     private static final Color ORANGE = Color.valueOf("FFB469FF");
@@ -56,7 +57,7 @@ public final class ColorScheme {
         RandomUtils.shuffle(scheme);
         primaryColor = new Color(scheme[0]);
         secondaryColor = new Color(scheme[1]);
-        backgroundColor = new Color(0.1f, 0.1f, 0.1f, 1);
+        backgroundColor = BACKGROUND_COLOR;
 
         // TODO: This is just for convenience. Remove later.
         ColorUtils.shade(primaryColor, 1);
