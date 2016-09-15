@@ -2,8 +2,6 @@ package com.tendersaucer.joe;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import com.tendersaucer.joe.event.listeners.ILevelLoadBeginListener;
-import com.tendersaucer.joe.level.ILevelLoadable;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -15,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p/>
  * Created by Alex on 4/10/2016.
  */
-public final class Canvas implements IRender, ILevelLoadBeginListener {
+public final class Canvas implements IRender {
 
     public static final int NUM_LAYERS = 10;
     private static final Canvas INSTANCE = new Canvas();
@@ -43,11 +41,6 @@ public final class Canvas implements IRender, ILevelLoadBeginListener {
                 object.render(spriteBatch);
             }
         }
-    }
-
-    @Override
-    public void onLevelLoadBegin(ILevelLoadable levelLoadable) {
-        clearLayers();
     }
 
     public void clearLayers() {

@@ -18,12 +18,11 @@ import com.tendersaucer.joe.level.entity.EntityDefinition;
 import com.tendersaucer.joe.level.entity.Player;
 import com.tendersaucer.joe.level.entity.RenderedEntity;
 import com.tendersaucer.joe.event.EventManager;
-import com.tendersaucer.joe.event.LevelLoadBeginEvent;
-import com.tendersaucer.joe.event.LevelLoadEndEvent;
 import com.tendersaucer.joe.Canvas;
 import com.tendersaucer.joe.IRender;
 import com.tendersaucer.joe.level.script.Script;
 import com.tendersaucer.joe.level.script.ScriptDefinition;
+import com.tendersaucer.joe.particle.ParticleEffectManager;
 import com.tendersaucer.joe.util.box2d.FixtureBodyDefinition;
 import com.tendersaucer.joe.util.exception.InvalidConfigException;
 
@@ -121,8 +120,9 @@ public final class Level implements IUpdate, IDisposable {
         this.iterationId = iterationId;
 
         ColorScheme.getInstance().reset();
+        Canvas.getInstance().clearLayers();
+        ParticleEffectManager.getInstance().clearLiveEffects();
         TiledMapLevelLoadable loadable = new TiledMapLevelLoadable(levelId);
-        EventManager.getInstance().notify(new LevelLoadBeginEvent(loadable));
 
         id = loadable.getId();
         respawnPosition.set(loadable.getRespawnPosition());
@@ -152,7 +152,6 @@ public final class Level implements IUpdate, IDisposable {
             MainCamera.getInstance().flipHorizontally();
         }
 
-        EventManager.getInstance().notify(new LevelLoadEndEvent());
         Globals.setGameState(Game.State.WAIT_FOR_INPUT);
 
         Timer.schedule(new Timer.Task() {

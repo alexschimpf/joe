@@ -6,9 +6,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.tendersaucer.joe.IUpdate;
-import com.tendersaucer.joe.event.listeners.ILevelLoadBeginListener;
 import com.tendersaucer.joe.particle.modifiers.ParticleModifier;
-import com.tendersaucer.joe.level.ILevelLoadable;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -19,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Created by Alex on 4/30/2016.xA
  */
-public class ParticleEffectManager implements IUpdate, ILevelLoadBeginListener {
+public class ParticleEffectManager implements IUpdate {
 
     private static final ParticleEffectManager INSTANCE = new ParticleEffectManager();
     private static final String CONFIG_FILENAME = "particle.json";
@@ -51,11 +49,6 @@ public class ParticleEffectManager implements IUpdate, ILevelLoadBeginListener {
         }
 
         return false;
-    }
-
-    @Override
-    public void onLevelLoadBegin(ILevelLoadable loadable) {
-        clearLiveEffects();
     }
 
     public void clearLiveEffects() {

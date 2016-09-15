@@ -12,10 +12,10 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.tendersaucer.joe.*;
 import com.tendersaucer.joe.event.EventManager;
 import com.tendersaucer.joe.event.GameStateChangeEvent;
-import com.tendersaucer.joe.event.LevelLoadBeginEvent;
 import com.tendersaucer.joe.event.NewUserEvent;
 import com.tendersaucer.joe.level.Level;
 import com.tendersaucer.joe.particle.ParticleEffectManager;
+import com.tendersaucer.joe.ui.HUD;
 import com.tendersaucer.joe.util.pool.Vector2Pool;
 
 /**
@@ -64,12 +64,10 @@ public final class Driver implements Screen {
         ParticleEffectManager.getInstance().loadDefinitions();
 
         EventManager eventManager = EventManager.getInstance();
-        eventManager.listen(LevelLoadBeginEvent.class, com.tendersaucer.joe.Canvas.getInstance());
-        eventManager.listen(LevelLoadBeginEvent.class, ParticleEffectManager.getInstance());
-        eventManager.listen(GameStateChangeEvent.class, com.tendersaucer.joe.ui.HUD.getInstance());
+        eventManager.listen(GameStateChangeEvent.class, HUD.getInstance());
         eventManager.listen(GameStateChangeEvent.class, StatsCollector.getInstance());
         eventManager.listen(GameStateChangeEvent.class, MainCamera.getInstance());
-        eventManager.listen(NewUserEvent.class, com.tendersaucer.joe.ui.HUD.getInstance());
+        eventManager.listen(NewUserEvent.class, HUD.getInstance());
 
         DAO dao = DAO.getInstance();
         if (Globals.START_LEVEL != null) {
