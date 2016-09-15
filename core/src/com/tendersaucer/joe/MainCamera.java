@@ -69,7 +69,7 @@ public final class MainCamera implements IUpdate, IGameStateChangeListener {
             Vector2 velocity = pathHelper.getVelocity(PATH_DURATION, pathElapsed);
             rawCamera.translate(velocity.x * deltaMs, velocity.y * deltaMs);
         } else if (playerFocus) {
-            Player player = Level.getInstance().getPlayer();
+            Player player = Level.getCurrent().getPlayer();
             if (player != null) {
                 rawCamera.position.set(player.getCenterX(), player.getCenterY(), 0);
             }

@@ -1,5 +1,7 @@
 package com.tendersaucer.joe.event;
 
+import com.badlogic.gdx.Gdx;
+
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -46,11 +48,24 @@ public final class EventManager {
         }
     }
 
+    public <L> void postNotify(final Event<L> event) {
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                EventManager.this.notify(event);
+            }
+        });
+    }
+
     public <L> void mute(Class<? extends Event<L>> eventClass, L listener) {
         ArrayList listeners = eventListeners.get(eventClass);
         if (listeners != null) {
             listeners.remove(listener);
         }
+    }
+
+    public <L> boolean isListening(Object object, Class<? extends Event<L>> eventClass) {
+        return eventListeners.get(eventClass).contains(object);
     }
 
     public <L> void clear(Class<? extends Event<L>> eventClass) {

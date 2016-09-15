@@ -121,7 +121,7 @@ public abstract class Script implements IUpdate, IDisposable {
     private String getOrCreateId() {
         String id = definition.getId();
         if (StringUtils.isEmpty(id)) {
-            id = Level.getInstance().getAvailableScriptId();
+            id = Level.getLoadingInstance().getAvailableScriptId();
         }
 
         return id;

@@ -1,5 +1,7 @@
 package com.tendersaucer.joe.event.listeners;
 
+import com.tendersaucer.joe.level.ILevelLoadable;
+
 /**
  * Interface for listening to level load end events
  * <p/>
@@ -9,6 +11,7 @@ public interface ILevelLoadEndListener {
 
     /**
      * Fired by Level after loading is complete
+     * @param loadable
      */
-    void onLevelLoadEnd();
+    void onLevelLoadEnd(ILevelLoadable loadable);
 }

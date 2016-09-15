@@ -30,7 +30,7 @@ import com.tendersaucer.joe.IUpdate;
 import com.tendersaucer.joe.MainCamera;
 import com.tendersaucer.joe.level.entity.Player;
 import com.tendersaucer.joe.event.listeners.IGameStateChangeListener;
-import com.tendersaucer.joe.event.listeners.INewUserEventListener;
+import com.tendersaucer.joe.event.listeners.INewUserListener;
 import com.tendersaucer.joe.level.Level;
 import com.tendersaucer.joe.IRender;
 
@@ -65,7 +65,7 @@ import com.tendersaucer.joe.IRender;
  *
  * Created by Alex on 4/8/2016.
  */
-public final class HUD implements IUpdate, IRender, IGameStateChangeListener, INewUserEventListener {
+public final class HUD implements IUpdate, IRender, IGameStateChangeListener, INewUserListener {
 
     private static final HUD INSTANCE = new HUD();
     public static final String WAITING_FOR_INPUT_MESSAGE = "- WAITING FOR INPUT -";
@@ -151,7 +151,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             checkMobileButtons();
         }
 
-        Level level = Level.getInstance();
+        Level level = Level.getCurrent();
         boolean isTutorial = DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true);
         if (!isTutorial) {
             long iterationId = level.getIterationId();
@@ -336,8 +336,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
      */
 
     private void createLevelCompleteUI() {
-        if (Level.getInstance().getPlayer() != null){
-            Level.getInstance().getPlayer().setDone();
+        if (Level.getCurrent().getPlayer() != null){
+            Level.getCurrent().getPlayer().setDone();
         }
 
         float screenWidth = Gdx.graphics.getWidth();
@@ -372,7 +372,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                 }
 
                 hideLevelComplete();
-                Level.getInstance().loadNext();
+                Level.getCurrent().loadNext();
             }
         });
         stage.addActor(nextButton);
@@ -572,7 +572,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                 }
 
                 if(Globals.getGameState() == Game.State.RUNNING) {
-                    Level.getInstance().getPlayer().jump();
+                    Level.getCurrent().getPlayer().jump();
                 }
 
                 return true;
@@ -581,7 +581,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 if(Globals.getGameState() == Game.State.RUNNING) {
-                    Level.getInstance().getPlayer().stopJump();
+                    Level.getCurrent().getPlayer().stopJump();
                 }
             }
         });
@@ -596,7 +596,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
         float moveCenterX = moveButton.getX() + (moveButton.getWidth() / 2);
         float x = Gdx.input.getX(movePointer);
-        Player player = Level.getInstance().getPlayer();
+        Player player = Level.getCurrent().getPlayer();
         boolean isTutorial = DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true);
         if(moveButton.isPressed() && !isTutorial) {
             MainCamera camera = MainCamera.getInstance();

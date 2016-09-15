@@ -25,6 +25,12 @@ public interface ILevelLoadable {
     int getId();
 
     /**
+     * Returns the iteration id.
+     * @return iteration id
+     */
+    long getIterationId();
+
+    /**
      * Returns the level's respawn position for the player.
      * @return respawn position
      */

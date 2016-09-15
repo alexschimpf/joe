@@ -16,6 +16,7 @@ import com.tendersaucer.joe.event.LevelLoadBeginEvent;
 import com.tendersaucer.joe.event.NewUserEvent;
 import com.tendersaucer.joe.level.Level;
 import com.tendersaucer.joe.particle.ParticleEffectManager;
+import com.tendersaucer.joe.ui.HUD;
 import com.tendersaucer.joe.util.pool.Vector2Pool;
 
 /**
@@ -64,12 +65,12 @@ public final class Driver implements Screen {
         ParticleEffectManager.getInstance().loadDefinitions();
 
         EventManager eventManager = EventManager.getInstance();
-        eventManager.listen(LevelLoadBeginEvent.class, com.tendersaucer.joe.Canvas.getInstance());
+        eventManager.listen(LevelLoadBeginEvent.class, Canvas.getInstance());
         eventManager.listen(LevelLoadBeginEvent.class, ParticleEffectManager.getInstance());
         eventManager.listen(GameStateChangeEvent.class, com.tendersaucer.joe.ui.HUD.getInstance());
         eventManager.listen(GameStateChangeEvent.class, StatsCollector.getInstance());
         eventManager.listen(GameStateChangeEvent.class, MainCamera.getInstance());
-        eventManager.listen(NewUserEvent.class, com.tendersaucer.joe.ui.HUD.getInstance());
+        eventManager.listen(NewUserEvent.class, HUD.getInstance());
 
         DAO dao = DAO.getInstance();
         if (Globals.START_LEVEL != null) {
@@ -82,7 +83,7 @@ public final class Driver implements Screen {
         }
         long iterationId = dao.getLong(DAO.ITERATION_ID_KEY, 0);
         int levelId = (int)dao.getLong(DAO.LEVEL_ID_KEY, 0);
-        Level.getInstance().load(iterationId, levelId);
+        Level.getCurrent().load(iterationId, levelId);
     }
 
     @Override
@@ -111,7 +112,7 @@ public final class Driver implements Screen {
 
     @Override
     public void resume() {
-        Level.getInstance().replay(); // then state becomes WAIT_FOR_INPUT
+        Level.getCurrent().replay(); // then state becomes WAIT_FOR_INPUT
     }
 
     @Override
@@ -133,7 +134,7 @@ public final class Driver implements Screen {
     private void update() {
         MainCamera.getInstance().update();
         com.tendersaucer.joe.ui.HUD.getInstance().update();
-        Level.getInstance().update();
+        Level.getCurrent().update();
         ParticleEffectManager.getInstance().update();
     }
 
@@ -159,7 +160,7 @@ public final class Driver implements Screen {
 
         if (Globals.debugPhysics) {
             debugMatrix.set(camera.combined);
-            debugRenderer.render(Level.getInstance().getPhysicsWorld(), debugMatrix);
+            debugRenderer.render(Level.getCurrent().getPhysicsWorld(), debugMatrix);
         }
 
         com.tendersaucer.joe.ui.HUD.getInstance().render(spriteBatch);

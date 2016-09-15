@@ -25,7 +25,7 @@ public final class DeadlyPlatform extends RenderedEntity {
         super.tick();
 
         if (isPlayerTouching) {
-            Level.getInstance().replay();
+            Level.getCurrent().replay();
         }
 
         ((AnimatedSprite)sprite).update();

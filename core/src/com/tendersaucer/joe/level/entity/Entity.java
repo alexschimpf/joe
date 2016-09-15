@@ -38,7 +38,7 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
     protected final String type;
     protected final EntityDefinition definition; // in case it needs to be cloned
 
-    protected Entity(com.tendersaucer.joe.level.entity.EntityDefinition definition) {
+    protected Entity(EntityDefinition definition) {
         this.definition = definition;
         this.type = definition.getType();
 
@@ -56,32 +56,20 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
         id = getOrCreateId();
         state = State.ACTIVE;
 
-        try {
-            body = createBody(definition);
-            body.setFixedRotation(definition.getBooleanProperty("fixed_rotation"));
-            body.setActive(definition.getBooleanProperty("is_body_active"));
-            setAngle(MathUtils.degreesToRadians * definition.getFloatProperty("rotation"));
-        } catch (Exception e) {
-            Gdx.app.log("entity", "Error creating body for entity with id=" + id);
-            Gdx.app.log("entity", e.toString());
-        }
+        body = createBody(definition);
+        body.setFixedRotation(definition.getBooleanProperty("fixed_rotation"));
+        body.setActive(definition.getBooleanProperty("is_body_active"));
+        setAngle(MathUtils.degreesToRadians * definition.getFloatProperty("rotation"));
     }
 
-    public static Entity build(com.tendersaucer.joe.level.entity.EntityDefinition entityDef) {
-        Entity entity = null;
-        try {
-            String entityType = entityDef.getType();
-            String className = CLASS_PATH + EntityPropertyConfiguration.getInstance().getClassName(entityType);
-            Class<?> c = Class.forName(className);
-            Constructor<?> constructor = c.getDeclaredConstructor(EntityDefinition.class);
-            constructor.setAccessible(true);
-            entity = (Entity)constructor.newInstance(entityDef);
-            entity.init();
-        } catch (Exception e) {
-            String entityInfo = "type=" + entityDef.getType() + ", id=" + entityDef.getId();
-            Gdx.app.log("entity", "Error building entity (" + entityInfo + ")");
-            Gdx.app.log("entity", e.toString());
-        }
+    public static Entity build(EntityDefinition entityDef) throws Exception {
+        String entityType = entityDef.getType();
+        String className = CLASS_PATH + EntityPropertyConfiguration.getInstance().getClassName(entityType);
+        Class<?> c = Class.forName(className);
+        Constructor<?> constructor = c.getDeclaredConstructor(EntityDefinition.class);
+        constructor.setAccessible(true);
+        Entity entity = (Entity)constructor.newInstance(entityDef);
+        entity.init();
 
         return entity;
     }
@@ -113,7 +101,7 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
 
     @Override
     public void dispose() {
-        Level.getInstance().getPhysicsWorld().destroyBody(body);
+        Level.getCurrent().getPhysicsWorld().destroyBody(body);
         Vector2Pool.getInstance().free(leftTop);
         definition.getFixtureDef().shape.dispose();
     }
@@ -219,7 +207,7 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
     }
 
     public boolean overlapsPlayer() {
-        Level level = Level.getInstance();
+        Level level = Level.getCurrent();
         return level.hasPlayer() && overlaps(level.getPlayer());
     }
 
@@ -263,7 +251,7 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
     protected Body createBody(com.tendersaucer.joe.level.entity.EntityDefinition definition) {
         BodyDef bodyDef = definition.getBodyDef();
         bodyDef.position.set(definition.getCenter());
-        Body body = Level.getInstance().getPhysicsWorld().createBody(bodyDef);
+        Body body = Level.getLoadingInstance().getPhysicsWorld().createBody(bodyDef);
         FixtureDef fixtureDef = definition.getFixtureDef();
         body.createFixture(fixtureDef);
 
@@ -273,7 +261,7 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
     private String getOrCreateId() {
         String id = definition.getId();
         if (StringUtils.isEmpty(id)) {
-            id = Level.getInstance().getAvailableEntityId();
+            id = Level.getLoadingInstance().getAvailableEntityId();
         }
 
         return id;

@@ -1,5 +1,6 @@
 package com.tendersaucer.joe.level;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
@@ -12,6 +13,9 @@ import com.tendersaucer.joe.Globals;
 import com.tendersaucer.joe.IDisposable;
 import com.tendersaucer.joe.IUpdate;
 import com.tendersaucer.joe.MainCamera;
+import com.tendersaucer.joe.event.LevelLoadEndEvent;
+import com.tendersaucer.joe.event.NextLevelReadyEvent;
+import com.tendersaucer.joe.event.listeners.INextLevelReadyListener;
 import com.tendersaucer.joe.parallax.ParallaxBackground;
 import com.tendersaucer.joe.level.entity.Entity;
 import com.tendersaucer.joe.level.entity.EntityDefinition;
@@ -19,7 +23,6 @@ import com.tendersaucer.joe.level.entity.Player;
 import com.tendersaucer.joe.level.entity.RenderedEntity;
 import com.tendersaucer.joe.event.EventManager;
 import com.tendersaucer.joe.event.LevelLoadBeginEvent;
-import com.tendersaucer.joe.event.LevelLoadEndEvent;
 import com.tendersaucer.joe.Canvas;
 import com.tendersaucer.joe.IRender;
 import com.tendersaucer.joe.level.script.Script;
@@ -31,17 +34,17 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 
 /**
  * A single level
  * <p/>
  * Created by Alex on 4/8/2016.
  */
-public final class Level implements IUpdate, IDisposable {
+public final class Level implements IUpdate, IDisposable, INextLevelReadyListener {
 
     public static final float DEFAULT_GRAVITY = 50;
-    private static final Level INSTANCE = new Level();
+    private static Level currInstance = new Level();
+    private static Level loadingInstance;
 
     private int id;
     private long iterationId;
@@ -63,9 +66,27 @@ public final class Level implements IUpdate, IDisposable {
         physicsWorld.setContactListener(CollisionListener.getInstance());
     }
 
-    public static Level getInstance() {
-        return INSTANCE;
+    public void set(ILevelLoadable loadable) {
+        id = loadable.getId();
+        iterationId = loadable.getIterationId();
+        background = loadable.getBackground();
+
+        loadEntities(loadable);
+        loadFreeBodies(loadable);
+        loadScripts(loadable);
     }
+
+    public static Level getCurrent() {
+        return currInstance;
+    }
+
+    /**
+     * Returns an instance of the next level, which will replace currInstance.
+     * This reference should be used during level load as entities and such
+     * need to work with the level-to-be, which they will eventually exist in.
+     * @return
+     */
+    public static Level getLoadingInstance() { return loadingInstance; }
 
     @Override
     public void dispose() {
@@ -108,27 +129,18 @@ public final class Level implements IUpdate, IDisposable {
         return false;
     }
 
-    // TODO: More color after each iteration
-    public void load(long iterationId, int levelId) {
-        try {
-            // Seems to be preventing concurrency issue.
-            TimeUnit.MILLISECONDS.sleep(5);
-        } catch (InterruptedException e) {
-            // TODO:
+    @Override
+    public void onNextLevelReady(final Level nextLevel, final ILevelLoadable loadable) {
+        clearPhysicsWorld();
+        dispose();
+
+        boolean isCameraFlipped = MainCamera.getInstance().isFlipped();
+        if ((iterationId % 2 == 0 && isCameraFlipped) ||
+                (iterationId % 2 == 1 && !isCameraFlipped)) {
+            MainCamera.getInstance().flipHorizontally();
         }
 
-        id = levelId;
-        this.iterationId = iterationId;
-
-        ColorScheme.getInstance().reset();
-        TiledMapLevelLoadable loadable = new TiledMapLevelLoadable(levelId);
-        EventManager.getInstance().notify(new LevelLoadBeginEvent(loadable));
-
-        id = loadable.getId();
-        respawnPosition.set(loadable.getRespawnPosition());
-
-        background = loadable.getBackground();
-        Canvas.getInstance().addToLayer(0, background);
+        Canvas.getInstance().addToLayer(0, nextLevel.getBackground());
 
         // Add non-entity/background canvas objects.
         Map<IRender, Integer> canvasMap = loadable.getCanvasMap();
@@ -137,31 +149,41 @@ public final class Level implements IUpdate, IDisposable {
             Canvas.getInstance().addToLayer(layer, object);
         }
 
-        dispose();
-        clearPhysicsWorld();
-        entityMap.clear();
-        scriptMap.clear();
-
-        loadEntities(loadable);
-        loadFreeBodies(loadable);
-        loadScripts(loadable);
-
-        boolean isCameraFlipped = MainCamera.getInstance().isFlipped();
-        if ((iterationId % 2 == 0 && isCameraFlipped) ||
-                (iterationId % 2 == 1 && !isCameraFlipped)) {
-            MainCamera.getInstance().flipHorizontally();
-        }
-
-        EventManager.getInstance().notify(new LevelLoadEndEvent());
-        Globals.setGameState(Game.State.WAIT_FOR_INPUT);
+        // Switch instance pointer.
+        currInstance = nextLevel;
+        loadingInstance = null;
 
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                getPlayer().setActive(true);
-                getPlayer().setVisible(true);
+                nextLevel.getPlayer().setActive(true);
+                nextLevel.getPlayer().setVisible(true);
             }
         }, DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true) ? 0 : 0.2f);
+
+        EventManager.getInstance().notify(new LevelLoadEndEvent(loadable));
+        Globals.setGameState(Game.State.WAIT_FOR_INPUT);
+    }
+
+    public void load(final long iterationId, final int levelId) {
+        // TODO: Look at changing this dependency.
+        ColorScheme.getInstance().reset();
+
+        final TiledMapLevelLoadable loadable = new TiledMapLevelLoadable(iterationId, levelId);
+        EventManager.getInstance().notify(new LevelLoadBeginEvent(loadable));
+
+        final Level currLevel = this;
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                Level nextLevel = new Level();
+                Level.loadingInstance = nextLevel;
+                nextLevel.set(loadable);
+
+                EventManager.getInstance().listen(NextLevelReadyEvent.class, currLevel);
+                EventManager.getInstance().notify(new NextLevelReadyEvent(nextLevel, loadable));
+            }
+        });
     }
 
     public void loadNext() {
@@ -169,14 +191,16 @@ public final class Level implements IUpdate, IDisposable {
             replay();
         }
 
+        int newId = id;
+        long newIterationId = iterationId;
         if (id >= Globals.NUM_LEVELS - 1) {
-            id = 0;
-            iterationId++;
+            newId = 0;
+            newIterationId++;
         } else {
-            id++;
+            newId++;
         }
 
-        load(iterationId, id);
+        load(newIterationId, newId);
     }
 
     public void replay() {
@@ -209,10 +233,6 @@ public final class Level implements IUpdate, IDisposable {
     public void addEntity(Entity entity) {
         String id = entity.getId();
         entityMap.put(id, entity);
-
-        if (Entity.isPlayer(entity)) {
-            player = (Player)entity;
-        }
     }
 
     public void addScript(Script script) {
@@ -272,17 +292,22 @@ public final class Level implements IUpdate, IDisposable {
                 throw new InvalidConfigException("Duplicate entity id: " + id);
             }
 
-            Entity entity = Entity.build(entityDefinition);
-            if (Entity.isPlayer(entity)) {
-                player = (Player)entity;
-                player.setActive(false);
-                player.setVisible(false);
-            }
-            if (entity instanceof RenderedEntity) {
-                ((RenderedEntity)entity).addToCanvas();
-            }
+            try {
+                Entity entity = Entity.build(entityDefinition);
+                if (Entity.isPlayer(entity)) {
+                    player = (Player) entity;
+                    player.setActive(false);
+                    player.setVisible(false);
+                }
+                if (entity instanceof RenderedEntity) {
+                    ((RenderedEntity) entity).addToCanvas();
+                }
 
-            addEntity(entity);
+                addEntity(entity);
+            } catch (Exception e) {
+                Gdx.app.log("Level", "Error building entity");
+                e.printStackTrace();
+            }
         }
     }
 

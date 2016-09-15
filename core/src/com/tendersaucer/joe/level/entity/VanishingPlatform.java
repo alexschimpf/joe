@@ -45,7 +45,7 @@ public class VanishingPlatform extends RenderedEntity {
             }
         }
 
-        Player player = Level.getInstance().getPlayer();
+        Player player = Level.getCurrent().getPlayer();
         if(isReappearWait && player != null && !player.overlaps(this)) {
             setReappearWait(false);
         }
@@ -78,23 +78,26 @@ public class VanishingPlatform extends RenderedEntity {
     }
 
     private void scheduleReappear() {
-        final int oldLevelId = Level.getInstance().getId();
+        final int oldLevelId = Level.getCurrent().getId();
         new Timer().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        if (oldLevelId != Level.getInstance().getId()) {
+                        if (oldLevelId != Level.getCurrent().getId()) {
                             return;
                         }
 
-                        com.tendersaucer.joe.level.entity.TiledEntityDefinition offspringDefinition =
-                                new com.tendersaucer.joe.level.entity.TiledEntityDefinition(UUID.randomUUID().toString(), (com.tendersaucer.joe.level.entity.TiledEntityDefinition)definition);
-                        VanishingPlatform offspring = (VanishingPlatform)Entity.build(offspringDefinition);
-                        offspring.setReappearWait(true);
-                        Level.getInstance().addEntity(offspring);
-                        Canvas.getInstance().addToLayer(offspringDefinition.getLayer(), offspring);
+                        try {
+                            TiledEntityDefinition offspringDefinition =
+                                    new TiledEntityDefinition(UUID.randomUUID().toString(), (TiledEntityDefinition) definition);
+                            VanishingPlatform offspring = (VanishingPlatform) Entity.build(offspringDefinition);
+                            offspring.setReappearWait(true);
+                            Level.getCurrent().addEntity(offspring);
+                            Canvas.getInstance().addToLayer(offspringDefinition.getLayer(), offspring);
+                        } catch (Exception e) {
+                        }
                     }
                 });
             }

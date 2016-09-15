@@ -49,6 +49,7 @@ import java.util.Map;
 public final class TiledMapLevelLoadable implements ILevelLoadable {
 
     private final int id;
+    private final long iterationId;
     private final String filename;
     private final TiledMap tiledMap;
     private final Vector2 respawnPosition;
@@ -59,8 +60,9 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
     private final Map<IRender, Integer> canvasMap;
     private final Map<String, MapObject> bodySkeletonMap;
 
-    public TiledMapLevelLoadable(int levelId) {
+    public TiledMapLevelLoadable(long iterationId, int levelId) {
         this.id = levelId;
+        this.iterationId = iterationId;
 
         respawnPosition = new Vector2();
         freeBodyDefinitions = new Array<FixtureBodyDefinition>();
@@ -85,6 +87,11 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
     @Override
     public int getId() {
         return id;
+    }
+
+    @Override
+    public long getIterationId() {
+        return iterationId;
     }
 
     @Override
@@ -239,12 +246,8 @@ public final class TiledMapLevelLoadable implements ILevelLoadable {
                 }
             }
 
-            // TODO: GET THIS WORKING!!!
+            // NOTE: The "texture" field takes precedence in RenderedEntity implementation.
             TextureRegion textureRegion = object.getTextureRegion();
-//            if (TiledUtils.propertyExists(object, "texture")) {
-//                String textureId = TiledUtils.getStringProperty(object, "texture");
-//                textureRegion = AssetManager.getInstance().getTextureRegion(textureId);
-//            }
 
             int layerPosition = getLayerPosition(layer, object);
             BodyDef bodyDef = getBodyDef(layer, object);

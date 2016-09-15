@@ -31,7 +31,7 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
         }
 
         MainCamera camera = MainCamera.getInstance();
-        Player player = Level.getInstance().getPlayer();
+        Player player = Level.getCurrent().getPlayer();
         if (player != null) {
             boolean isCameraFlipped = camera.isFlipped();
             float multiplier = isCameraFlipped ? -1 : 1;
@@ -80,7 +80,7 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
         Game.State gameState = Globals.getGameState();
         if (gameState == Game.State.RUNNING || gameState == Game.State.WAIT_FOR_INPUT) {
             if (keyCode == Keys.A) {
-                Player player = Level.getInstance().getPlayer();
+                Player player = Level.getCurrent().getPlayer();
                 if (player != null) {
                     player.jump();
                 }
@@ -116,11 +116,11 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
                 if (Globals.getGameState() == Game.State.LEVEL_COMPLETE) {
                     HUD.getInstance().hideLevelComplete();
                 }
-                Level.getInstance().loadNext();
+                Level.getCurrent().loadNext();
 
                 break;
             default:
-                if (Level.getInstance().getPlayer() != null &&
+                if (Level.getCurrent().getPlayer() != null &&
                         Globals.getGameState() == Game.State.WAIT_FOR_INPUT) {
                     Globals.setGameState(Game.State.RUNNING);
                 }
@@ -138,7 +138,7 @@ public final class InputListener extends com.badlogic.gdx.scenes.scene2d.InputLi
         }
 
         if (keyCode == Keys.A) {
-            Player player = Level.getInstance().getPlayer();
+            Player player = Level.getCurrent().getPlayer();
             if (player != null) {
                 player.stopJump();
             }
