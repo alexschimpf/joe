@@ -35,10 +35,8 @@ public final class Driver implements Screen {
 
     private final Matrix4 debugMatrix;
     private final Box2DDebugRenderer debugRenderer;
-    private final Game game;
 
     public Driver(Game game) {
-        this.game = game;
         debugMatrix = new Matrix4();
         debugRenderer = new Box2DDebugRenderer();
 

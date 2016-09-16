@@ -121,7 +121,8 @@ public final class Level implements IUpdate, IDisposable {
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
-                set();
+                TiledMapLevelLoadable loadable = new TiledMapLevelLoadable(id);
+                set(loadable);
             }
         });
     }
@@ -223,9 +224,7 @@ public final class Level implements IUpdate, IDisposable {
         return respawnPosition;
     }
 
-    private void set() {
-        TiledMapLevelLoadable loadable = new TiledMapLevelLoadable(id);
-
+    private void set(ILevelLoadable loadable) {
         id = loadable.getId();
         respawnPosition.set(loadable.getRespawnPosition());
         background = loadable.getBackground();

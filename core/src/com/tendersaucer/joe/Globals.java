@@ -17,12 +17,12 @@ public final class Globals {
     public static final int NUM_LEVELS = 6;
     public static final Integer START_LEVEL = null; // null = disabled
     public static final boolean REPEAT_START_LEVEL = false;
-    public static final boolean CLEAR_PREFERENCES = false;
+    public static final boolean CLEAR_PREFERENCES = true;
     public static final boolean PACK_TEXTURES = true;
     public static final int LOG_LEVEL = Application.LOG_DEBUG;
 
     private static Game.State gameState;
-    public static boolean fullScreenMode = true;
+    public static boolean fullScreenMode = false;
     public static boolean debugPhysics = false;
     public static boolean printDebugInfo = false;
     public static boolean customCameraInfo = false;

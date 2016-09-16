@@ -232,8 +232,12 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             infoLabel.setVisible(true);
             infoBackground.setVisible(true);
             infoLabel.setText(WAITING_FOR_INPUT_MESSAGE);
-            infoLabel.addAction(Actions.alpha(0, 0.3f));
-            infoBackground.addAction(Actions.alpha(0, 0.3f));
+
+            boolean isTutorial = DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true);
+            if (!isTutorial) {
+                infoLabel.addAction(Actions.alpha(0, 0.3f));
+                infoBackground.addAction(Actions.alpha(0, 0.3f));
+            }
         }
 
         if (newEvent == Game.State.WAIT_FOR_INPUT) {
@@ -265,7 +269,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         }
 
         tutorialLabel.setVisible(true);
-        stage.removeListener(inputListener);
     }
 
     public void resize(int width, int height) {
@@ -284,7 +287,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         flashImage.clearActions();
         flashImage.getColor().a = 0;
         flashImage.setVisible(true);
-        flashImage.addAction(Actions.sequence(Actions.alpha(1, 0.4f), Actions.alpha(0, 0.4f), Actions.visible(false)));
+        flashImage.addAction(Actions.sequence(
+                Actions.alpha(1, 0.4f), Actions.alpha(0, 0.4f), Actions.visible(false)));
     }
 
     private void createFlashImage() {
@@ -313,7 +317,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
 
     private void createInfoLabel() {
         infoBackground = new Image();
-        TextureRegionDrawable image = new TextureRegionDrawable(AssetManager.getInstance().getTextureRegion("default"));
+        TextureRegionDrawable image =
+                new TextureRegionDrawable(AssetManager.getInstance().getTextureRegion("default"));
         infoBackground.setDrawable(image.tint(new Color(0, 0, 0, 0.6f)));
         infoBackground.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getWidth() / 20);
         stage.addActor(infoBackground);
@@ -493,8 +498,9 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                     tutorialLabel.setVisible(false);
                     tutorialHelperArrow.setVisible(false);
                     tutorialNextButton.setVisible(false);
-                    stage.addListener(inputListener);
                     DAO.getInstance().putBoolean(DAO.IS_NEW_KEY, false);
+
+                    // TODO: Execute script that will allow player to finish level.
                 } else {
                     tutorialPosition++;
                     if (Globals.isMobile()) {
