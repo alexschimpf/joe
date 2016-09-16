@@ -15,7 +15,7 @@
                     "class": "RunOnce",
                     "properties": {
                         "optional": [
-                            { "name": "delay", "default": "0" }
+                            { "name": "delay", "default": "-1" }
                         ]
                     }
                 },
