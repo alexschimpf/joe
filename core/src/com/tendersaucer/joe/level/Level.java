@@ -30,7 +30,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 
 /**
  * A single level
@@ -74,6 +73,10 @@ public final class Level implements IUpdate, IDisposable {
         for (Script script : scriptMap.values()) {
             script.dispose();
         }
+
+        clearPhysicsWorld();
+        entityMap.clear();
+        scriptMap.clear();
     }
 
     @Override
@@ -118,7 +121,7 @@ public final class Level implements IUpdate, IDisposable {
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
-                doLoad();
+                set();
             }
         });
     }
@@ -220,12 +223,11 @@ public final class Level implements IUpdate, IDisposable {
         return respawnPosition;
     }
 
-    private void doLoad() {
+    private void set() {
         TiledMapLevelLoadable loadable = new TiledMapLevelLoadable(id);
 
         id = loadable.getId();
         respawnPosition.set(loadable.getRespawnPosition());
-
         background = loadable.getBackground();
         Canvas.getInstance().addToLayer(0, background);
 
@@ -237,9 +239,6 @@ public final class Level implements IUpdate, IDisposable {
         }
 
         dispose();
-        clearPhysicsWorld();
-        entityMap.clear();
-        scriptMap.clear();
 
         loadEntities(loadable);
         loadFreeBodies(loadable);
@@ -252,7 +251,10 @@ public final class Level implements IUpdate, IDisposable {
         }
 
         Globals.setGameState(Game.State.WAIT_FOR_INPUT);
+        schedulePlayerActivate();
+    }
 
+    private void schedulePlayerActivate() {
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {

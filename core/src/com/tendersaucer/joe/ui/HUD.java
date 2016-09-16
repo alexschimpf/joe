@@ -22,7 +22,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tendersaucer.joe.AssetManager;
-import com.tendersaucer.joe.ColorScheme;
 import com.tendersaucer.joe.DAO;
 import com.tendersaucer.joe.Game;
 import com.tendersaucer.joe.Globals;
@@ -159,7 +158,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             progressLabel.setText(iterationId + "." + levelId + "." + runId);
         }
 
-        infoLabel.setColor(ColorScheme.getInstance().getSecondaryColor(ColorScheme.ReturnType.SHARED));
         if (isTutorial) {
             infoLabel.setText("TUTORIAL");
         } else {
