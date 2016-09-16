@@ -32,6 +32,7 @@ import com.tendersaucer.joe.event.listeners.IGameStateChangeListener;
 import com.tendersaucer.joe.event.listeners.INewUserListener;
 import com.tendersaucer.joe.level.Level;
 import com.tendersaucer.joe.level.entity.Player;
+import com.tendersaucer.joe.screen.IterationComplete;
 
 /**
  * Game heads up display
@@ -247,6 +248,8 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             infoLabel.setText(WAITING_FOR_INPUT_MESSAGE);
             infoLabel.addAction(Actions.forever(Actions.sequence(Actions.alpha(0, 0.25f), Actions.alpha(1, 0.25f))));
             infoBackground.addAction(Actions.alpha(1, 0.6f));
+        } else if (newEvent == Game.State.ITERATION_COMPLETE) {
+            Game.instance.setScreen(new IterationComplete(Game.instance));
         }
     }
 
@@ -369,7 +372,11 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                 }
 
                 hideLevelComplete();
-                Level.getInstance().loadNext();
+                if (Level.getInstance().getId() == Globals.NUM_LEVELS - 1) {
+                    Globals.setGameState(Game.State.ITERATION_COMPLETE);
+                } else {
+                    Level.getInstance().loadNext();
+                }
             }
         });
         stage.addActor(nextButton);

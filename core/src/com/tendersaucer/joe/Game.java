@@ -13,7 +13,7 @@ public final class Game extends com.badlogic.gdx.Game {
 
     public enum State {
 
-        WAIT_FOR_INPUT, RUNNING, PAUSED, LEVEL_COMPLETE, SHUTDOWN
+        WAIT_FOR_INPUT, RUNNING, PAUSED, LEVEL_COMPLETE, ITERATION_COMPLETE, SHUTDOWN
     }
 
     @Override
