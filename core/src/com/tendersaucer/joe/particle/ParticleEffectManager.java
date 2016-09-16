@@ -59,6 +59,7 @@ public class ParticleEffectManager implements IUpdate {
         effects.clear();
     }
 
+    @SuppressWarnings("unchecked")
     public void loadDefinitions() {
         JsonReader jsonReader = new JsonReader();
         JsonValue root = jsonReader.parse(Gdx.files.internal(CONFIG_FILENAME));

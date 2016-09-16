@@ -36,8 +36,7 @@ import com.tendersaucer.joe.level.entity.Player;
 
 /**
  * Game heads up display
- * <p/>
- * <p/>
+ *
  * /                \
  * / /          \ \   \
  * |                  |
@@ -60,9 +59,9 @@ import com.tendersaucer.joe.level.entity.Player;
  * |       ____________/
  * |      /
  * |_____/
- * <p/>
+ *
  * http://www.chris.com/ascii/index.php?art=cartoons/beavis%20and%20Butt-head
- * <p/>
+ *
  * Created by Alex on 4/8/2016.
  */
 public final class HUD implements IUpdate, IRender, IGameStateChangeListener, INewUserListener {

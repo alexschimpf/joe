@@ -43,7 +43,7 @@ public final class Player extends RenderedEntity {
     private Direction direction;
     private float jumpStartY;
 
-    private Player(com.tendersaucer.joe.level.entity.EntityDefinition def) {
+    private Player(EntityDefinition def) {
         super(def);
 
         numFootContacts = 0;
@@ -75,7 +75,7 @@ public final class Player extends RenderedEntity {
     }
 
     @Override
-    protected Sprite createSprite(com.tendersaucer.joe.level.entity.EntityDefinition definition) {
+    protected Sprite createSprite(EntityDefinition definition) {
         AnimatedSpriteSystem animationSystem = new AnimatedSpriteSystem("player_default");
         animationSystem.setSize(getWidth(), getHeight());
         animationSystem.add(JUMP_ANIMATION_ID, new AnimatedSprite("player_jump", JUMP_ANIMATION_DURATION));
@@ -91,7 +91,7 @@ public final class Player extends RenderedEntity {
     }
 
     @Override
-    public void onBeginContact(Contact contact, com.tendersaucer.joe.level.entity.Entity entity) {
+    public void onBeginContact(Contact contact, Entity entity) {
         handleFootContact(contact, true);
 
         if (entity instanceof GroovySpinningThingy) {
@@ -100,12 +100,12 @@ public final class Player extends RenderedEntity {
     }
 
     @Override
-    public void onEndContact(Contact contact, com.tendersaucer.joe.level.entity.Entity entity) {
+    public void onEndContact(Contact contact, Entity entity) {
         handleFootContact(contact, false);
     }
 
     @Override
-    protected Body createBody(com.tendersaucer.joe.level.entity.EntityDefinition definition) {
+    protected Body createBody(EntityDefinition definition) {
         BodyDef bodyDef = definition.getBodyDef();
         bodyDef.position.set(definition.getCenter());
         Body body = Level.getInstance().getPhysicsWorld().createBody(bodyDef);

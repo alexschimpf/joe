@@ -89,8 +89,8 @@ public class VanishingPlatform extends RenderedEntity {
                             return;
                         }
 
-                        com.tendersaucer.joe.level.entity.TiledEntityDefinition offspringDefinition =
-                                new com.tendersaucer.joe.level.entity.TiledEntityDefinition(UUID.randomUUID().toString(), (com.tendersaucer.joe.level.entity.TiledEntityDefinition)definition);
+                        TiledEntityDefinition offspringDefinition =
+                                new TiledEntityDefinition(UUID.randomUUID().toString(), (TiledEntityDefinition)definition);
                         VanishingPlatform offspring = (VanishingPlatform)Entity.build(offspringDefinition);
                         offspring.setReappearWait(true);
                         Level.getInstance().addEntity(offspring);

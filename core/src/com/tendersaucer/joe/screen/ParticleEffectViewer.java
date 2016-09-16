@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tendersaucer.joe.AssetManager;
+import com.tendersaucer.joe.Canvas;
 import com.tendersaucer.joe.Globals;
 import com.tendersaucer.joe.MainCamera;
 import com.tendersaucer.joe.particle.ParticleEffectManager;
@@ -107,9 +108,7 @@ public class ParticleEffectViewer implements Screen {
         spriteBatch.setProjectionMatrix(camera.combined);
 
         spriteBatch.begin();
-        {
-            com.tendersaucer.joe.Canvas.getInstance().render(spriteBatch);
-        }
+        Canvas.getInstance().render(spriteBatch);
         spriteBatch.end();
 
         stage.draw();

@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.JsonValue;
 import com.tendersaucer.joe.MainCamera;
+import com.tendersaucer.joe.util.pool.Vector3Pool;
 
 /**
  * Created by Alex on 5/5/2016.
@@ -64,18 +65,18 @@ public final class ConversionUtils {
     }
 
     public static Vector2 toWorldCoords(float x, float y) {
-        Vector3 coords = com.tendersaucer.joe.util.pool.Vector3Pool.getInstance().obtain(x, y, 0);
+        Vector3 coords = Vector3Pool.getInstance().obtain(x, y, 0);
         MainCamera camera = MainCamera.getInstance();
         camera.getRawCamera().unproject(coords);
-        com.tendersaucer.joe.util.pool.Vector3Pool.getInstance().free(coords);
+        Vector3Pool.getInstance().free(coords);
         return new Vector2(coords.x, camera.getViewportHeight() - coords.y);
     }
 
     public static Vector2 toScreenCoords(float x, float y) {
-        Vector3 coords = com.tendersaucer.joe.util.pool.Vector3Pool.getInstance().obtain(x, y, 0);
+        Vector3 coords = Vector3Pool.getInstance().obtain(x, y, 0);
         MainCamera camera = MainCamera.getInstance();
         camera.getRawCamera().project(coords);
-        com.tendersaucer.joe.util.pool.Vector3Pool.getInstance().free(coords);
+        Vector3Pool.getInstance().free(coords);
         return new Vector2(coords.x, camera.getViewportHeight() - coords.y);
     }
 

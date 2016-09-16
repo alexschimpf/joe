@@ -39,7 +39,7 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
     protected final String type;
     protected final EntityDefinition definition; // in case it needs to be cloned
 
-    protected Entity(com.tendersaucer.joe.level.entity.EntityDefinition definition) {
+    protected Entity(EntityDefinition definition) {
         this.definition = definition;
         this.type = definition.getType();
 
@@ -63,7 +63,7 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
         setAngle(MathUtils.degreesToRadians * definition.getFloatProperty("rotation"));
     }
 
-    public static Entity build(com.tendersaucer.joe.level.entity.EntityDefinition entityDef) {
+    public static Entity build(EntityDefinition entityDef) {
         Entity entity = null;
         try {
             String entityType = entityDef.getType();
@@ -256,7 +256,7 @@ public abstract class Entity implements IUpdate, ICollide, IDisposable {
         leftTop.set(left, top);
     }
 
-    protected Body createBody(com.tendersaucer.joe.level.entity.EntityDefinition definition) {
+    protected Body createBody(EntityDefinition definition) {
         BodyDef bodyDef = definition.getBodyDef();
         bodyDef.position.set(definition.getCenter());
         Body body = Level.getInstance().getPhysicsWorld().createBody(bodyDef);

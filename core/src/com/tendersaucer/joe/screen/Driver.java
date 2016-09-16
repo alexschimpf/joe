@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.tendersaucer.joe.AssetManager;
+import com.tendersaucer.joe.Canvas;
 import com.tendersaucer.joe.ColorScheme;
 import com.tendersaucer.joe.DAO;
 import com.tendersaucer.joe.Globals;
@@ -87,7 +88,7 @@ public final class Driver implements Screen {
     @Override
     public void resize(int width, int height) {
         MainCamera.getInstance().resizeViewport(width, height);
-        com.tendersaucer.joe.ui.HUD.getInstance().resize(width, height);
+        HUD.getInstance().resize(width, height);
     }
 
     @Override
@@ -118,7 +119,7 @@ public final class Driver implements Screen {
 
     private void update() {
         MainCamera.getInstance().update();
-        com.tendersaucer.joe.ui.HUD.getInstance().update();
+        HUD.getInstance().update();
         Level.getInstance().update();
         ParticleEffectManager.getInstance().update();
     }
@@ -139,9 +140,7 @@ public final class Driver implements Screen {
         spriteBatch.setProjectionMatrix(camera.combined);
 
         spriteBatch.begin();
-        {
-            com.tendersaucer.joe.Canvas.getInstance().render(spriteBatch);
-        }
+        Canvas.getInstance().render(spriteBatch);
         spriteBatch.end();
 
         if (Globals.debugPhysics) {
@@ -149,6 +148,6 @@ public final class Driver implements Screen {
             debugRenderer.render(Level.getInstance().getPhysicsWorld(), debugMatrix);
         }
 
-        com.tendersaucer.joe.ui.HUD.getInstance().render(spriteBatch);
+        HUD.getInstance().render(spriteBatch);
     }
 }

@@ -3,6 +3,7 @@ package com.tendersaucer.joe.util;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.tendersaucer.joe.util.exception.InvalidConfigException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +48,7 @@ public abstract class PropertyConfiguration {
     private void parseConfiguration(String parentType, JsonValue root) {
         String type = root.name;
         if (type.equals("")) {
-            throw new com.tendersaucer.joe.util.exception.InvalidConfigException(filename, "type", "null");
+            throw new InvalidConfigException(filename, "type", "null");
         }
 
         Properties parentProperties = null;
@@ -71,7 +72,7 @@ public abstract class PropertyConfiguration {
         String type = root.name;
         String className = root.getString("class");
         if (className.equals("")) {
-            throw new com.tendersaucer.joe.util.exception.InvalidConfigException(filename, "class", "null");
+            throw new InvalidConfigException(filename, "class", "null");
         }
 
         typeClassMap.put(type, className);
@@ -137,7 +138,7 @@ public abstract class PropertyConfiguration {
             } else if (propertyDefaultValMap.containsKey(name)) {
                 return false;
             } else {
-                throw new com.tendersaucer.joe.util.exception.InvalidConfigException(filename, "name", name);
+                throw new InvalidConfigException(filename, "name", name);
             }
         }
 

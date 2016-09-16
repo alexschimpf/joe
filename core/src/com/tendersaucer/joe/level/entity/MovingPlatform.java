@@ -20,7 +20,7 @@ public class MovingPlatform extends RenderedEntity {
     protected final LinearPathHelper pathHelper;
     protected final float duration;
 
-    protected MovingPlatform(com.tendersaucer.joe.level.entity.EntityDefinition definition) {
+    protected MovingPlatform(EntityDefinition definition) {
         super(definition);
 
         duration = definition.getFloatProperty("duration");
