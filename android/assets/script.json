@@ -7,23 +7,19 @@
                     "id", "x", "y", "width", "height", "type"
                 ],
                 "optional": [
-                    { "name": "is_active", "default": "false" }
+                    { "name": "is_active", "default": "false" },
+                    { "name": "delay", "default": "-1" }
                 ]
             },
             "children": {
-                "run_once": {
-                    "class": "RunOnce",
-                    "properties": {
-                        "optional": [
-                            { "name": "delay", "default": "-1" }
-                        ]
-                    }
-                },
-                "set_timer": {
-                    "class": "SetTimer",
+                "rotate_entity": {
+                    "class": "RotateEntityScript",
                     "properties": {
                         "required": [
-                            "duration"
+                            "target", "angular_speed"
+                        ],
+                        "optional": [
+                            { "name": "degrees", "default": "null" }
                         ]
                     }
                 }

@@ -27,6 +27,11 @@
                         ]
                     },
                     "children": {
+                        "simple_rendered_entity": {
+                            "class": "SimpleRenderedEntity",
+                            "properties": {
+                            }
+                        },
                         "player": {
                             "class": "Player",
                             "properties": {

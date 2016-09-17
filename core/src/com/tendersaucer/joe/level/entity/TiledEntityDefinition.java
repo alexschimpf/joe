@@ -9,6 +9,8 @@ import com.tendersaucer.joe.AssetManager;
 import com.tendersaucer.joe.util.StringUtils;
 import com.tendersaucer.joe.util.tiled.TiledUtils;
 
+import java.util.Iterator;
+
 /**
  * Entity definition also based on Tiled map objects and properties
  * <p/>
@@ -37,6 +39,16 @@ public final class TiledEntityDefinition extends EntityDefinition {
             this.textureRegion = textureRegion;
         } else {
             this.textureRegion = AssetManager.getInstance().getTextureRegion(textureKey);
+        }
+
+        // This is kind of hacky...
+        Iterator<String> keys = properties.getKeys();
+        while (keys.hasNext()) {
+            String key = keys.next();
+            Object value = properties.get(key);
+            if (value.toString().toLowerCase().equals("null")) {
+                properties.put(key, null);
+            }
         }
     }
 
