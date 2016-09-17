@@ -22,6 +22,8 @@ public abstract class Script implements IUpdate, IDisposable {
     }
 
     protected State state;
+    private final float delay; // If -1, the script is not run until set active.
+    private float elapsed;
     protected final String type;
     protected final String id;
     protected final ScriptDefinition definition;
@@ -32,6 +34,7 @@ public abstract class Script implements IUpdate, IDisposable {
 
         id = getOrCreateId();
         state = definition.getBooleanProperty("is_active") ? State.ACTIVE : State.INACTIVE;
+        delay = definition.getFloatProperty("delay");
     }
 
     public static Script build(ScriptDefinition scriptDef) {
@@ -76,11 +79,17 @@ public abstract class Script implements IUpdate, IDisposable {
 
     @Override
     public boolean update() {
-        if (state != State.ACTIVE) {
-            return isDone();
+        if (isActive()) {
+            if (delay >= 0) {
+                elapsed += Gdx.graphics.getDeltaTime() * 1000;
+                if (elapsed >= delay) {
+                    tick();
+                }
+            } else {
+                tick();
+            }
         }
 
-        tick();
         return isDone();
     }
 

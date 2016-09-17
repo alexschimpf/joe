@@ -32,7 +32,6 @@ import com.tendersaucer.joe.event.listeners.IGameStateChangeListener;
 import com.tendersaucer.joe.event.listeners.INewUserListener;
 import com.tendersaucer.joe.level.Level;
 import com.tendersaucer.joe.level.entity.Player;
-import com.tendersaucer.joe.screen.IterationComplete;
 
 /**
  * Game heads up display
@@ -70,20 +69,11 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     public static final String WAITING_FOR_INPUT_MESSAGE = "- WAITING FOR INPUT -";
     private Color MOBILE_BUTTON_DOWN_COLOR = new Color(0.45f, 0.45f, 0.45f, 0.5f);
     private Color MOBILE_BUTTON_UP_COLOR = new Color(0.65f, 0.65f, 0.65f, 0.5f);
-    private static final String[] MOBILE_TUTORIAL_MESSAGES = new String[] {
+    private static final String[] TUTORIAL_MESSAGES = new String[] {
             "Hi, I'm Joe.",
-            "Now, mindlessly follow my commands.",
+            "Now follow my commands!!!",
             "To make me move left/right, slide your finger here.",
             "To make me jump, touch here.",
-            "If you hold longer, I'll jump higher.",
-            "Your mission?",
-            "GUIDE ME TO THE GROOVT SPINNING THINGIES!"
-    };
-    private static final String[] DESKTOP_TUTORIAL_MESSAGES = new String[] {
-            "Hi, I'm Joe.",
-            "Now, mindlessly follow my commands.",
-            "To make me move left/right, use the arrow keys.",
-            "To make me jump, press A.",
             "If you hold longer, I'll jump higher.",
             "Your mission?",
             "GUIDE ME TO THE GROOVY SPINNING THINGIES!"
@@ -92,7 +82,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
     // Tutorial
     private int tutorialPosition;
     private Label tutorialLabel;
-    private Image tutorialHelperArrow;
     private Image tutorialNextButton;
 
     // Level Complete
@@ -189,9 +178,9 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             tutorialLabel.setPosition((screenWidth - labelWidth) / 2, 0.6f * screenHeight);
 
             if (Globals.isMobile()) {
-                tutorialLabel.setText(MOBILE_TUTORIAL_MESSAGES[tutorialPosition]);
+                tutorialLabel.setText(TUTORIAL_MESSAGES[tutorialPosition]);
             } else {
-                tutorialLabel.setText(DESKTOP_TUTORIAL_MESSAGES[tutorialPosition]);
+                tutorialLabel.setText(TUTORIAL_MESSAGES[tutorialPosition]);
             }
         }
 
@@ -253,7 +242,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             infoLabel.addAction(Actions.forever(Actions.sequence(Actions.alpha(0, 0.25f), Actions.alpha(1, 0.25f))));
             infoBackground.addAction(Actions.alpha(1, 0.6f));
         } else if (newEvent == Game.State.ITERATION_COMPLETE) {
-            Game.instance.setScreen(new IterationComplete(Game.instance));
+            //Game.instance.setScreen(new IterationComplete(Game.instance));
         }
     }
 
@@ -262,12 +251,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         tutorialPosition = 0;
         createTutorialUI();
 
-        if (Globals.isMobile()) {
-            tutorialLabel.setText(MOBILE_TUTORIAL_MESSAGES[0]);
-        } else {
-            tutorialLabel.setText(DESKTOP_TUTORIAL_MESSAGES[0]);
-        }
-
+        tutorialLabel.setText(TUTORIAL_MESSAGES[0]);
         tutorialLabel.setVisible(true);
     }
 
@@ -377,11 +361,11 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
                 }
 
                 hideLevelComplete();
-                if (Level.getInstance().getId() == Globals.NUM_LEVELS - 1) {
-                    Globals.setGameState(Game.State.ITERATION_COMPLETE);
-                } else {
+//                if (Level.getInstance().getId() == Globals.NUM_LEVELS - 1) {
+//                    Globals.setGameState(Game.State.ITERATION_COMPLETE);
+//                } else {
                     Level.getInstance().loadNext();
-                }
+//                }
             }
         });
         stage.addActor(nextButton);
@@ -470,15 +454,9 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         tutorialLabel.setVisible(false);
         stage.addActor(tutorialLabel);
 
-        final float padding = screenHeight * 0.01f;
         float size = Gdx.graphics.getWidth() / 20;
         TextureRegion tr = AssetManager.getInstance().getTextureRegion("arrow");
         tr.flip(false, true);
-        tutorialHelperArrow = new Image(tr);
-        tutorialHelperArrow.setSize(size, size);
-        tutorialHelperArrow.setOrigin(Align.center);
-        tutorialHelperArrow.setVisible(false);
-        tutorialHelperArrow.setColor(Color.WHITE);
         tutorialNextButton = new Image(tr);
         tutorialNextButton.setSize(size * 2, size * 2);
         tutorialNextButton.setOrigin(Align.center);
@@ -486,34 +464,33 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         tutorialNextButton.setVisible(true);
         tutorialNextButton.setRotation(90);
         tutorialNextButton.setColor(Color.WHITE);
-        tutorialNextButton.addAction(Actions.forever(Actions.sequence(Actions.fadeOut(0.25f), Actions.fadeIn(0.25f))));
+        tutorialNextButton.addAction(Actions.forever(
+                Actions.sequence(
+                    Actions.moveBy(-size / 2, 0, 0.5f),
+                    Actions.moveBy(size / 2, 0, 0.5f)
+                )
+        ));
         tutorialNextButton.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 doFlash();
 
-                int lastPos = Globals.isMobile() ? MOBILE_TUTORIAL_MESSAGES.length - 1 :
-                        DESKTOP_TUTORIAL_MESSAGES.length - 1;
+                int lastPos = TUTORIAL_MESSAGES.length - 1;
                 if (tutorialPosition == lastPos) {
                     tutorialLabel.setVisible(false);
-                    tutorialHelperArrow.setVisible(false);
-                    tutorialNextButton.setVisible(false);
+                    tutorialNextButton.remove();
                     DAO.getInstance().putBoolean(DAO.IS_NEW_KEY, false);
-
-                    // TODO: Execute script that will allow player to finish level.
+                    Level.getInstance().getScript("tutorial_end_script").setActive(true);
                 } else {
                     tutorialPosition++;
                     if (Globals.isMobile()) {
-                        float size = tutorialHelperArrow.getWidth();
                         if (tutorialPosition == 2) {
-                            float moveButtonCenterX = moveButton.getX() + (moveButton.getWidth() / 2);
-                            tutorialHelperArrow.setPosition(moveButtonCenterX - (size / 2), moveButton.getTop() + padding);
-                            tutorialHelperArrow.setVisible(true);
+                            moveButton.addAction(Actions.color(Color.RED, 1.5f));
                         } else if (tutorialPosition == 3) {
-                            float jumpButtonCenterX = jumpButton.getX() + (jumpButton.getWidth() / 2);
-                            tutorialHelperArrow.setPosition(jumpButtonCenterX - (size / 2), jumpButton.getTop() + padding);
+                            moveButton.addAction(Actions.color(Color.WHITE, 1.5f));
+                            jumpButton.addAction(Actions.color(Color.RED, 1.5f));
                         } else if (tutorialPosition == 5) {
-                            tutorialHelperArrow.setVisible(false);
+                            jumpButton.addAction(Actions.color(Color.WHITE, 1.5f));
                         }
                     }
                 }
@@ -522,7 +499,6 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             }
         });
         stage.addActor(tutorialNextButton);
-        stage.addActor(tutorialHelperArrow);
     }
 
     /**
@@ -549,7 +525,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 boolean isTutorial = DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true);
-                if (!isTutorial && Globals.getGameState() == Game.State.WAIT_FOR_INPUT) {
+                if (Globals.getGameState() == Game.State.WAIT_FOR_INPUT) {
                     Globals.setGameState(Game.State.RUNNING);
                 }
 
@@ -576,8 +552,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         jumpButton.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                boolean isTutorial = DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true);
-                if (!isTutorial && Globals.getGameState() == Game.State.WAIT_FOR_INPUT) {
+                if (Globals.getGameState() == Game.State.WAIT_FOR_INPUT) {
                     Globals.setGameState(Game.State.RUNNING);
                 }
 
@@ -607,8 +582,7 @@ public final class HUD implements IUpdate, IRender, IGameStateChangeListener, IN
         float moveCenterX = moveButton.getX() + (moveButton.getWidth() / 2);
         float x = Gdx.input.getX(movePointer);
         Player player = Level.getInstance().getPlayer();
-        boolean isTutorial = DAO.getInstance().getBoolean(DAO.IS_NEW_KEY, true);
-        if (moveButton.isPressed() && !isTutorial) {
+        if (moveButton.isPressed()) {
             MainCamera camera = MainCamera.getInstance();
             if (x < moveCenterX) {
                 if (camera.isFlipped()) {
