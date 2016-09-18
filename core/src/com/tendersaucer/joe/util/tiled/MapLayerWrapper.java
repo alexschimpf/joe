@@ -56,11 +56,13 @@ public final class MapLayerWrapper implements IRender {
         }
 
         if (objects != null) {
-            ColorScheme.ColorType layerColorType = null;
+            ColorScheme.ColorType layerColorType;
             MapProperties properties = rawLayer.getProperties();
             if (properties.containsKey("color_type")) {
                 String colorType = properties.get("color_type").toString();
                 layerColorType = ColorScheme.ColorType.valueOf(colorType.toUpperCase());
+            } else {
+                layerColorType = ColorScheme.ColorType.PRIMARY;
             }
 
             Color objectColor;

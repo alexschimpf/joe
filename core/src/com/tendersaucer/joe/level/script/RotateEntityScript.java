@@ -51,7 +51,7 @@ public final class RotateEntityScript extends Script {
         degrees -= Math.abs(MathUtils.radiansToDegrees * (lastAngle - target.getAngle()));
         if (degrees <= 0) {
             target.setAngularSpeed(0);
-            target.setAngle(startAngle + ((angularSpeed > 0 ? 1 : -1) * MathUtils.degreesToRadians * totalDegrees));
+            target.setAngle(startAngle + (MathUtils.degreesToRadians * Math.signum(angularSpeed) * totalDegrees));
             setDone();
         }
 
