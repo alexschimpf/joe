@@ -50,7 +50,7 @@
  <objectgroup name="scripts">
   <object id="318" name="tutorial_end_script" type="rotate_entity" gid="39" x="1472" y="512" width="64" height="64">
    <properties>
-    <property name="angular_speed" type="float" value="0.40000000000000002"/>
+    <property name="angular_speed" type="float" value="3"/>
     <property name="degrees" type="float" value="90"/>
     <property name="target" value="script_target"/>
    </properties>
