@@ -67,6 +67,15 @@
                                 ]
                             }
                         },
+                        "simon_platform": {
+                            "class": "SimonPlatform",
+                            "properties": {
+                                "optional": [
+                                    { "name": "interval", "default": "1000" },
+                                    { "name": "moves", "default": "" }
+                                ]
+                            }
+                        },
                         "moving_platform": {
                             "class": "MovingPlatform",
                             "properties": {
